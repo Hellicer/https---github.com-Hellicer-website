@@ -3,13 +3,12 @@
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import { Header } from '@/sections/Header/index'
+
 export default function Home() {
     const { t } = useTranslation()
     return (
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 ">
-            <section id="headerBar">
-                <Header>{null}</Header>
-            </section>
+            <Header>{null}</Header>
             {/* font-[family-name:var(--font-silkscreen-sans)] */}
             {/* font-[family-name:var(--font-geist-mono)] */}
             <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">

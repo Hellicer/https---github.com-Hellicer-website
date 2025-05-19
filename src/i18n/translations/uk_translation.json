@@ -1,0 +1,113 @@
+{
+    "language": {
+        "en": "English",
+        "uk": "Українська"
+    },
+    "header": {
+        "specialization": "Спеціалізація",
+        "skills": "Навички",
+        "about": "Про нас",
+        "projects": "Проєкти",
+        "contact": "Контакт"
+    },
+    "headerTitle": {
+        "title": "Цифрові рішення для вашого бізнесу",
+        "description": {
+            "first": "Ми створюємо сучасні сайти",
+            "second": "що вирішують бізнес-завдання",
+            "third": "та прискорюють ваш розвиток"
+        }
+    },
+    "subHeaderTitle": {
+        "aboutUs": "Про нас",
+        "project": "Проєкт",
+        "services": "Послуги",
+        "learnMore": "Дізнатись більше"
+    },
+    "sideSwitcherLeft": "Фронтенд",
+    "sideSwitcherRight": "Бекенд",
+    "specialization": {
+        "title": "Спеціалізація",
+        "cards": {
+            "corporateWebsites": {
+                "title": "Корпоративні сайти",
+                "description": "Розробка сайтів для компаній з індивідуальним дизайном, адаптивною версткою та SEO-оптимізацією."
+            },
+            "crm": {
+                "title": "CRM-системи",
+                "description": "Розробка сайтів для компаній з індивідуальним дизайном, адаптивною версткою та SEO-оптимізацією."
+            },
+            "personalPortfolios": {
+                "title": "Особисті портфоліо",
+                "description": "Створення стильних сайтів для фрилансерів, дизайнерів, розробників та інших спеціалістів."
+            },
+            "webApplications": {
+                "title": "Веб-додатки",
+                "description": "Динамічні та інтерактивні платформи з API та інтеграцією бази даних."
+            },
+            "marketplaces": {
+                "title": "Маркетплейси",
+                "description": "Складні мультикористувацькі системи для продажу товарів чи послуг."
+            },
+            "chatbotsAndAutomation": {
+                "title": "Чат-боти та автоматизація",
+                "description": "Створення ботів для Telegram, WhatsApp, Facebook Messenger для бізнесу та підтримки."
+            },
+            "paymentSystemIntegration": {
+                "title": "Інтеграція платіжних систем",
+                "description": "Підключення Stripe, LiqPay, Fondy, PayPal та інших сервісів для прийому оплат."
+            },
+            "migrationAndOptimization": {
+                "title": "Міграція та оптимізація",
+                "description": "Перенесення сайтів на нові платформи, прискорення роботи та підвищення продуктивності."
+            }
+        }
+    },
+    "about": {
+        "title": "Про нас",
+        "solvingBlock": {
+            "title": "Розв’язання бізнес-проблем",
+            "experience": "3 роки досвіду",
+            "projectsCompleted": "10+ завершених проєктів",
+            "roas": "300%+ ROAS для клієнтів",
+            "ssr": "Швидкий SSR для SEO та продуктивності",
+            "metadata": "Динамічні метадані та OpenGraph-теги"
+        },
+        "cd": {
+            "mainInfo": {
+                "title": "Основна інформація",
+                "name": "Ім’я",
+                "position": "Посада",
+                "sex": "Стать",
+                "age": "Вік",
+                "sexValues": {
+                    "male": "Чоловік",
+                    "female": "Жінка",
+                    "other": "Інше"
+                }
+            },
+            "skills": {
+                "title": "Навички",
+                "template": "Фахівець з фронтенду та бекенду. Досвід з {{frontend}} та {{backend}}. Знання баз даних: {{databases}}."
+            },
+            "techStack": {
+                "title": "Стек технологій"
+            },
+            "otherInfo": {
+                "title": "Інша інформація"
+            },
+            "projects": {
+                "title": "Проєкти",
+                "openSource": "Open-source",
+                "startups": "Стартапи",
+                "freelance": "Фриланс",
+                "corporate": "Корпоративні"
+            }
+        }
+    },
+    "project": {},
+    "contact": {
+        "title": "Обговоримо ваш проєкт",
+        "description": "Ми готові втілити ваші ідеї в життя та допомогти бізнесу зростати."
+    }
+}

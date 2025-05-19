@@ -1,0 +1,113 @@
+{
+    "language": {
+        "en": "En",
+        "uk": "Uk"
+    },
+    "header": {
+        "specialization": "Specialization",
+        "skills": "Skills",
+        "about": "About",
+        "projects": "Projects",
+        "contact": "Contact"
+    },
+    "headerTitle": {
+        "title": "Digital solutions for your business",
+        "description": {
+            "first": "We create modern websites",
+            "second": "that solve business tasks",
+            "third": "and boost your growth"
+        }
+    },
+    "subHeaderTitle": {
+        "aboutUs": "About us",
+        "project": "Project",
+        "services": "Services",
+        "learnMore": "Learn more"
+    },
+    "sideSwitcherLeft": "Frontend",
+    "sideSwitcherRight": "Backend",
+    "specialization": {
+        "title": "Specialization",
+        "cards": {
+            "corporateWebsites": {
+                "title": "Corporate websites",
+                "description": "Website development for companies with individual design, responsive layout and SEO optimization."
+            },
+            "crm": {
+                "title": "CRM",
+                "description": "Website development for companies with individual design, responsive layout and SEO optimization."
+            },
+            "personalPortfolios": {
+                "title": "Personal portfolios",
+                "description": "Creation of stylish websites for freelancers, designers, developers and other specialists."
+            },
+            "webApplications": {
+                "title": "Web applications",
+                "description": "Dynamic and interactive platforms with API and database integration."
+            },
+            "marketplaces": {
+                "title": "Marketplaces",
+                "description": "Complex multi-user systems for selling goods or services."
+            },
+            "chatbotsAndAutomation": {
+                "title": "Chatbots and automation",
+                "description": "Creation of bots for Telegram, WhatsApp, Facebook Messenger for business and support services."
+            },
+            "paymentSystemIntegration": {
+                "title": "Payment system integration",
+                "description": "Connection of Stripe, LiqPay, Fondy, PayPal and other services for accepting payments."
+            },
+            "migrationAndOptimization": {
+                "title": "Migration and optimization",
+                "description": "Transfer of websites to new platforms, acceleration of work and improvement of productivity."
+            }
+        }
+    },
+    "about": {
+        "title": "About us",
+        "solvingBlock": {
+            "title": "Solving business problems",
+            "experience": "3 years experience",
+            "projectsCompleted": "10+ projects completed",
+            "roas": "300%+ ROAS for clients",
+            "ssr": "Fast SSR for SEO & performance",
+            "metadata": "Dynamic metadata & OpenGraph tags"
+        },
+        "cd": {
+            "mainInfo": {
+                "title": "Main Info",
+                "name": "Name",
+                "position": "Position",
+                "sex": "Sex",
+                "age": "Age",
+                "sexValues": {
+                    "male": "Male",
+                    "female": "Female",
+                    "other": "Other"
+                }
+            },
+            "skills": {
+                "title": "Skills",
+                "template": "Frontend / Backend Specialist. Experience with {{frontend}} and {{backend}}. Database knowledge: {{databases}}."
+            },
+            "techStack": {
+                "title": "Tech Stack"
+            },
+            "otherInfo": {
+                "title": "Other Info"
+            },
+            "projects": {
+                "title": "Projects",
+                "openSource": "Open-source",
+                "startups": "Startups",
+                "freelance": "Freelance",
+                "corporate": "Corporate"
+            }
+        }
+    },
+    "project": {},
+    "contact": {
+        "title": "Let's discuss your project",
+        "description": "We are ready to bring your ideas to life and help your business grow."
+    }
+}

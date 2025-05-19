@@ -3,6 +3,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { CommonProps } from '@/interfaces/props'
+import '@/i18n/clientI18n'
 
 function Button({
     onclick,
@@ -27,8 +28,7 @@ export default function LanguageSwitcher(props: CommonProps) {
     const { className } = props
     const { i18n, t } = useTranslation()
 
-    console.log(String(i18n.language), 'uk')
-    const changeLanguage = async (lang: 'en' | 'ru' | 'uk') => {
+    const changeLanguage = async (lang: 'en' | 'uk') => {
         await i18n.changeLanguage(lang)
     }
     return (
@@ -43,18 +43,6 @@ export default function LanguageSwitcher(props: CommonProps) {
             >
                 {t('language.en')}
             </Button>{' '}
-            <span className="max-md:ml-[40px] md:ml-[20px] mr-[40px]">|</span>
-            <Button
-                onclick={() => changeLanguage('ru')}
-                targetLang={
-                    String(i18n.language) == 'ru'
-                        ? 'text-white'
-                        : 'text-white/60'
-                }
-            >
-                {t('language.ru')}
-            </Button>
-            <span className="max-md:ml-[40px] md:ml-[20px] mr-[38px]">|</span>
             <Button
                 onclick={() => changeLanguage('uk')}
                 targetLang={

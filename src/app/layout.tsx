@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Silkscreen } from 'next/font/google'
 import './globals.css'
-import '@/i18n/i18n'
+import '@/i18n/config'
 
 const interSans = Inter({
     variable: '--font-inter-sans',

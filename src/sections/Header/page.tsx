@@ -4,7 +4,7 @@ import LanguageSwitcher from '@/components/change-language/changeLang'
 import Logotype from '@/components/logotype/logotype'
 import NavbarMenu from '@/components/navbarMenu/navbarMenu'
 import ContactUs from '@/components/contactUs/ContactUs'
-import SwitchertTheme from '@/components/switcher-theme/SwitchertTheme'
+import SwitcherTheme from '@/components/switcher-theme/SwitchTheme'
 
 export function Header(props: any) {
     return (
@@ -18,7 +18,7 @@ export function Header(props: any) {
             <NavbarMenu />
             <LanguageSwitcher />
             <ContactUs />
-            <SwitchertTheme />
+            <SwitcherTheme />
         </section>
     )
 }

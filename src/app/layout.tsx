@@ -2,16 +2,27 @@ import type { Metadata } from 'next'
 import { Inter, Silkscreen } from 'next/font/google'
 import './globals.css'
 import '@/i18n/config'
+import localFont from 'next/font/local'
 
 const interSans = Inter({
     variable: '--font-inter-sans',
     subsets: ['latin'],
 })
 
-const silkscreen = Silkscreen({
+// const silkscreen = Silkscreen({
+//     variable: '--font-silkscreen-sans',
+//     subsets: ['latin'],
+//     weight: ['400', '700'],
+// })
+
+export const silkscreen = localFont({
+    src: [
+        {
+            path: '../fonts/Silkscreen/Silkscreen.ttf',
+            style: 'normal',
+        },
+    ],
     variable: '--font-silkscreen-sans',
-    subsets: ['latin'],
-    weight: ['400', '700'],
 })
 
 export const metadata: Metadata = {

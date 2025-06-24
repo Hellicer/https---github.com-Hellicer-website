@@ -16,9 +16,11 @@ export function Header(props: any) {
         >
             <Logotype />
             <NavbarMenu />
-            <LanguageSwitcher />
-            <ContactUs />
-            <SwitcherTheme />
+            <div className="grid grid-flow-col gap-[13px]">
+                <ContactUs />
+                <LanguageSwitcher />
+            </div>
+            {/* <SwitcherTheme /> */}
         </section>
     )
 }

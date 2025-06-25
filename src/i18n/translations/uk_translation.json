@@ -1,14 +1,14 @@
 {
     "language": {
-        "en": "English",
-        "uk": "Українська"
+        "en": "Eng",
+        "uk": "Укр"
     },
     "header": {
         "specialization": "Спеціалізація",
         "skills": "Навички",
         "about": "Про нас",
         "projects": "Проєкти",
-        "contact": "Контакт"
+        "contact": "Контакти"
     },
     "headerTitle": {
         "title": "Цифрові рішення для вашого бізнесу",

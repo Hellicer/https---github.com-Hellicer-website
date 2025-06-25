@@ -1,13 +1,13 @@
 'use client'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslations } from 'next-intl'
 
 export default function ContactUs(props: any) {
-    const { t } = useTranslation()
+    const t = useTranslations('header')
 
     return (
         <>
-            <button> {t?.('header.contact') ?? 'loren ipsum'}</button>
+            <button> {t?.('contact') ?? 'loren ipsum'}</button>
         </>
     )
 }

@@ -1,15 +1,17 @@
 'use client'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslations } from 'next-intl'
 
+const arrMenuItems = ['about', 'specialization', 'skills', 'projects']
 export default function navbarMenu(props: any) {
-    const { t } = useTranslation()
+    const t = useTranslations('header')
     return (
-        <div className="grid grid-flow-col w-[450px] ">
-            <span>{t?.('header.about') ?? 'loren ipsum'} </span>
-            <span>{t?.('header.specialization') ?? 'loren ipsum'} </span>{' '}
-            <span>{t?.('header.skills') ?? 'loren ipsum'} </span>{' '}
-            <span>{t?.('header.projects') ?? 'loren ipsum'} </span>{' '}
+        <div className="grid grid-flow-col w-[450px] place-items-center justify-self-center ">
+            {arrMenuItems.map(item => (
+                <button type="button" key={item} className="cursor-pointer">
+                    {t?.(`${item}`) ?? 'item'}
+                </button>
+            ))}
         </div>
     )
 }

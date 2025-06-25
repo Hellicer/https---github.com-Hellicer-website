@@ -12,11 +12,11 @@ export function Header(props: any) {
             id="HeaderBar"
             className="grid grid-flow-col w-full h-[74px]
         bg-accent rounded-2xl text-sm font-bold
-        font-silkscreen items-center-safe place-items-center"
+        font-silkscreen items-center-safe px-[36px] select-none"
         >
             <Logotype />
             <NavbarMenu />
-            <div className="grid grid-flow-col gap-[13px]">
+            <div className="grid grid-flow-col gap-[13px] justify-around">
                 <ContactUs />
                 <LanguageSwitcher />
             </div>

@@ -1,9 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import { Header } from '@/sections/Header/index'
+import { Header, GlobeWrapper, Main } from '@/components/layout/index'
 // import { useTranslations } from 'next-intl'
-import { InteractiveGridPattern } from '@/components/magicui/interactive-grid-pattern'
+import { InteractiveGridPattern } from '@/components/ui/magicui/interactive-grid-pattern'
+import { DotPattern } from '@/components/ui/magicui/dot-pattern'
 import { cn } from '@/lib/utils'
 
 export default function Home() {
@@ -11,26 +12,16 @@ export default function Home() {
 
     return (
         <>
-            <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background">
-                <InteractiveGridPattern
-                    className={cn(
-                        '[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]',
-                    )}
-                    width={1440}
-                    height={2000}
-                    squares={[80, 80]}
-                    squaresClassName="hover:fill-blue-500"
-                />
-            </div>{' '}
-            <div className="grid grid-rows-[20px_1fr_20px] justify-items-center min-h-screen p-4  gap-16 items-start ">
-                <Header />
-                <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-                    <p>main</p>
-                </main>
-                <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-                    <p>footer</p>
-                </footer>
+            <div className="absolute flex -z-10 h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg  bg-background opacity-15 ">
+                <DotPattern />
             </div>
+            <div className="relative mx-auto grid max-w-[1440px] z-10 justify-items-center p-4 gap-16 items-start">
+                <Header />
+            </div>
+            <Main />
+            <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
+                <p>footer</p>
+            </footer>
         </>
     )
 }

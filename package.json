@@ -10,9 +10,11 @@
     },
     "dependencies": {
         "clsx": "^2.1.1",
+        "cobe": "^0.6.4",
         "eslint-plugin-perfectionist": "^4.13.0",
         "interfaces": "^0.0.3",
         "lucide-react": "^0.522.0",
+        "motion": "^12.23.3",
         "next": "15.3.2",
         "next-i18next": "^15.4.2",
         "next-intl": "^4.3.1",

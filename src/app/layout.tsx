@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Silkscreen } from 'next/font/google'
+import { Inter, Silkscreen, Handjet } from 'next/font/google'
 import './globals.css'
 import localFont from 'next/font/local'
 import { NextIntlClientProvider } from 'next-intl'
@@ -15,6 +15,12 @@ const interSans = Inter({
 //     subsets: ['latin'],
 //     weight: ['400', '700'],
 // })
+
+const handjet = Handjet({
+    variable: '--font-handjet-sans',
+    subsets: ['latin'],
+    weight: ['400', '700'],
+})
 
 export const silkscreen = localFont({
     src: [
@@ -41,7 +47,7 @@ export default async function RootLayout({
     return (
         <html lang={locale}>
             <body
-                className={`${interSans.variable} ${silkscreen.variable} antialiased max-w-[1440px] w-full justify-self-center`}
+                className={`${interSans.variable} ${silkscreen.variable} ${handjet.variable} antialiased w-full justify-self-center`}
             >
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     {children}

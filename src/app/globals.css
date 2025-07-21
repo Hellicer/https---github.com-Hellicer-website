@@ -30,6 +30,7 @@
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
     --font-inter: var(--font-inter-sans);
+    --font-handjet: var(--font-handjet-sans);
     --font-silkscreen: var(--font-silkscreen-sans);
 }
 

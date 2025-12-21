@@ -4,6 +4,7 @@ import './globals.css'
 import localFont from 'next/font/local'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
+import { DotPattern } from '@/components/ui/magicui/dot-pattern'
 
 const interSans = Inter({
     variable: '--font-inter-sans',
@@ -49,6 +50,9 @@ export default async function RootLayout({
             <body
                 className={`${interSans.variable} ${silkscreen.variable} ${handjet.variable} antialiased w-full justify-self-center`}
             >
+                <div className="absolute flex -z-10 h-screen w-full flex-col items-center justify-center overflow-hidden rounded-lg  bg-background opacity-15 ">
+                    <DotPattern />
+                </div>
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     {children}
                 </NextIntlClientProvider>

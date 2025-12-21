@@ -15,8 +15,10 @@ export default function Header(props: any) {
         font-silkscreen items-center-safe px-[36px] select-none"
         >
             <Logotype />
-            <NavbarMenu />
-            <div className="grid grid-flow-col gap-[13px] justify-around">
+            <div className="max-sm:hidden">
+                <NavbarMenu />
+            </div>
+            <div className="grid grid-flow-col gap-[13px] justify-around max-sm:hidden">
                 <ContactUs />
                 <LanguageSwitcher />
             </div>

@@ -1,8 +1,13 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
     --background: #ffffff;
     --foreground: #171717;
+
+    --border: #2a2f45;
+    --ring: #6e56cf;
     --accent: #11172d;
     --card: #1c274f;
     --button: #392c72;
@@ -10,6 +15,7 @@
     --green7: #1b543a;
     --violet5: #32275f;
     --violet6: #392c72;
+    --violet8: #5842c3;
     --violet9: #6e56cf;
     --white12: #ededed;
 }
@@ -19,11 +25,13 @@
     --color-foreground: var(--foreground);
     --color-accent: var(--accent);
     --color-card: var(--card);
+    --color-ring: var(--ring);
     --color-button: var(--button);
     --color-red9: var(--red9);
     --color-green7: var(--green7);
-    --color-violet5: var(--viowlet5);
+    --color-violet5: var(--violet5);
     --color-violet6: var(--violet6);
+    --color-violet8: var(--violet8);
     --color-violet9: var(--violet9);
     --color-white12: var(--white12);
     --color-background: var(--background);
@@ -32,6 +40,24 @@
     --font-inter: var(--font-inter-sans);
     --font-handjet: var(--font-handjet-sans);
     --font-silkscreen: var(--font-silkscreen-sans);
+    --animate-marquee: marquee var(--duration) infinite linear;
+    --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+    @keyframes marquee {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(calc(-100% - var(--gap)));
+        }
+    }
+    @keyframes marquee-vertical {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(calc(-100% - var(--gap)));
+        }
+    }
 }
 
 @media (prefers-color-scheme: dark) {

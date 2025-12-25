@@ -9,3 +9,9 @@ export interface CommonProps {
     i?: string | number
     closeMenu?: () => void
 }
+
+export type FiltersState = {
+    stack: string | null
+    status: string | null
+    tech: string[]
+}

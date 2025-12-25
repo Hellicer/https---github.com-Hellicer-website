@@ -65,6 +65,7 @@
     },
     "about": {
         "title": "About us",
+        "subtitle": "Our innovations and experience",
         "solvingBlock": {
             "title": "Solving business problems",
             "experience": "3 years experience",
@@ -73,6 +74,7 @@
             "ssr": "Fast SSR for SEO & performance",
             "metadata": "Dynamic metadata & OpenGraph tags"
         },
+
         "cd": {
             "mainInfo": {
                 "title": "Main Info",
@@ -105,7 +107,9 @@
             }
         }
     },
-    "project": {},
+    "project": {
+        "title": "Projects"
+    },
     "contact": {
         "title": "Let's discuss your project",
         "description": "We are ready to bring your ideas to life and help your business grow."

@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react'
 
 import { cn } from '@/lib/utils'
 
-const MOVEMENT_DAMPING = 1400
+const MOVEMENT_DAMPING = 4000
 
 const GLOBE_CONFIG: COBEOptions = {
     width: 980,
@@ -17,12 +17,14 @@ const GLOBE_CONFIG: COBEOptions = {
     theta: 0.3,
     dark: 0,
     diffuse: 0.4,
-    mapSamples: 16000,
+    mapSamples: 6000,
     mapBrightness: 1.2,
     baseColor: [1, 1, 1],
     markerColor: [251 / 255, 100 / 255, 21 / 255],
     glowColor: [1, 1, 1],
     markers: [
+        { location: [50.4501, 30.5234], size: 0.08 },
+        { location: [48.4647, 35.0462], size: 0.06 },
         { location: [14.5995, 120.9842], size: 0.03 },
         { location: [19.076, 72.8777], size: 0.1 },
         { location: [23.8103, 90.4125], size: 0.05 },
@@ -51,9 +53,9 @@ export function Globe({
 
     const r = useMotionValue(0)
     const rs = useSpring(r, {
-        mass: 1,
-        damping: 30,
-        stiffness: 100,
+        mass: 0.8,
+        damping: 60,
+        stiffness: 120,
     })
 
     const updatePointerInteraction = (value: number | null) => {
@@ -87,7 +89,7 @@ export function Globe({
             width: width * 2,
             height: width * 2,
             onRender: state => {
-                if (!pointerInteracting.current) phi += 0.005
+                phi += 0.0004
                 state.phi = phi + rs.get()
                 state.width = width * 2
                 state.height = width * 2

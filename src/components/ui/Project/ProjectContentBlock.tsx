@@ -1,0 +1,36 @@
+'use client'
+
+import { ProjectsFilters } from '@/components/ui/Project/ProjectsFilters'
+import { ProjectsGrid } from '@/components/ui/Project/ProjectsGrid'
+import { FiltersState } from '@/interfaces/props'
+import { useState } from 'react'
+import SpecTypeToggle from '../SpecTypeToggle/SpecTypeToggle'
+
+export default function ProjectContentBlock() {
+    const [filters, setFilters] = useState<FiltersState>({
+        stack: null,
+        status: null,
+        tech: [],
+    })
+    return (
+        <section className="w-full">
+            <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold ">
+                <h1>Projects</h1>
+                <SpecTypeToggle />
+            </div>
+
+            <div className="mt-16 mb-16">
+                <ProjectsFilters filters={filters} setFilters={setFilters} />
+                <button
+                    onClick={() =>
+                        setFilters({ stack: null, status: null, tech: [] })
+                    }
+                    className="text-xs text-gray-400 underline hover:text-white"
+                >
+                    Reset filters
+                </button>
+            </div>
+            <ProjectsGrid filters={filters} />
+        </section>
+    )
+}

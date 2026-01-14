@@ -12,11 +12,7 @@
     },
     "headerTitle": {
         "title": "Digital solutions for your business",
-        "description": {
-            "first": "We create modern websites",
-            "second": "that solve business tasks",
-            "third": "and boost your growth"
-        }
+        "description": "We build fast, responsive and scalable web products that are ready to grow with your business."
     },
     "subHeaderTitle": {
         "aboutUs": "About us",
@@ -113,5 +109,24 @@
     "contact": {
         "title": "Let's discuss your project",
         "description": "We are ready to bring your ideas to life and help your business grow."
+    },
+    "common": {
+        "learnMore": "Learn more",
+        "hireUs": "Hire Us",
+        "reset": "Reset",
+        "applyFilters": "Apply Filters",
+        "all": "All",
+        "noProjectsFound": "No projects found",
+        "loading": "Loading...",
+        "viewProject": "View Project",
+        "seeMore": "See More",
+        "seeLess": "See Less",
+        "backToTop": "Back to Top",
+        "contactUs": "Contact Us",
+        "otherLinks": "Other Links",
+        "stack": "Stack",
+        "technologies": "Tech",
+        "status": "Status",
+        "resetFilter": "Reset Filter"
     }
 }

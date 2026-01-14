@@ -7,7 +7,7 @@ export function AboutSection() {
     const t = useTranslations('about')
 
     return (
-        <section className="grid max-w-[1440px] w-full mx-auto">
+        <section className="grid max-w-[1440px] w-full h-full mx-auto">
             <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold">
                 <h1> {t('title')}</h1>
             </div>

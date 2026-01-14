@@ -12,7 +12,7 @@ export default function Home() {
 
     return (
         <>
-            <div className="relative mx-auto grid max-w-[1440px] z-10 justify-items-center p-4 gap-16 items-start ">
+            <div className="relative mx-auto grid max-w-[1440px] z-10 justify-items-center p-4  items-start ">
                 <Header />
             </div>
 

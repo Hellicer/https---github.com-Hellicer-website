@@ -2,19 +2,18 @@
 import { GlobeWrapper } from '@/components/layout/index'
 import { AboutSection } from '@/components/ui/about/AboutSection'
 import { BentoMenu } from '@/components/ui/BentoMenu/BentoMenu'
-import { ProjectsFilters } from '@/components/ui/Project/ProjectsFilters'
-import { ProjectsGrid } from '@/components/ui/Project/ProjectsGrid'
-import Specialization from '@/components/ui/Specialization/Specialization'
+import { Button } from '@/components/ui/button'
+import ProjectContentBlock from '@/components/ui/Project/ProjectContentBlock'
 import { SpecializationCards } from '@/components/ui/Specialization/SpecializationCards'
+import SpecTypeToggle from '@/components/ui/SpecTypeToggle/SpecTypeToggle'
 import { FiltersState } from '@/interfaces/props'
+import { Inbox } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 export default function MainPage() {
-    const [filters, setFilters] = useState<FiltersState>({
-        stack: null,
-        status: null,
-        tech: [],
-    })
+    const t = useTranslations('')
+
     return (
         <main className="">
             <GlobeWrapper>
@@ -23,23 +22,34 @@ export default function MainPage() {
                         className=" flex flex-col relative z-10  px-6 w-full max-w-5xl
                     "
                     >
-                        <h1 className=" font-silkscreen text-5xl md:text-5xl  font-bold uppercase leading-tight tracking-wide">
-                            Your Business + Our Solution = Success!
+                        <h1 className=" font-silkscreen text-5xl  max-w-4xl  font-bold uppercase leading-tight tracking-wide">
+                            {t('headerTitle.title')}
+
+                            {/* Your Business + Our Solution = Success! */}
                         </h1>
 
-                        <p className="mt-6 text-gray-300 max-w-2xl  text-left">
-                            Lobortis, volutpat turpis vitae elit hendrerit dui
-                            lacus vehicula, tincidunt libero, ut tincidunt odio
-                            in enim. Ut nunc non sed nam ipsum convallis.
+                        <p className="mt-6 font-semibold text-xl text-gray-30 max-w-4xl  text-left">
+                            {t('headerTitle.title')}
+                            {/* We build fast, responsive
+                            and scalable web products that are ready to grow
+                            with your business. */}
                         </p>
 
                         <div className="mt-8 text-right">
-                            <button
-                                // variant="outline"
-                                className="uppercase tracking-wider text-sm font-bold px-6 py-3"
+                            <Button
+                                variant="secondary"
+                                asChild
+                                size="default"
+                                className="pointer-events-auto p-0 h-11 "
                             >
-                                Hire Us 🚀
-                            </button>
+                                <a href={'#'} className="">
+                                    {/* {cta} */}
+                                    <span className="">
+                                        {t('common.hireUs')}
+                                    </span>
+                                    <Inbox className=" ms-2 min-h-5.5 min-w-5.5" />
+                                </a>
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -48,25 +58,16 @@ export default function MainPage() {
                 </div>
             </GlobeWrapper>
             <div className="relative mx-auto grid max-w-[1440px] z-10 justify-items-center p-4 gap-16 items-stretch ">
-                {/* <BentoMenu /> */}
-                <Specialization />
+                <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold">
+                    <h1>Specialization</h1>
+                    <SpecTypeToggle />
+                </div>
                 <SpecializationCards />
                 <AboutSection />
             </div>
-
-            <section className="mt-12 space-y-10">
-                <button
-                    onClick={() =>
-                        setFilters({ stack: null, status: null, tech: [] })
-                    }
-                    className="text-xs text-gray-400 underline hover:text-white"
-                >
-                    Reset filters
-                </button>
-
-                <ProjectsFilters filters={filters} setFilters={setFilters} />
-                <ProjectsGrid filters={filters} />
-            </section>
+            <div className="relative mx-auto grid max-w-[1440px] mt-20 z-10 justify-items-center p-4 gap-16 items-stretch ">
+                <ProjectContentBlock />
+            </div>
         </main>
     )
 }

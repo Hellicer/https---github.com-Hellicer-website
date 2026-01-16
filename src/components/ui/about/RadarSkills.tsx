@@ -20,7 +20,7 @@ export function RadarChart({
     values: number[]
 }) {
     return (
-        <div className="w-[210px] h-[190px]">
+        <div className="w-[210px] h-[150px]">
             <Radar
                 data={{
                     labels,

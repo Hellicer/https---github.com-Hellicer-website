@@ -11,19 +11,12 @@ const interSans = Inter({
     subsets: ['latin'],
 })
 
-// const silkscreen = Silkscreen({
-//     variable: '--font-silkscreen-sans',
-//     subsets: ['latin'],
-//     weight: ['400', '700'],
-// })
-
 const handjet = Handjet({
     variable: '--font-handjet-sans',
     subsets: ['latin'],
     weight: ['400', '700'],
 })
-
-export const silkscreen = localFont({
+const silkscreen = localFont({
     src: [
         {
             path: '../fonts/Silkscreen/Silkscreen.ttf',

@@ -5,8 +5,10 @@ import { ProjectsGrid } from '@/components/ui/Project/ProjectsGrid'
 import { FiltersState } from '@/interfaces/props'
 import { useState } from 'react'
 import SpecTypeToggle from '../SpecTypeToggle/SpecTypeToggle'
+import { useTranslations } from 'next-intl'
 
 export default function ProjectContentBlock() {
+    const t = useTranslations('')
     const [filters, setFilters] = useState<FiltersState>({
         stack: null,
         status: null,
@@ -27,7 +29,7 @@ export default function ProjectContentBlock() {
                     }
                     className="text-xs text-gray-400 underline hover:text-white"
                 >
-                    Reset filters
+                    {t('common.resetFilter')}
                 </button>
             </div>
             <ProjectsGrid filters={filters} />

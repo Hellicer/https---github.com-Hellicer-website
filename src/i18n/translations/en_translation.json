@@ -127,6 +127,7 @@
         "stack": "Stack",
         "technologies": "Tech",
         "status": "Status",
-        "resetFilter": "Reset Filter"
+        "resetFilter": "Reset Filter",
+        "download": "Download"
     }
 }

@@ -91,13 +91,13 @@ function FilterRow({
                     <button
                         key={item}
                         onClick={() => onClick(item)}
-                        className={`
+                        className={` font-silkscreen text-violet-200 
                             px-4 py-1.5 rounded-md text-xs font-semibold uppercase
                             transition
                             ${
                                 isActive
-                                    ? 'bg-violet-600 text-white'
-                                    : 'bg-violet-900/40 text-violet-300 hover:bg-violet-800'
+                                    ? 'bg-violet6  '
+                                    : 'bg-violet8  hover:bg-violet6'
                             }
                         `}
                     >

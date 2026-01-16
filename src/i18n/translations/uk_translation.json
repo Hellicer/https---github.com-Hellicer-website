@@ -126,6 +126,7 @@
         "stack": "Стек",
         "technologies": "Технології",
         "status": "Статус",
-        "resetFilter": "Скинути фільтр"
+        "resetFilter": "Скинути фільтр",
+        "download": "Завантажити"
     }
 }

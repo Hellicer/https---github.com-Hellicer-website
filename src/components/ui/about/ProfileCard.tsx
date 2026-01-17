@@ -118,25 +118,24 @@ export function ProfileCard({ className }: CommonProps = {}) {
     const t = useTranslations('')
 
     return (
-        <div className="grid rounded-2xl bg-card p-6 text-sm space-y-6 max-w-xl w-full">
+        <div className="grid rounded-2xl bg-card p-6 text-sm space-y-6 max-w-xl w-full ">
             {/* MAIN INFO */}
             <div className="grid grid-flow-col gap-6">
                 <div className="grid grid-flow-row gap-6">
-                    <div className="font-inter text-base font-semibold ">
+                    <div className="font-inter text-base font-semibold">
                         <TitleBar title="main info" />
-
                         <div className="pl-2 pt-1">
                             <p>
                                 <span className="text-violet8">
                                     &gt; Name:{' '}
                                 </span>
-                                <b>{d.mainInfo.name}</b>
+                                {d.mainInfo.name}
                             </p>
                             <p>
                                 <span className="text-violet8">
                                     &gt; Position:{' '}
                                 </span>
-                                <b>{d.mainInfo.position}</b>
+                                {d.mainInfo.position}
                             </p>
                             <p>
                                 <span className="text-violet8">&gt; Sex: </span>
@@ -166,7 +165,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
                 </div>
 
                 {/* AVATAR */}
-                <div className="gap-4 grid grid-flow-row">
+                <div className="gap-4 grid grid-flow-row content-start">
                     <div className="w-50 h-50 rounded-xl bg-gray-500/40 flex items-center justify-center">
                         <span>Photo</span>
                     </div>
@@ -176,12 +175,12 @@ export function ProfileCard({ className }: CommonProps = {}) {
                             variant="secondary"
                             asChild
                             size="default"
-                            className="pointer-events-auto p-0 h-11 "
+                            className="pointer-events-auto p-0 h-9 text-base"
                         >
                             <a href={'#'} className="">
                                 {/* {cta} */}
                                 <span className="capitalize">
-                                    {t('common.download')}
+                                    {t('common.download')} CV
                                 </span>
                                 <Download className=" ms-2 min-h-5.5 min-w-5.5" />
                             </a>
@@ -193,13 +192,41 @@ export function ProfileCard({ className }: CommonProps = {}) {
                             DOWNLOAD CV
                         </a> */}
 
-                        <div className="text-xs text-muted-foreground">
-                            wakatime · {d.wakatime.text}
-                        </div>
+                        <div className="flex flex-wrap gap-2 children:pointer-events-cursor">
+                            <div className="text-xs text-muted-foreground flex mt-1 pointer-events-cursor">
+                                <a
+                                    className="bg-gray-600 flex py-1 px-1 rounded-l-sm"
+                                    href="#"
+                                >
+                                    <img
+                                        className="me-1"
+                                        src={`https://cdn.simpleicons.org/wakatime/wakatime`}
+                                        width={14}
+                                        height={14}
+                                    />
+                                    wakatime
+                                </a>
+                                <div className="bg-[#0778b9] py-1  px-1 rounded-r-sm">
+                                    {d.wakatime.text}
+                                </div>
+                            </div>
 
-                        <div className="flex gap-3">
-                            <a href={d.social.linkedin}>LinkedIn</a>
-                            <a href={d.social.github}>GitHub</a>
+                            <a href={d.social.linkedin}>
+                                <img
+                                    className="ms-1  invert-100"
+                                    src={`data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWxpbmtlZGluLWljb24gbHVjaWRlLWxpbmtlZGluIj48cGF0aCBkPSJNMTYgOGE2IDYgMCAwIDEgNiA2djdoLTR2LTdhMiAyIDAgMCAwLTItMiAyIDIgMCAwIDAtMiAydjdoLTR2LTdhNiA2IDAgMCAxIDYtNnoiLz48cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSIxMiIgeD0iMiIgeT0iOSIvPjxjaXJjbGUgY3g9IjQiIGN5PSI0IiByPSIyIi8+PC9zdmc+`}
+                                    width={24}
+                                    height={24}
+                                />
+                            </a>
+                            <a href={d.social.github}>
+                                <img
+                                    className="ms-1 invert-100"
+                                    src={`data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWdpdGh1Yi1pY29uIGx1Y2lkZS1naXRodWIiPjxwYXRoIGQ9Ik0xNSAyMnYtNGE0LjggNC44IDAgMCAwLTEtMy41YzMgMCA2LTIgNi01LjUuMDgtMS4yNS0uMjctMi40OC0xLTMuNS4yOC0xLjE1LjI4LTIuMzUgMC0zLjUgMCAwLTEgMC0zIDEuNS0yLjY0LS41LTUuMzYtLjUtOCAwQzYgMiA1IDIgNSAyYy0uMyAxLjE1LS4zIDIuMzUgMCAzLjVBNS40MDMgNS40MDMgMCAwIDAgNCA5YzAgMy41IDMgNS41IDYgNS41LS4zOS40OS0uNjggMS4wNS0uODUgMS42NS0uMTcuNi0uMjIgMS4yMy0uMTUgMS44NXY0Ii8+PHBhdGggZD0iTTkgMThjLTQuNTEgMi01LTItNy0yIi8+PC9zdmc+`}
+                                    width={24}
+                                    height={24}
+                                />
+                            </a>
                         </div>
                     </div>
                 </div>

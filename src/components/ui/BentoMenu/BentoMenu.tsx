@@ -1,10 +1,4 @@
-import {
-    BellIcon,
-    CalendarIcon,
-    FileTextIcon,
-    GlobeIcon,
-    InputIcon,
-} from '@radix-ui/react-icons'
+import { FileTextIcon, GlobeIcon, InputIcon } from '@radix-ui/react-icons'
 import { IconCloud } from '@/components/ui/icon-cloud'
 
 import { BentoCard, BentoGrid } from '../bento-grid'

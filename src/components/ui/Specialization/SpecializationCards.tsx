@@ -102,7 +102,7 @@ export function BentoCard({
                 </h3>
             </div>
 
-            <p className="text-sm leading-relaxed text-white/70 font-bold">
+            <p className="text-sm leading-relaxed text-gray11 font-bold">
                 {description}
             </p>
         </div>

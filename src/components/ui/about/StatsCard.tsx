@@ -23,7 +23,7 @@ export function StatsCard({ className }: CommonProps = {}) {
                         color="white"
                         className="text-white"
                     />
-                    <span className="text-2xl font-bold text-white">
+                    <span className="text-2xl font-semibold text-white">
                         {t(key)}
                     </span>
                 </div>

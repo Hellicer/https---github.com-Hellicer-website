@@ -18,6 +18,7 @@
     --violet8: #5842c3;
     --violet9: #6e56cf;
     --white12: #ededed;
+    --gray11: #a0a0a0;
 }
 
 @theme inline {
@@ -34,6 +35,8 @@
     --color-violet8: var(--violet8);
     --color-violet9: var(--violet9);
     --color-white12: var(--white12);
+    --color-gray11: var(--gray11);
+
     --color-background: var(--background);
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);

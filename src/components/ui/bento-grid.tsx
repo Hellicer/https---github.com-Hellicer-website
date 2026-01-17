@@ -59,7 +59,7 @@ const BentoCard = ({
                 <h3 className="text-xl font-semibold text-white dark:text-white">
                     {name}
                 </h3>
-                <p className="max-w-lg text-neutral-400">{description}</p>
+                {/* <p className="max-w-lg text-neutral-400">{description}</p> */}
             </div>
 
             <div
@@ -83,7 +83,7 @@ const BentoCard = ({
 
         <div
             className={cn(
-                'pointer-events-none absolute bottom-0 hidden w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:flex',
+                'text-gray11 pointer-events-none absolute bottom-0 hidden w-full translate-y-10 transform-gpu flex-row items-center pl-2 pb-6 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:flex',
             )}
         >
             <Button
@@ -94,7 +94,7 @@ const BentoCard = ({
             >
                 <a href={href}>
                     {cta}
-                    <ArrowRightIcon className="ms-2 h-4 w-4 rtl:rotate-180" />
+                    <ArrowRightIcon className="ms-0 h-4 w-4 rtl:rotate-180" />
                 </a>
             </Button>
         </div>

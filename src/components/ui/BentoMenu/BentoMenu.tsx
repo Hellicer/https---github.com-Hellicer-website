@@ -120,7 +120,7 @@ const features = [
         cta: 'Learn more',
         background: (
             <div
-                className="absolute top-2 right-2 h-[250px] w-full scale-75 border-none [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] transition-all duration-500 ease-out  blur-[1px]
+                className="absolute top-2 right-2 h-[250px] w-full scale-75 border-none [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] transition-all duration-500 ease-out  blur-[1px] mr-[-8px]
 group-hover:blur-none group-hover:scale-90"
             >
                 <IconCloudDemo />

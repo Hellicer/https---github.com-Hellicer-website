@@ -118,7 +118,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
     const t = useTranslations('')
 
     return (
-        <div className="grid rounded-2xl bg-card p-6 text-sm space-y-6 max-w-xl w-full ">
+        <div className="grid rounded-2xl bg-card p-6 backdrop-blur-md transition-all text-sm space-y-6 max-w-xl w-full ">
             {/* MAIN INFO */}
             <div className="grid grid-flow-col gap-6">
                 <div className="grid grid-flow-row gap-6">

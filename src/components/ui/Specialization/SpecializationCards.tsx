@@ -81,7 +81,7 @@ export function BentoCard({
     return (
         <div
             className={cn(
-                'h-64 w-64 group relative overflow-hidden rounded-2xl border border-black bg-card p-6 backdrop-blur-md transition-all',
+                'h-64 w-64 group relative overflow-hidden m-4 rounded-2xl border border-black bg-card p-6 backdrop-blur-md transition-all',
                 'hover:border-black/20 hover:bg-accent',
                 className,
             )}

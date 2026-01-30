@@ -1,6 +1,7 @@
 import { FiltersState } from '@/interfaces/props'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
+import { Button } from '../button'
 
 function ProjectsFilters({
     filters,
@@ -88,21 +89,17 @@ function FilterRow({
                     : active === item
 
                 return (
-                    <button
+                    <Button
+                        variant="secondary"
+                        asChild
+                        size="default"
                         key={item}
                         onClick={() => onClick(item)}
-                        className={` font-silkscreen text-violet-200 
-                            px-4 py-1.5 rounded-md text-xs font-semibold uppercase
-                            transition
-                            ${
-                                isActive
-                                    ? 'bg-violet6  '
-                                    : 'bg-violet8  hover:bg-violet6'
-                            }
-                        `}
+                        className={`font-inter cursor-pointer p-0 h-9 px-4 py-1.5 rounded-md text-xs
+                            ${isActive ? 'bg-violet4 ' : ''}`}
                     >
-                        {item}
-                    </button>
+                        <span className="capitalize">{item}</span>
+                    </Button>
                 )
             })}
         </div>

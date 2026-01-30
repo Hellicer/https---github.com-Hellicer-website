@@ -13,6 +13,7 @@
     --button: #392c72;
     --red9: #e5484d;
     --green7: #1b543a;
+    --violet4: #2c2250;
     --violet5: #32275f;
     --violet6: #392c72;
     --violet8: #5842c3;
@@ -30,6 +31,7 @@
     --color-button: var(--button);
     --color-red9: var(--red9);
     --color-green7: var(--green7);
+    --color-violet4: var(--violet4);
     --color-violet5: var(--violet5);
     --color-violet6: var(--violet6);
     --color-violet8: var(--violet8);

@@ -12,7 +12,7 @@ export function AboutSection() {
                 <h1> {t('title')}</h1>
             </div>
 
-            <div className="grid xl:grid-cols-2 gap-10 mt-12 justify-items-center h-full ">
+            <div className="grid xl:grid-cols-2 gap-10 mt-12 justify-items-center h-auto ">
                 <div className="grid grid-flow-row w-fit max-w-158 gap-10 mt-12 ">
                     <div className="grid">
                         <h3 className="text-4xl font-inter font-extrabold h-fit">

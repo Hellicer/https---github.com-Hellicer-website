@@ -14,7 +14,9 @@ export function StatsCard({ className }: CommonProps = {}) {
     const t = useTranslations('about.solvingBlock')
 
     return (
-        <div className={`grid rounded-2xl bg-card p-8 space-y-6 ${className}`}>
+        <div
+            className={`grid rounded-2xl bg-card backdrop-blur-md p-8 space-y-6 ${className}`}
+        >
             {items.map(({ icon: Icon, key }) => (
                 <div key={key} className="flex items-center gap-4">
                     <Icon

@@ -30,3 +30,5 @@ export const SLUGS = [
     'sonarqube',
     'figma',
 ]
+
+//  bg-card  backdrop-blur-md transition-all hover:border-black/20 hover:bg-accent p-6

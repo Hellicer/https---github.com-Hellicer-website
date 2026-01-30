@@ -3,6 +3,7 @@ import { GlobeWrapper } from '@/components/layout/index'
 import { AboutSection } from '@/components/ui/about/AboutSection'
 import { BentoMenu } from '@/components/ui/BentoMenu/BentoMenu'
 import { Button } from '@/components/ui/button'
+import ContactSection from '@/components/ui/ContactSection/ContactSection'
 import ProjectContentBlock from '@/components/ui/Project/ProjectContentBlock'
 import { SpecializationCards } from '@/components/ui/Specialization/SpecializationCards'
 import SpecTypeToggle from '@/components/ui/SpecTypeToggle/SpecTypeToggle'
@@ -67,6 +68,9 @@ export default function MainPage() {
             </div>
             <div className="relative mx-auto grid max-w-[1440px] mt-20 z-10 justify-items-center p-4 gap-16 items-stretch ">
                 <ProjectContentBlock />
+            </div>
+            <div className="relative mx-auto grid max-w-[1440px] mt-20 z-10 justify-items-center p-4 gap-16 items-stretch ">
+                <ContactSection />
             </div>
         </main>
     )

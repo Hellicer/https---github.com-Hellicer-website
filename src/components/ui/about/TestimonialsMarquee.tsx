@@ -60,7 +60,7 @@ const ReviewCard = ({
             className={cn(
                 'relative h-full w-80 cursor-pointer overflow-hidden rounded-xl p-4',
                 // light styles
-                'bg-[#222225]  hover:bg-[#222225]/80',
+                'bg-card  backdrop-blur-md transition-all hover:border-black/20 hover:bg-accent ',
             )}
         >
             <div className="flex flex-row items-center gap-2">

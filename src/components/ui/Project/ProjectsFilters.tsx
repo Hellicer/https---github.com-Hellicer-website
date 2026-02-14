@@ -96,7 +96,7 @@ function FilterRow({
                         key={item}
                         onClick={() => onClick(item)}
                         className={`font-inter cursor-pointer p-0 h-9 px-4 py-1.5 rounded-md text-xs
-                            ${isActive ? 'bg-violet4 ' : ''}`}
+                            ${isActive ? 'bg-secondary ' : ''}`}
                     >
                         <span className="capitalize">{item}</span>
                     </Button>

@@ -88,7 +88,7 @@ export function BentoCard({
         >
             {/* glow */}
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-transparent" />
+                <div className="absolute -inset-px rounded-2xl10 to-transparent" />
             </div>
 
             {/* icon */}

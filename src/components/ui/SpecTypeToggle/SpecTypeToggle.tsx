@@ -10,14 +10,16 @@ export default function SpecTypeToggle() {
         <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold">
             <div className="cursor-pointer text-end">
                 <span
-                    className={selected === 'frontend' ? 'text-red9' : ''}
+                    className={
+                        selected === 'frontend' ? 'text-destructive' : ''
+                    }
                     onClick={() => setSelected('frontend')}
                 >
                     Frontend
                 </span>{' '}
                 /{' '}
                 <span
-                    className={selected === 'backend' ? 'text-red9' : ''}
+                    className={selected === 'backend' ? 'text-destructive' : ''}
                     onClick={() => setSelected('backend')}
                 >
                     Backend

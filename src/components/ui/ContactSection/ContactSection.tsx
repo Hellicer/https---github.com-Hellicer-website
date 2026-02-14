@@ -4,14 +4,17 @@ import {
     LinkedInLogoIcon,
     GitHubLogoIcon,
 } from '@radix-ui/react-icons'
-import { TableCellsMerge } from 'lucide-react'
+import { PiTelegramLogo } from 'react-icons/pi'
+import { FaWhatsapp } from 'react-icons/fa'
+import { MdOutlineContentCopy } from 'react-icons/md'
+import { FaFigma } from 'react-icons/fa'
 
 export default function ContactSection() {
     return (
-        <section className="w-full bg-black text-white py-20">
-            <div className="max-w-[1400px] mx-auto px-8">
+        <section className="w-full  text-white ">
+            <div className="max-w-[1400px] mx-auto ">
                 {/* Title */}
-                <h2 className="font-pixel text-3xl tracking-widest uppercase mb-12">
+                <h2 className="font-silkscreen text-3xl font-bold tracking-widest uppercase mb-12">
                     Contact us
                 </h2>
 
@@ -26,7 +29,7 @@ export default function ContactSection() {
                             </span>
 
                             <Link href="#" className="hover:opacity-70">
-                                <TableCellsMerge className="w-6 h-6" />
+                                <PiTelegramLogo className="w-6 h-6" />
                             </Link>
 
                             <span className="underline underline-offset-4">
@@ -34,7 +37,7 @@ export default function ContactSection() {
                             </span>
 
                             <Link href="#" className="hover:opacity-70">
-                                <span className="text-xl">💬</span>
+                                <FaWhatsapp className="w-6 h-6" />
                             </Link>
                         </div>
 
@@ -52,7 +55,9 @@ export default function ContactSection() {
                             </Link>
 
                             {/* Copy icon */}
-                            <button className="hover:opacity-70">📋</button>
+                            <button className="hover:opacity-70">
+                                <MdOutlineContentCopy className="w-6 h-6" />
+                            </button>
                         </div>
                     </div>
 
@@ -67,19 +72,14 @@ export default function ContactSection() {
                         </Link>
 
                         <Link href="#" className="hover:opacity-70">
-                            🌐
-                        </Link>
-
-                        <Link href="#" className="hover:opacity-70">
                             <GitHubLogoIcon className="w-6 h-6" />
                         </Link>
 
                         <Link href="#" className="hover:opacity-70">
-                            ✦
-                        </Link>
-
-                        <Link href="#" className="hover:opacity-70">
                             <LinkedInLogoIcon className="w-6 h-6" />
+                        </Link>
+                        <Link href="#" className="hover:opacity-70">
+                            <FaFigma className="w-6 h-6" />
                         </Link>
                     </div>
                 </div>

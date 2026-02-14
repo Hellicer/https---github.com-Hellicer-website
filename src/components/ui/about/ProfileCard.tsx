@@ -1,92 +1,22 @@
 import Image from 'next/image'
 import { profileData } from '../../../data/UserData'
-import { RadarChart } from './RadarSkills'
+import { RadarSimple } from './RadarSkills'
 import { CommonProps } from '@/interfaces/props'
 import { SLUGS as skills } from '@/data/slugs'
 import { Button } from '../button'
-import { Download } from 'lucide-react'
+// import { Download } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-
-// export function TechStackGrid({
-//     stack,
-// }: {
-//     stack: { name: string; icon: string; url: string }[]
-// }) {
-//     return (
-//         <div className="grid grid-cols-5 gap-3">
-//             {stack.map(tech => (
-//                 <a
-//                     key={tech.name}
-//                     href={tech.url}
-//                     target="_blank"
-//                     className="flex flex-col items-center text-xs gap-1 hover:scale-105 transition"
-//                 >
-//                     <Image
-//                         src={tech.icon}
-//                         alt={tech.name}
-//                         width={36}
-//                         height={36}
-//                     />
-//                     <span>{tech.name}</span>
-//                 </a>
-//             ))}
-//         </div>
-//     )
-// }
-
-// SkillTiles.tsx
-// skills.data.ts
-// export const skills = [
-//     { name: 'AWS', color: 'bg-orange-600' },
-//     { name: 'Cloudflare', color: 'bg-orange-500' },
-//     { name: 'GitHub Pages', color: 'bg-gray-800' },
-//     { name: 'Netlify', color: 'bg-teal-500' },
-//     { name: 'Vercel', color: 'bg-black' },
-//     { name: 'javascript', color: 'bg-yellow-400 text-black' },
-
-//     { name: 'CSS3', color: 'bg-blue-600' },
-//     { name: 'HTML5', color: 'bg-orange-500' },
-//     { name: 'Typescript', color: 'bg-blue-500' },
-//     { name: 'Kotlin', color: 'bg-purple-600' },
-//     { name: 'bootstrap', color: 'bg-indigo-600' },
-//     { name: 'Context API', color: 'bg-sky-600' },
-//     { name: 'Nodedotjs', color: 'bg-red-600' },
-//     { name: 'Next.js', color: 'bg-black' },
-
-//     { name: 'PNPM', color: 'bg-orange-400' },
-//     { name: 'React', color: 'bg-cyan-500' },
-//     { name: 'React Query', color: 'bg-red-500' },
-//     { name: 'React Router', color: 'bg-red-600' },
-//     { name: 'React Hook Form', color: 'bg-pink-600' },
-//     { name: 'Redux', color: 'bg-purple-500' },
-
-//     { name: 'TailwindCSS', color: 'bg-teal-500' },
-//     { name: 'Vite', color: 'bg-purple-500' },
-//     { name: 'Webpack', color: 'bg-sky-500' },
-//     { name: 'Firebase', color: 'bg-yellow-500' },
-//     { name: 'Redis', color: 'bg-red-600' },
-//     { name: 'MySQL', color: 'bg-blue-700' },
-//     { name: 'MongoDB', color: 'bg-green-600' },
-//     { name: 'SQLite', color: 'bg-sky-700' },
-
-//     { name: 'Figma', color: 'bg-pink-500' },
-//     { name: 'Git', color: 'bg-orange-600' },
-//     { name: 'GitHub', color: 'bg-gray-900' },
-//     { name: 'Docker', color: 'bg-sky-600' },
-//     { name: 'Notion', color: 'bg-gray-800' },
-//     { name: 'Postman', color: 'bg-orange-500' },
-// ]
+// import { UIIcon } from '../ui-icon'
+import MemoryDownload from '../../../../public/memoryDownload.svg'
 
 export function SkillTiles() {
     return (
-        // ${skill.color}                        <div className="pl-2 pt-1">
-
         <div className="flex flex-wrap gap-2 pl-2 pt-1 ">
             {skills.map(skill => (
                 <div
                     key={skill}
                     className={`
-            bg-white/10
+            bg-accent
             px-3 py-1.5
             rounded-md
             text-xs font-semibold
@@ -126,23 +56,23 @@ export function ProfileCard({ className }: CommonProps = {}) {
                         <TitleBar title="main info" />
                         <div className="pl-2 pt-1">
                             <p>
-                                <span className="text-violet8">
+                                <span className="text-chart-1">
                                     &gt; Name:{' '}
                                 </span>
                                 {d.mainInfo.name}
                             </p>
                             <p>
-                                <span className="text-violet8">
+                                <span className="text-chart-1">
                                     &gt; Position:{' '}
                                 </span>
                                 {d.mainInfo.position}
                             </p>
                             <p>
-                                <span className="text-violet8">&gt; Sex: </span>
+                                <span className="text-chart-1">&gt; Sex: </span>
                                 {d.mainInfo.sex}
                             </p>
                             <p>
-                                <span className="text-violet8">&gt; Old: </span>
+                                <span className="text-chart-1">&gt; Old: </span>
                                 {d.mainInfo.age}
                             </p>
                         </div>
@@ -182,7 +112,10 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                 <span className="capitalize">
                                     {t('common.download')} CV
                                 </span>
-                                <Download className=" ms-2 min-h-5.5 min-w-5.5" />
+                                <MemoryDownload
+                                    style={{ width: 18, height: 18 }}
+                                    className="mt-0.5 text-white "
+                                />
                             </a>
                         </Button>
                         {/* <a
@@ -193,7 +126,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
                         </a> */}
 
                         <div className="flex flex-wrap gap-2 children:pointer-events-cursor">
-                            <div className="text-xs text-muted-foreground flex mt-1 pointer-events-cursor">
+                            <div className="text-xs text-card-foreground flex mt-1 pointer-events-cursor">
                                 <a
                                     className="bg-gray-600 flex py-1 px-1 rounded-l-sm"
                                     href="#"
@@ -246,12 +179,12 @@ export function ProfileCard({ className }: CommonProps = {}) {
                 <div className="grid grid-flow-row ">
                     <TitleBar title="Other Info" />
 
-                    <RadarChart {...d.radar} />
+                    <RadarSimple {...d.radar} />
                 </div>
 
                 <div className="grid content-start ">
                     <TitleBar title="projects" />
-                    <div className="pl-2 pt-3 space-y-3 grid grid-flow-row font-inter text-base py-3 letter-spacing-wide font-semibold ">
+                    <div className="pl-2 pt-6 space-y-3 grid grid-flow-row font-inter text-base py-3 letter-spacing-wide font-semibold ">
                         <a href="#" className="underline">
                             &gt; Open-source:{' '}
                             <span>{d.projects.openSource}</span>

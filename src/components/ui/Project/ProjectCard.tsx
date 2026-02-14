@@ -18,7 +18,8 @@ function Tag({
                 rounded-md
                 text-xs 
                 capitalize
-                bg-violet6 text-secondary-foreground hover:bg-violet6
+                cursor-default
+                bg-accent text-secondary-foreground hover:bg-accent/80
                 ${className}
                 ${variant === 'online' ? 'text-green-500' : ''}
             `}

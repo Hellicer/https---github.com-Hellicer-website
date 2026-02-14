@@ -16,11 +16,11 @@ export default function MainPage() {
     const t = useTranslations('')
 
     return (
-        <main className="">
+        <main className="pt-20">
             <GlobeWrapper>
-                <div className="w-full max-w-[1440px] place-self-center mt-22 text-left">
+                <div className="w-full max-w-360 place-self-center mt-25 text-left">
                     <div
-                        className=" flex flex-col relative z-10  px-6 w-full max-w-5xl
+                        className=" flex flex-col relative z-10 w-full max-w-[1024px] ml-[20px]
                     "
                     >
                         <h1 className=" font-silkscreen text-5xl  max-w-4xl  font-bold uppercase leading-tight tracking-wide">
@@ -54,11 +54,11 @@ export default function MainPage() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full max-w-[1440px] place-self-center mt-22 text-left pl-5">
+                <div className="w-full max-w-360 place-self-center mt-22 text-left pl-5">
                     <BentoMenu />
                 </div>
             </GlobeWrapper>
-            <div className="relative mx-auto grid max-w-[1440px] z-10 justify-items-center p-4 gap-16 items-stretch ">
+            <div className="relative mx-auto grid max-w-360 z-10 justify-items-center p-4 gap-16 items-stretch ">
                 <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold">
                     <h1>Specialization</h1>
                     <SpecTypeToggle />
@@ -66,11 +66,8 @@ export default function MainPage() {
                 <SpecializationCards />
                 <AboutSection />
             </div>
-            <div className="relative mx-auto grid max-w-[1440px] mt-20 z-10 justify-items-center p-4 gap-16 items-stretch ">
+            <div className="relative mx-auto grid max-w-360 mt-20 z-10 justify-items-center p-4 gap-16 items-stretch ">
                 <ProjectContentBlock />
-            </div>
-            <div className="relative mx-auto grid max-w-[1440px] mt-20 z-10 justify-items-center p-4 gap-16 items-stretch ">
-                <ContactSection />
             </div>
         </main>
     )

@@ -174,7 +174,7 @@ group-hover:blur-none group-hover:scale-90"
         cta: 'Learn more',
         background: (
             <div
-                className="absolute top-2 right-2 h-[300px] w-full scale-75 border-none
+                className="absolute mr-[-6px] top-2 right-2 h-[300px] w-full scale-75 border-none
             [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)]
             transition-all duration-300 ease-out blur-[1px]
             group-hover:scale-90 group-hover:blur-none"

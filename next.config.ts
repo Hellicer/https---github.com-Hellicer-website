@@ -1,12 +1,28 @@
-const createNextIntPlugin = require('next-intl/plugin')
 import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
 
-const withNextIntl = createNextIntPlugin()
+const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
-    /* config options here */
     images: {
-        remotePatterns: [new URL('https://cdn.simpleicons.org/**')],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'cdn.simpleicons.org',
+                pathname: '/**',
+            },
+        ],
+    },
+
+    webpack(config) {
+        // ⬇️ додаємо SVGR
+        config.module.rules.push({
+            test: /\.svg$/i,
+            issuer: /\.[jt]sx?$/,
+            use: ['@svgr/webpack'],
+        })
+
+        return config
     },
 }
 

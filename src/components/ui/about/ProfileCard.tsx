@@ -112,10 +112,10 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                 <span className="capitalize">
                                     {t('common.download')} CV
                                 </span>
-                                <MemoryDownload
+                                {/* <MemoryDownload
                                     style={{ width: 18, height: 18 }}
                                     className="mt-0.5 text-white "
-                                />
+                                /> */}
                             </a>
                         </Button>
                         {/* <a

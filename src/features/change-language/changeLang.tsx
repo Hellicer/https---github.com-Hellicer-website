@@ -30,6 +30,7 @@ export default function LanguageSwitcher(props: CommonProps) {
     const router = useRouter()
 
     const [locale, setLocale] = useState('')
+    const supportedLocales = ['en', 'uk']
 
     useEffect(() => {
         const cookieLocale = document.cookie
@@ -38,12 +39,15 @@ export default function LanguageSwitcher(props: CommonProps) {
             ?.split('=')[1]
 
         // console.log(cookieLocale)
-        if (cookieLocale) {
+        if (cookieLocale && supportedLocales.includes(cookieLocale)) {
             setLocale(cookieLocale)
         } else {
             const browserLocale = navigator.language.slice(0, 2)
-            setLocale(browserLocale)
-            document.cookie = `MYNEXTAPP_LOCALE=${browserLocale};`
+            const nextLocale = supportedLocales.includes(browserLocale)
+                ? browserLocale
+                : 'en'
+            setLocale(nextLocale)
+            document.cookie = `MYNEXTAPP_LOCALE=${nextLocale}; path=/; samesite=lax`
             router.refresh()
         }
     }, [router])
@@ -51,7 +55,7 @@ export default function LanguageSwitcher(props: CommonProps) {
     const changeLocale = (newLocale: string) => {
         // console.log(newLocale)
         setLocale(newLocale)
-        document.cookie = `MYNEXTAPP_LOCALE=${newLocale}`
+        document.cookie = `MYNEXTAPP_LOCALE=${newLocale}; path=/; samesite=lax`
         router.refresh()
     }
     return (

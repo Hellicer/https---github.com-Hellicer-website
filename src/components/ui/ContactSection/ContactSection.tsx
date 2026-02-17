@@ -62,7 +62,7 @@ export default function ContactSection() {
                     </div>
 
                     {/* Right Side */}
-                    <div className="flex items-center gap-4 text-lg">
+                    <div className="flex items-center gap-4 text-lg self-end">
                         <span className="underline underline-offset-4">
                             Other link:
                         </span>

@@ -1,7 +1,5 @@
-import { TFunction } from 'i18next'
-
 export interface CommonProps {
-    t?: TFunction
+    t?: (key: string) => string
     className?: string
     toggle?: () => void
     isOpen?: boolean

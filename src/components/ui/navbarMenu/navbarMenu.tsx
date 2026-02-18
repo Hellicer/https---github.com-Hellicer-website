@@ -2,7 +2,13 @@
 
 import { useTranslations } from 'next-intl'
 
-const arrMenuItems = ['about', 'specialization', 'skills', 'projects']
+const arrMenuItems = [
+    'about',
+    'specialization',
+    'skills',
+    'projects',
+    'contact',
+]
 export default function navbarMenu(props: any) {
     const t = useTranslations('header')
     return (

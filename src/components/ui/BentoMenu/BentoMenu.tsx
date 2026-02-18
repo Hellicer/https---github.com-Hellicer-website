@@ -86,7 +86,7 @@ export function AnimatedListDemo({ className }: { className?: string }) {
     return (
         <div
             className={cn(
-                'relative flex h-[250px] w-full flex-col overflow-hidden p-2',
+                'relative flex h-full w-full flex-col overflow-hidden p-2',
                 className,
             )}
         >
@@ -95,7 +95,7 @@ export function AnimatedListDemo({ className }: { className?: string }) {
                     <Notification {...item} key={idx} />
                 ))}
             </AnimatedList>
-            <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t"></div>
+            <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-1/4 "></div>
         </div>
     )
 }
@@ -174,8 +174,8 @@ group-hover:blur-none group-hover:scale-90"
         cta: 'Learn more',
         background: (
             <div
-                className="absolute mr-[-6px] top-2 right-2 h-[300px] w-full scale-75 border-none
-            [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)]
+                className="absolute mr-[-6px] top-2 right-2 h-[340px] w-full scale-85 border-none
+            [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)]
             transition-all duration-300 ease-out blur-[1px]
             group-hover:scale-90 group-hover:blur-none"
             >

@@ -84,7 +84,6 @@ const ReviewCard = ({
         </figure>
     )
 }
-
 export function TestimonialsMarquee({ className }: CommonProps = {}) {
     return (
         <div className="relative w-full items-center justify-center overflow-hidden place-self-end">

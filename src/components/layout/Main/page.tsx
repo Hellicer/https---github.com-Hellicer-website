@@ -16,11 +16,14 @@ export default function MainPage() {
     const t = useTranslations('')
 
     return (
-        <main className="pt-20">
+        <main className="pt-20 ">
             <GlobeWrapper>
-                <div className="w-full max-w-360 place-self-center mt-25 text-left">
+                <div
+                    className="w-full max-w-360 place-self-center mt-25 text-left"
+                    id="about"
+                >
                     <div
-                        className=" flex flex-col relative z-10 w-full max-w-[1024px] ml-[20px]
+                        className=" flex flex-col relative z-10 w-full max-w-5xl ml-[20px]
                     "
                     >
                         <h1 className=" font-silkscreen text-5xl  max-w-4xl  font-bold uppercase leading-tight tracking-wide">
@@ -59,14 +62,20 @@ export default function MainPage() {
                 </div>
             </GlobeWrapper>
             <div className="relative mx-auto grid max-w-360 z-10 justify-items-center p-4 gap-16 items-stretch ">
-                <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold">
+                <div
+                    className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold"
+                    id="specialization"
+                >
                     <h1>Specialization</h1>
                     <SpecTypeToggle />
                 </div>
                 <SpecializationCards />
                 <AboutSection />
             </div>
-            <div className="relative mx-auto grid max-w-360 mt-20 z-10 justify-items-center p-4 gap-16 items-stretch ">
+            <div
+                className="relative mx-auto grid max-w-360 mt-20 z-10 justify-items-center p-4 gap-16 items-stretch "
+                id="projects"
+            >
                 <ProjectContentBlock />
             </div>
         </main>

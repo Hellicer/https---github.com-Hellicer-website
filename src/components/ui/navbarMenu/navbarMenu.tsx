@@ -12,11 +12,17 @@ const arrMenuItems = [
 export default function navbarMenu(props: any) {
     const t = useTranslations('header')
     return (
-        <div className="grid grid-flow-col w-[450px] place-items-center justify-self-center ">
+        <div className="grid grid-flow-col max-w-5xl gap-10 place-items-center justify-self-center ">
             {arrMenuItems.map(item => (
-                <button type="button" key={item} className="cursor-pointer">
+                <a
+                    type="button"
+                    href={`#${item}`}
+                    id={`block-${item}`}
+                    key={item}
+                    className="cursor-pointer"
+                >
                     {t?.(`${item}`) ?? 'item'}
-                </button>
+                </a>
             ))}
         </div>
     )

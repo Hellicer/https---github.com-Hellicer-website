@@ -11,7 +11,7 @@ import { FaFigma } from 'react-icons/fa'
 
 export default function ContactSection() {
     return (
-        <section className="w-full  text-white ">
+        <section className="w-full  text-white" id="contact">
             <div className="max-w-[1400px] mx-auto ">
                 {/* Title */}
                 <h2 className="font-silkscreen text-3xl font-bold tracking-widest uppercase mb-12">

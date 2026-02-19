@@ -9,6 +9,7 @@ import NavbarMenu from '@/components/ui/navbarMenu/navbarMenu'
 import { cn } from '@/lib/utils'
 
 export default function Header({ className }: { className?: string }) {
+    const keepHeaderVisible = false
     const [isHidden, setIsHidden] = useState(false)
     const [isHoverReveal, setIsHoverReveal] = useState(false)
     const [isScrollingUp, setIsScrollingUp] = useState(false)
@@ -21,6 +22,11 @@ export default function Header({ className }: { className?: string }) {
 
     useEffect(() => {
         const handleScroll = () => {
+            if (keepHeaderVisible) {
+                setIsHidden(false)
+                shouldHideRef.current = false
+                return
+            }
             const currentY = window.scrollY
             const lastY = lastScrollYRef.current
             const delta = currentY - lastY
@@ -178,16 +184,8 @@ export default function Header({ className }: { className?: string }) {
                 #HeaderBar :global(a:focus-visible),
                 #HeaderBar :global(button:hover),
                 #HeaderBar :global(button:focus-visible) {
-                    color: color-mix(
-                        in oklch,
-                        var(--primary) 70%,
-                        currentColor
-                    );
-                    text-shadow:
-                        0 0 6px
-                            color-mix(in oklch, var(--primary) 45%, transparent),
-                        0 0 14px
-                            color-mix(in oklch, var(--primary) 30%, transparent);
+                    color: var(--primary);
+                    text-shadow: none;
                 }
             `}</style>
         </>

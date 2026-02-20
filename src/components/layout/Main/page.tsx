@@ -33,10 +33,7 @@ export default function MainPage() {
                         </h1>
 
                         <p className="mt-6 font-semibold text-xl text-gray-30 max-w-4xl  text-left">
-                            {t('headerTitle.title')}
-                            {/* We build fast, responsive
-                            and scalable web products that are ready to grow
-                            with your business. */}
+                            {t('headerTitle.description')}
                         </p>
 
                         <div className="mt-8 text-right">
@@ -61,19 +58,12 @@ export default function MainPage() {
                     <BentoMenu />
                 </div>
             </GlobeWrapper>
-            <div className="relative mx-auto grid max-w-360 z-10 justify-items-center p-4 gap-16 items-stretch ">
-                <div
-                    className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold"
-                    id="specialization"
-                >
-                    <h1>Specialization</h1>
-                    <SpecTypeToggle />
-                </div>
+            <div className="relative mx-auto grid max-w-360 z-10 justify-items-center p-4 gap-50 items-stretch mt-20">
                 <SpecializationCards />
                 <AboutSection />
             </div>
             <div
-                className="relative mx-auto grid max-w-360 mt-20 z-10 justify-items-center p-4 gap-16 items-stretch "
+                className="relative mx-auto grid max-w-360 mt-40 z-10 justify-items-center p-4 gap-16 items-stretch "
                 id="projects"
             >
                 <ProjectContentBlock />

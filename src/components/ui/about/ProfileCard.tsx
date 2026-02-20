@@ -48,7 +48,10 @@ export function ProfileCard({ className }: CommonProps = {}) {
     const t = useTranslations('')
 
     return (
-        <div className="grid rounded-2xl bg-card p-6 backdrop-blur-md transition-all text-sm space-y-6 max-w-xl w-full ">
+        <div
+            className={`group [perspective:1000px] max-w-xl w-full ${className}`}
+        >
+            <div className="grid rounded-2xl bg-card p-6 transition-transform duration-500 text-sm space-y-6 shadow-[0_24px_60px_rgba(0,0,0,0.45)] [transform-style:preserve-3d] group-hover:[transform:translateZ(18px)]">
             {/* MAIN INFO */}
             <div className="grid grid-flow-col gap-6">
                 <div className="grid grid-flow-row gap-6">
@@ -200,6 +203,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
                         </a>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     )

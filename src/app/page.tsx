@@ -59,7 +59,7 @@ export default function Home() {
             </header>
 
             <Main />
-            <footer className="relative grid max-w-360 w-full place-self-center z-10 justify-items-center items-stretch mt-22 p-4 gap-16">
+            <footer className="mt-40 relative grid max-w-360 w-full place-self-center z-10 justify-items-center items-stretch p-4 gap-16">
                 <ContactSection />
             </footer>
         </div>

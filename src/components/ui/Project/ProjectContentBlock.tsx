@@ -19,7 +19,7 @@ export default function ProjectContentBlock() {
         <section className="w-full">
             <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold ">
                 <h1>Projects</h1>
-                <SpecTypeToggle />
+                {/* <SpecTypeToggle /> */}
             </div>
 
             <div className="mt-16 mb-16 flex items-center justify-between">

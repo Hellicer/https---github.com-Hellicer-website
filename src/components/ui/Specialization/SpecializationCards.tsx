@@ -9,7 +9,9 @@ import {
     CubeIcon,
     ChatBubbleIcon,
     RocketIcon,
+    IdCardIcon,
 } from '@radix-ui/react-icons'
+import SpecTypeToggle from '../SpecTypeToggle/SpecTypeToggle'
 
 const features = [
     {
@@ -49,7 +51,7 @@ const features = [
             'AI-powered chatbots and automation to improve customer communication.',
     },
     {
-        icon: ChatBubbleIcon,
+        icon: IdCardIcon,
         name: 'Payment system integration',
         description:
             'Integration of secure payment systems and online billing solutions.',
@@ -81,47 +83,66 @@ export function BentoCard({
     return (
         <div
             className={cn(
-                'h-64 w-64 group relative overflow-hidden m-4 rounded-2xl border border-black bg-card p-6 backdrop-blur-md transition-all',
-                'hover:border-black/20 hover:bg-accent',
+                'h-64 w-64 group relative m-4 rounded-2xl transition-all [perspective:1000px]',
+                '[transform:translateZ(0)]',
+                'hover:border-black/20',
                 className,
             )}
         >
-            {/* glow */}
-            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <div className="absolute -inset-px rounded-2xl10 to-transparent" />
+            <div className="relative h-full w-full rounded-2xl transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                {/* front */}
+                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-card p-6 backdrop-blur-md [backface-visibility:hidden] shadow-[0_24px_60px_rgba(0,0,0,0.45)] transition-transform duration-500 group-hover:[transform:translateZ(18px)]">
+                    {/* glow */}
+                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <div className="absolute -inset-px rounded-2xl10 to-transparent" />
+                    </div>
+
+                    {/* icon */}
+                    <div className="flex h-full w-full items-center justify-center">
+                        <Icon className="h-24 w-24 text-white drop-shadow-[0_14px_28px_rgba(0,0,0,0.6)]" />
+                    </div>
+                </div>
+
+                {/* back */}
+                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-accent p-6 [transform:rotateY(180deg)] [backface-visibility:hidden] shadow-[0_24px_60px_rgba(0,0,0,0.45)] transition-transform duration-500 group-hover:[transform:rotateY(180deg)_translateZ(18px)]">
+                    <h3 className="text-2xl font-semibold text-white min-h-11">
+                        {name}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-gray11 font-bold">
+                        {description}
+                    </p>
+                </div>
             </div>
-
-            {/* icon */}
-            <div className="grid grid-flow-col justify-start  gap-2 items-start h-18">
-                {/* <div className=" inline-flex h-11 w-11 items-center justify-center rounded-xl ">
-                    <Icon className="h-6 w-6 text-white" />
-                </div> */}
-
-                <h3 className=" text-2xl font-semibold text-white min-h-11">
-                    {name}
-                </h3>
-            </div>
-
-            <p className="text-sm leading-relaxed text-gray11 font-bold">
-                {description}
-            </p>
         </div>
     )
 }
 
 export function SpecializationCards() {
     return (
-        <BentoGrid
-            className="    grid
+        <div
+            className="w-full grid grid-flow-row
+        "
+        >
+            <div
+                className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold mb-10"
+                id="specialization"
+            >
+                <h1>Specialization</h1>
+                <SpecTypeToggle />
+            </div>
+
+            <BentoGrid
+                className="    grid
             justify-items-center
     grid-cols-1
     sm:grid-cols-2
     lg:grid-cols-4
      w-full place-self-start cursor-pointer "
-        >
-            {features.map(({ icon, ...rest }) => (
-                <BentoCard key={rest.name} Icon={icon} {...rest} />
-            ))}
-        </BentoGrid>
+            >
+                {features.map(({ icon, ...rest }) => (
+                    <BentoCard key={rest.name} Icon={icon} {...rest} />
+                ))}
+            </BentoGrid>
+        </div>
     )
 }

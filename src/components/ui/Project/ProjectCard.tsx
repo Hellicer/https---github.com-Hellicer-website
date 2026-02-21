@@ -31,7 +31,7 @@ function Tag({
 
 export default function ProjectCard({ project }: { project: Project }) {
     return (
-        <div className="rounded-2xl bg-card p-6 backdrop-blur-md transition-all flex flex-col gap-4">
+        <div className="h-full rounded-2xl bg-card p-6 backdrop-blur-md transition-all flex flex-col gap-4 project-card-anim animate-fade-in-up card-hover-effect">
             <h3 className="text-2xl font-semibold text-white">
                 {project.title}
             </h3>

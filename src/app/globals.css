@@ -208,6 +208,102 @@ body {
     font-family: Inter, Silkscreen, sans-serif;
 }
 
+.project-card-anim {
+    transition:
+        opacity 250ms ease-out,
+        transform 250ms ease-out;
+    will-change: opacity, transform;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.4s ease-out;
+}
+
+.card-hover-effect {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.card-hover-effect:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.project-grid-item {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 260ms ease-out,
+        transform 260ms ease-out;
+}
+
+.project-grid-item-exit {
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+}
+
+.no-found-fade-in {
+    animation: fadeInUp 0.32s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-card-anim,
+    .animate-fade-in-up,
+    .animate-scale-in,
+    .animate-slide-in-left,
+    .card-hover-effect,
+    .project-grid-item,
+    .project-grid-item-exit,
+    .no-found-fade-in {
+        animation: none;
+        transition: none;
+        transform: none;
+    }
+}
+
 .pacman {
     width: 40px;
     height: 40px;

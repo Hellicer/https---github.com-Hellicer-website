@@ -16,7 +16,7 @@ export default function ProjectContentBlock() {
         tech: [],
     })
     return (
-        <section className="w-full">
+        <section className="w-full min-h-200">
             <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold ">
                 <h1>Projects</h1>
                 {/* <SpecTypeToggle /> */}

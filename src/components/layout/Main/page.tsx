@@ -19,7 +19,7 @@ export default function MainPage() {
         <main className="pt-20 ">
             <GlobeWrapper>
                 <div
-                    className="w-full max-w-360 place-self-center mt-25 text-left"
+                    className="cursor-default w-full max-w-360 place-self-center mt-25 text-left"
                     id="about"
                 >
                     <div
@@ -54,7 +54,7 @@ export default function MainPage() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full max-w-360 place-self-center mt-22 text-left pl-5">
+                <div className=" w-full max-w-360 place-self-center mt-22 text-left pl-5">
                     <BentoMenu />
                 </div>
             </GlobeWrapper>
@@ -63,7 +63,7 @@ export default function MainPage() {
                 <AboutSection />
             </div>
             <div
-                className="relative mx-auto grid max-w-360 mt-40 z-10 justify-items-center p-4 gap-16 items-stretch "
+                className="relative mx-auto grid max-w-360 mt-40 z-10 justify-items-center p-4 gap-16 items-stretch  "
                 id="projects"
             >
                 <ProjectContentBlock />

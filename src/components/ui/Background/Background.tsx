@@ -205,9 +205,9 @@ export function DotPattern({
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            const canvas = canvasRef.current
-            if (!canvas) return
-            const rect = canvas.getBoundingClientRect()
+            const container = containerRef.current
+            if (!container) return
+            const rect = container.getBoundingClientRect()
             mouseRef.current = {
                 x: e.clientX - rect.left,
                 y: e.clientY - rect.top,
@@ -218,17 +218,16 @@ export function DotPattern({
             mouseRef.current = { x: -1000, y: -1000 }
         }
 
-        const container = containerRef.current
-        if (container) {
-            container.addEventListener('mousemove', handleMouseMove)
-            container.addEventListener('mouseleave', handleMouseLeave)
-        }
+        window.addEventListener('mousemove', handleMouseMove, {
+            passive: true,
+        })
+        window.addEventListener('mouseleave', handleMouseLeave)
+        window.addEventListener('blur', handleMouseLeave)
 
         return () => {
-            if (container) {
-                container.removeEventListener('mousemove', handleMouseMove)
-                container.removeEventListener('mouseleave', handleMouseLeave)
-            }
+            window.removeEventListener('mousemove', handleMouseMove)
+            window.removeEventListener('mouseleave', handleMouseLeave)
+            window.removeEventListener('blur', handleMouseLeave)
         }
     }, [])
 

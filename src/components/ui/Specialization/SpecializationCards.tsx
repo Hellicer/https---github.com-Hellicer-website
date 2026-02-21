@@ -120,7 +120,7 @@ export function BentoCard({
 export function SpecializationCards() {
     return (
         <div
-            className="w-full grid grid-flow-row
+            className="cursor-default w-full grid grid-flow-row
         "
         >
             <div
@@ -132,12 +132,12 @@ export function SpecializationCards() {
             </div>
 
             <BentoGrid
-                className="    grid
+                className="cursor-default grid
             justify-items-center
     grid-cols-1
     sm:grid-cols-2
     lg:grid-cols-4
-     w-full place-self-start cursor-pointer "
+     w-full place-self-start "
             >
                 {features.map(({ icon, ...rest }) => (
                     <BentoCard key={rest.name} Icon={icon} {...rest} />

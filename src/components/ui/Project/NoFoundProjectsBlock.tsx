@@ -1,6 +1,6 @@
 export function NoFoundProjectsBlock() {
     return (
-        <div className="col-span-full">
+        <div>
             <div className="relative overflow-hidden rounded-2xl border border-border bg-card/70 px-8 py-12 text-center backdrop-blur-md h-[404px] content-center">
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.08),transparent_55%),radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.06),transparent_55%)]" />
 

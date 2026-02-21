@@ -120,8 +120,8 @@ const features = [
         cta: 'Learn more',
         background: (
             <div
-                className="absolute top-2 right-2 h-[250px] w-full scale-75 border-none [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] transition-all duration-500 ease-out  blur-[1px] mr-[-8px]
-group-hover:blur-none group-hover:scale-90"
+                className="absolute top-2 right-2 h-[250px] w-full scale-75 border-none [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] transition-all duration-500 ease-out mr-[-8px]
+group-hover:scale-90"
             >
                 <IconCloudDemo />
             </div>
@@ -147,7 +147,7 @@ group-hover:blur-none group-hover:scale-90"
                             'relative w-32 cursor-pointer overflow-hidden rounded-xl border p-4',
                             'border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]',
                             'dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]',
-                            'transform-gpu blur-[1px] transition-all duration-300 ease-out hover:blur-none',
+                            'transform-gpu transition-all duration-300 ease-out',
                         )}
                     >
                         <div className="flex flex-row items-center gap-2">
@@ -176,8 +176,8 @@ group-hover:blur-none group-hover:scale-90"
             <div
                 className="absolute mr-[-6px] top-2 right-2 h-[340px] w-full scale-85 border-none
             [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)]
-            transition-all duration-300 ease-out blur-[1px]
-            group-hover:scale-90 group-hover:blur-none"
+            transition-all duration-300 ease-out
+            group-hover:scale-90"
             >
                 <AnimatedListDemo />
             </div>

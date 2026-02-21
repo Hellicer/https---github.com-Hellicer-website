@@ -1,7 +1,7 @@
 import { FiltersState } from '@/interfaces/props'
 import ProjectCard from './ProjectCard'
 import { projects } from '@/data/projects.data'
-import { PacmanText } from './PacmanText'
+import { NoFoundProjectsBlock } from './NoFoundProjectsBlock'
 
 function ProjectsGrid({ filters }: { filters: FiltersState }) {
     const filteredProjects = projects.filter(project => {
@@ -32,7 +32,7 @@ function ProjectsGrid({ filters }: { filters: FiltersState }) {
                 //         No matches for selected filters.
                 //     </p>
                 // </div>
-                <PacmanText />
+                <NoFoundProjectsBlock />
             )}
 
             {filteredProjects.map(project => (

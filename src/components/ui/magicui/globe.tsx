@@ -12,12 +12,12 @@ const GLOBE_CONFIG: COBEOptions = {
     width: 980,
     height: 1024,
     onRender: () => {},
-    devicePixelRatio: 2,
+    devicePixelRatio: 1.5,
     phi: 0,
     theta: 0.3,
     dark: 0,
     diffuse: 0.4,
-    mapSamples: 6000,
+    mapSamples: 4200,
     mapBrightness: 1.2,
     baseColor: [1, 1, 1],
     markerColor: [251 / 255, 100 / 255, 21 / 255],
@@ -46,8 +46,11 @@ export function Globe({
     config?: COBEOptions
 }) {
     let phi = 0
-    let width = 0
     const canvasRef = useRef<HTMLCanvasElement>(null)
+    const globeRef = useRef<ReturnType<typeof createGlobe> | null>(null)
+    const widthRef = useRef(0)
+    const isInViewRef = useRef(true)
+    const isPageVisibleRef = useRef(true)
     const pointerInteracting = useRef<number | null>(null)
     const pointerInteractionMovement = useRef(0)
 
@@ -77,29 +80,87 @@ export function Globe({
     useEffect(() => {
         const onResize = () => {
             if (canvasRef.current) {
-                width = canvasRef.current.offsetWidth
+                widthRef.current = canvasRef.current.offsetWidth
             }
         }
 
-        window.addEventListener('resize', onResize)
-        onResize()
+        const destroyGlobe = () => {
+            if (globeRef.current) {
+                globeRef.current.destroy()
+                globeRef.current = null
+            }
+        }
 
-        const globe = createGlobe(canvasRef.current!, {
-            ...config,
-            width: width * 2,
-            height: width * 2,
-            onRender: state => {
-                phi += 0.0004
-                state.phi = phi + rs.get()
-                state.width = width * 2
-                state.height = width * 2
+        const createOrResumeGlobe = () => {
+            if (!canvasRef.current || globeRef.current) return
+            if (!isInViewRef.current || !isPageVisibleRef.current) return
+
+            const width = widthRef.current || canvasRef.current.offsetWidth
+            const dpr = Math.min(
+                window.devicePixelRatio || config.devicePixelRatio || 1,
+                config.devicePixelRatio || 1.5,
+            )
+            const adaptiveSamples =
+                width < 500
+                    ? Math.min(config.mapSamples ?? 4200, 2800)
+                    : (config.mapSamples ?? 4200)
+
+            globeRef.current = createGlobe(canvasRef.current, {
+                ...config,
+                devicePixelRatio: dpr,
+                mapSamples: adaptiveSamples,
+                width: width * dpr,
+                height: width * dpr,
+                onRender: state => {
+                    phi += 0.0004
+                    state.phi = phi + rs.get()
+                    state.width = widthRef.current * dpr
+                    state.height = widthRef.current * dpr
+                },
+            })
+
+            setTimeout(() => {
+                if (canvasRef.current) canvasRef.current.style.opacity = '1'
+            }, 0)
+        }
+
+        const handleVisibilityChange = () => {
+            isPageVisibleRef.current = !document.hidden
+            if (isPageVisibleRef.current) {
+                createOrResumeGlobe()
+            } else {
+                destroyGlobe()
+            }
+        }
+
+        const observer = new IntersectionObserver(
+            entries => {
+                const entry = entries[0]
+                isInViewRef.current = Boolean(entry?.isIntersecting)
+                if (isInViewRef.current) {
+                    createOrResumeGlobe()
+                } else {
+                    destroyGlobe()
+                }
             },
-        })
+            { threshold: 0.05 },
+        )
 
-        setTimeout(() => (canvasRef.current!.style.opacity = '1'), 0)
+        window.addEventListener('resize', onResize)
+        document.addEventListener('visibilitychange', handleVisibilityChange)
+        onResize()
+        isPageVisibleRef.current = !document.hidden
+        if (canvasRef.current) observer.observe(canvasRef.current)
+        createOrResumeGlobe()
+
         return () => {
-            globe.destroy()
+            destroyGlobe()
+            observer.disconnect()
             window.removeEventListener('resize', onResize)
+            document.removeEventListener(
+                'visibilitychange',
+                handleVisibilityChange,
+            )
         }
     }, [rs, config])
 

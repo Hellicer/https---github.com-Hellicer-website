@@ -1,19 +1,14 @@
-'use client'
 import { GlobeWrapper } from '@/components/layout/index'
 import { AboutSection } from '@/components/ui/about/AboutSection'
 import { BentoMenu } from '@/components/ui/BentoMenu/BentoMenu'
 import { Button } from '@/components/ui/button'
-import ContactSection from '@/components/ui/ContactSection/ContactSection'
 import ProjectContentBlock from '@/components/ui/Project/ProjectContentBlock'
 import { SpecializationCards } from '@/components/ui/Specialization/SpecializationCards'
-import SpecTypeToggle from '@/components/ui/SpecTypeToggle/SpecTypeToggle'
-import { FiltersState } from '@/interfaces/props'
 import { Inbox } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { getTranslations } from 'next-intl/server'
 
-export default function MainPage() {
-    const t = useTranslations('')
+export default async function MainPage() {
+    const t = await getTranslations('')
 
     return (
         <main className="pt-20 ">

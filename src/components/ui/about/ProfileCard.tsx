@@ -35,6 +35,9 @@ export function SkillTiles() {
                         src={`https://cdn.simpleicons.org/${skill}/${skill}`}
                         width={16}
                         height={16}
+                        loading="lazy"
+                        decoding="async"
+                        alt={`${skill} logo`}
                     />
                     <p className="capitalize">{skill}</p>
                 </div>
@@ -156,6 +159,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                                     src={`https://cdn.simpleicons.org/wakatime/wakatime`}
                                                     width={14}
                                                     height={14}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    alt="Wakatime logo"
                                                 />
                                                 wakatime
                                             </a>
@@ -170,6 +176,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                                 src={`data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWxpbmtlZGluLWljb24gbHVjaWRlLWxpbmtlZGluIj48cGF0aCBkPSJNMTYgOGE2IDYgMCAwIDEgNiA2djdoLTR2LTdhMiAyIDAgMCAwLTItMiAyIDIgMCAwIDAtMiAydjdoLTR2LTdhNiA2IDAgMCAxIDYtNnoiLz48cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSIxMiIgeD0iMiIgeT0iOSIvPjxjaXJjbGUgY3g9IjQiIGN5PSI0IiByPSIyIi8+PC9zdmc+`}
                                                 width={24}
                                                 height={24}
+                                                loading="lazy"
+                                                decoding="async"
+                                                alt="LinkedIn icon"
                                             />
                                         </a>
                                         <a href={d.social.github}>
@@ -178,6 +187,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                                 src={`data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWdpdGh1Yi1pY29uIGx1Y2lkZS1naXRodWIiPjxwYXRoIGQ9Ik0xNSAyMnYtNGE0LjggNC44IDAgMCAwLTEtMy41YzMgMCA2LTIgNi01LjUuMDgtMS4yNS0uMjctMi40OC0xLTMuNS4yOC-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0Q6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"/><path d=\"M9 18c-4.51 2-5-2-7-2\"/></svg>`}
                                                 width={24}
                                                 height={24}
+                                                loading="lazy"
+                                                decoding="async"
+                                                alt="GitHub icon"
                                             />
                                         </a>
                                     </div>
@@ -326,6 +338,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                                         src={`https://cdn.simpleicons.org/wakatime/wakatime`}
                                                         width={14}
                                                         height={14}
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                        alt="Wakatime logo"
                                                     />
                                                     wakatime
                                                 </a>
@@ -340,6 +355,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                                     src={`data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWxpbmtlZGluLWljb24gbHVjaWRlLWxpbmtlZGluIj48cGF0aCBkPSJNMTYgOGE2IDYgMCAwIDEgNiA2djdoLTR2LTdhMiAyIDAgMCAwLTItMiAyIDIgMCAwIDAtMiAydjdoLTR2LTdhNiA2IDAgMCAxIDYtNnoiLz48cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSIxMiIgeD0iMiIgeT0iOSIvPjxjaXJjbGUgY3g9IjQiIGN5PSI0IiByPSIyIi8+PC9zdmc+`}
                                                     width={24}
                                                     height={24}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    alt="LinkedIn icon"
                                                 />
                                             </a>
                                             <a href={d.social.github}>
@@ -348,6 +366,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                                     src={`data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWdpdGh1Yi1pY29uIGx1Y2lkZS1naXRodWIiPjxwYXRoIGQ9Ik0xNSAyMnYtNGE0LjggNC44IDAgMCAwLTEtMy41YzMgMCA2LTIgNi01LjUuMDgtMS4yNS0uMjctMi40OC0xLTMuNS4yOC-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0Q6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"/><path d=\"M9 18c-4.51 2-5-2-7-2\"/></svg>`}
                                                     width={24}
                                                     height={24}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    alt="GitHub icon"
                                                 />
                                             </a>
                                         </div>

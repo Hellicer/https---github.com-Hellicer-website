@@ -68,7 +68,9 @@ const ReviewCard = ({
                     className="rounded-full"
                     width="32"
                     height="32"
-                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    alt={`${name} avatar`}
                     src={img}
                 />
                 <div className="flex flex-col">

@@ -55,6 +55,21 @@ export default function Header({ className }: { className?: string }) {
                 glowRef.current.style.setProperty('--header-glow-x', `${value}%`)
             }
         }
+        const updateGlowColorVar = () => {
+            if (!glowRef.current) return
+            const supportsColorMix =
+                typeof CSS !== 'undefined' &&
+                CSS.supports(
+                    'color',
+                    'color-mix(in oklch, white 35%, transparent)',
+                )
+            glowRef.current.style.setProperty(
+                '--header-glow-color',
+                supportsColorMix
+                    ? 'color-mix(in oklch, var(--primary) 35%, transparent)'
+                    : 'rgba(110, 86, 207, 0.35)',
+            )
+        }
 
         const handleMouseMove = (event: MouseEvent) => {
             if (window.innerWidth < 768) return
@@ -83,6 +98,7 @@ export default function Header({ className }: { className?: string }) {
             rafRef.current = window.requestAnimationFrame(animate)
         }
 
+        updateGlowColorVar()
         updateGlowVar(currentGlowXRef.current)
         window.addEventListener('mousemove', handleMouseMove, { passive: true })
         window.addEventListener('resize', handleResize)
@@ -159,7 +175,7 @@ export default function Header({ className }: { className?: string }) {
                     )}
                     style={{
                         background:
-                            'radial-gradient(810px 180px at var(--header-glow-x, 50%) 0%, color-mix(in oklch, var(--primary) 35%, transparent), transparent)',
+                            'radial-gradient(810px 180px at var(--header-glow-x, 50%) 0%, var(--header-glow-color, rgba(110, 86, 207, 0.35)), transparent)',
                         maskImage:
                             'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0))',
                         WebkitMaskImage:

@@ -69,6 +69,26 @@
     --spacing: 0.25rem;
 }
 
+@supports not (color: oklch(50% 0 0)) {
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+        --card: #1d2030;
+        --card-foreground: #ededed;
+        --secondary: #262b3d;
+        --secondary-foreground: #ededed;
+        --muted: #202536;
+        --muted-foreground: #a0a6b5;
+        --primary: #6e56cf;
+        --primary-foreground: #ffffff;
+        --accent: #2f3650;
+        --accent-foreground: #f2f4f8;
+        --border: #33394f;
+        --input: #33394f;
+        --ring: #6e56cf;
+    }
+}
+
 /* :root {
     --background: #ffffff;
     --foreground: #171717;

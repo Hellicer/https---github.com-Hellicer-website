@@ -32,7 +32,7 @@ export default function ProjectContentBlock() {
                     className="text-xs mx-6 text-gray-400 underline hover:text-white"
                 >
                     {/* {t('common.resetFilter')} */}
-                    <RotateCcw className="h-4 w-4" />
+                    <RotateCcw className="h-4 w-4 cursor-pointer" />
                 </button>
             </div>
             <ProjectsGrid filters={filters} />

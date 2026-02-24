@@ -13,7 +13,8 @@ export default function Header({ className }: { className?: string }) {
     const [isHidden, setIsHidden] = useState(false)
     const [isHoverReveal, setIsHoverReveal] = useState(false)
     const [isScrollingUp, setIsScrollingUp] = useState(false)
-    const [glowX, setGlowX] = useState(50)
+    const glowRef = useRef<HTMLDivElement | null>(null)
+    const currentGlowXRef = useRef(50)
     const targetGlowXRef = useRef(50)
     const rafRef = useRef<number | null>(null)
     const hideTimeoutRef = useRef<number | null>(null)
@@ -49,6 +50,12 @@ export default function Header({ className }: { className?: string }) {
     }, [])
 
     useEffect(() => {
+        const updateGlowVar = (value: number) => {
+            if (glowRef.current) {
+                glowRef.current.style.setProperty('--header-glow-x', `${value}%`)
+            }
+        }
+
         const handleMouseMove = (event: MouseEvent) => {
             if (window.innerWidth < 768) return
             const next = Math.min(
@@ -59,18 +66,24 @@ export default function Header({ className }: { className?: string }) {
         }
 
         const handleResize = () => {
-            if (window.innerWidth < 768) setGlowX(50)
+            if (window.innerWidth < 768) {
+                currentGlowXRef.current = 50
+                targetGlowXRef.current = 50
+                updateGlowVar(50)
+            }
         }
 
         const animate = () => {
-            setGlowX(current => {
-                const target = targetGlowXRef.current
-                const next = current + (target - current) * 0.01
-                return Math.abs(target - next) < 0.05 ? target : next
-            })
+            const target = targetGlowXRef.current
+            const current = currentGlowXRef.current
+            const next = current + (target - current) * 0.01
+            currentGlowXRef.current =
+                Math.abs(target - next) < 0.05 ? target : next
+            updateGlowVar(currentGlowXRef.current)
             rafRef.current = window.requestAnimationFrame(animate)
         }
 
+        updateGlowVar(currentGlowXRef.current)
         window.addEventListener('mousemove', handleMouseMove, { passive: true })
         window.addEventListener('resize', handleResize)
         rafRef.current = window.requestAnimationFrame(animate)
@@ -132,6 +145,7 @@ export default function Header({ className }: { className?: string }) {
                     {/* <SwitcherTheme /> */}
                 </section>
                 <div
+                    ref={glowRef}
                     aria-hidden
                     className={cn(
                         'pointer-events-none absolute left-0 right-0 z-0 hidden h-50 transition-opacity duration-400 ease-in-out',
@@ -145,9 +159,7 @@ export default function Header({ className }: { className?: string }) {
                     )}
                     style={{
                         background:
-                            'radial-gradient(810px 180px at ' +
-                            glowX +
-                            '% 0%, color-mix(in oklch, var(--primary) 35%, transparent), transparent)',
+                            'radial-gradient(810px 180px at var(--header-glow-x, 50%) 0%, color-mix(in oklch, var(--primary) 35%, transparent), transparent)',
                         maskImage:
                             'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0))',
                         WebkitMaskImage:

@@ -1,14 +1,62 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { gsap } from 'gsap'
 import { useEffect, useRef, useState } from 'react'
 import { Header, Main } from '@/components/layout/index'
 import ContactSection from '@/components/ui/ContactSection/ContactSection'
 
+const DotPatternDemo = dynamic(() => import('@/components/ui/Background/Background'), {
+    ssr: false,
+})
+
 export default function Home() {
     const [isScrolled, setIsScrolled] = useState(false)
+    const [shouldRenderBackground, setShouldRenderBackground] = useState(false)
     const headerRef = useRef<HTMLElement | null>(null)
     const baseMaxWidthRef = useRef<string>('90rem')
+
+    useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return
+        }
+
+        const win = window as Window &
+            Partial<{
+                requestIdleCallback: (
+                    callback: IdleRequestCallback,
+                    options?: IdleRequestOptions,
+                ) => number
+                cancelIdleCallback: (id: number) => void
+            }>
+
+        let isCancelled = false
+        let timeoutId: number | null = null
+        let idleId: number | null = null
+
+        const mountBackground = () => {
+            if (isCancelled) return
+            setShouldRenderBackground(true)
+        }
+
+        if (typeof win.requestIdleCallback === 'function') {
+            idleId = win.requestIdleCallback(mountBackground, {
+                timeout: 500,
+            })
+        } else {
+            timeoutId = window.setTimeout(mountBackground, 220)
+        }
+
+        return () => {
+            isCancelled = true
+            if (timeoutId !== null) {
+                window.clearTimeout(timeoutId)
+            }
+            if (idleId !== null && typeof win.cancelIdleCallback === 'function') {
+                win.cancelIdleCallback(idleId)
+            }
+        }
+    }, [])
 
     useEffect(() => {
         const onScroll = () => {
@@ -45,6 +93,7 @@ export default function Home() {
 
     return (
         <div className="flex flex-col overflow-hidden">
+            {shouldRenderBackground && <DotPatternDemo />}
             <header
                 ref={headerRef}
                 className="fixed inset-x-0 z-50 grid w-full max-w-360 place-self-center px-4 py-4 justify-items-center items-stretch"

@@ -1,4 +1,7 @@
+'use client'
+
 import { ComponentPropsWithoutRef } from 'react'
+import { useEffect, useState } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -31,6 +34,16 @@ interface MarqueeProps extends ComponentPropsWithoutRef<'div'> {
      * @default 4
      */
     repeat?: number
+    /**
+     * Repeat count on mobile when `repeat` is not provided
+     * @default 2
+     */
+    mobileRepeat?: number
+    /**
+     * Repeat count on desktop when `repeat` is not provided
+     * @default 3
+     */
+    desktopRepeat?: number
 }
 
 export function Marquee({
@@ -39,9 +52,31 @@ export function Marquee({
     pauseOnHover = false,
     children,
     vertical = false,
-    repeat = 4,
+    repeat,
+    mobileRepeat = 2,
+    desktopRepeat = 3,
     ...props
 }: MarqueeProps) {
+    const [responsiveRepeat, setResponsiveRepeat] = useState(
+        repeat ?? mobileRepeat,
+    )
+
+    useEffect(() => {
+        if (typeof repeat === 'number') {
+            setResponsiveRepeat(repeat)
+            return
+        }
+
+        const mediaQuery = window.matchMedia('(min-width: 1024px)')
+        const updateRepeat = () => {
+            setResponsiveRepeat(mediaQuery.matches ? desktopRepeat : mobileRepeat)
+        }
+
+        updateRepeat()
+        mediaQuery.addEventListener('change', updateRepeat)
+        return () => mediaQuery.removeEventListener('change', updateRepeat)
+    }, [repeat, mobileRepeat, desktopRepeat])
+
     return (
         <div
             {...props}
@@ -54,7 +89,7 @@ export function Marquee({
                 className,
             )}
         >
-            {Array(repeat)
+            {Array.from({ length: Math.max(1, responsiveRepeat) })
                 .fill(0)
                 .map((_, i) => (
                     <div

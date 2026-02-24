@@ -1,11 +1,11 @@
 import { GlobeWrapper } from '@/components/layout/index'
-import { AboutSection } from '@/components/ui/about/AboutSection'
-import { BentoMenu } from '@/components/ui/BentoMenu/BentoMenu'
 import { Button } from '@/components/ui/button'
 import ProjectContentBlock from '@/components/ui/Project/ProjectContentBlock'
 import { SpecializationCards } from '@/components/ui/Specialization/SpecializationCards'
 import { Inbox } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import LazyAboutSection from './LazyAboutSection'
+import LazyBentoMenu from './LazyBentoMenu'
 
 export default async function MainPage() {
     const t = await getTranslations('')
@@ -50,12 +50,12 @@ export default async function MainPage() {
                     </div>
                 </div>
                 <div className=" w-full max-w-360 place-self-center mt-22 text-left pl-5">
-                    <BentoMenu />
+                    <LazyBentoMenu />
                 </div>
             </GlobeWrapper>
             <div className="relative mx-auto grid max-w-360 z-10 justify-items-center p-4 gap-50 items-stretch mt-20">
                 <SpecializationCards />
-                <AboutSection />
+                <LazyAboutSection />
             </div>
             <div
                 className="relative mx-auto grid max-w-360 mt-40 z-10 justify-items-center p-4 gap-16 items-stretch  "

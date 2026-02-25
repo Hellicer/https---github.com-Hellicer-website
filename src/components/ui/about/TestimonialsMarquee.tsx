@@ -1,6 +1,9 @@
+'use client'
+
 import { cn } from '@/lib/utils'
 import { Marquee } from '@/components/ui/magicui/marquee'
 import { CommonProps } from '@/interfaces/props'
+import { useEffect, useState } from 'react'
 
 const reviews = [
     {
@@ -87,15 +90,25 @@ const ReviewCard = ({
     )
 }
 export function TestimonialsMarquee({ className }: CommonProps = {}) {
+    const [isFirefox, setIsFirefox] = useState(false)
+
+    useEffect(() => {
+        setIsFirefox(navigator.userAgent.toLowerCase().includes('firefox'))
+    }, [])
+
     return (
         <div
             className="relative w-full items-center justify-center overflow-hidden place-self-end"
-            style={{
-                WebkitMaskImage:
-                    'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
-                maskImage:
-                    'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
-            }}
+            style={
+                isFirefox
+                    ? undefined
+                    : {
+                          WebkitMaskImage:
+                              'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+                          maskImage:
+                              'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+                      }
+            }
         >
             <Marquee pauseOnHover className="[--duration:20s]">
                 {firstRow.map(review => (
@@ -107,6 +120,12 @@ export function TestimonialsMarquee({ className }: CommonProps = {}) {
                     <ReviewCard key={review.username} {...review} />
                 ))}
             </Marquee>
+            {isFirefox && (
+                <>
+                    <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r to-transparent" />
+                    <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l to-transparent" />
+                </>
+            )}
         </div>
     )
 }

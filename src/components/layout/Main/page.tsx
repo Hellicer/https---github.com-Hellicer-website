@@ -14,11 +14,11 @@ export default async function MainPage() {
         <main className="pt-20 ">
             <GlobeWrapper>
                 <div
-                    className="cursor-default w-full max-w-360 place-self-center mt-25 text-left"
+                    className="cursor-default w-full max-w-360 mx-auto mt-25 text-left px-5"
                     id="about"
                 >
                     <div
-                        className=" flex flex-col relative z-10 w-full max-w-5xl ml-[20px]
+                        className="flex flex-col relative z-10 w-full max-w-5xl
                     "
                     >
                         <h1 className=" font-silkscreen text-5xl  max-w-4xl  font-bold uppercase leading-tight tracking-wide">
@@ -49,7 +49,7 @@ export default async function MainPage() {
                         </div>
                     </div>
                 </div>
-                <div className=" w-full max-w-360 place-self-center mt-22 text-left pl-5">
+                <div className="w-full max-w-360 mx-auto mt-22 text-left px-5">
                     <LazyBentoMenu />
                 </div>
             </GlobeWrapper>

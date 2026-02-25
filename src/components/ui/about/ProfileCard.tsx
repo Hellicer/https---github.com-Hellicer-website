@@ -102,7 +102,7 @@ export function SkillTiles() {
                 ))}
             </div>
             {hasOverflow && (
-                <div className="pointer-events-none absolute bottom-2 right-2">
+                <div className="pointer-events-none absolute bottom-2 right-22">
                     <span className="inline-flex items-center rounded-md bg-accent px-3 py-1 text-xs font-semibold tracking-widest">
                         ...
                     </span>
@@ -295,7 +295,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className="grid h-[954px] place-items-center rounded-2xl border border-ring/30 bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+                    <div className="grid h-[954px] place-items-center rounded-2xl bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
                         <div className="grid gap-4">
                             <p className="font-silkscreen text-3xl text-ring uppercase tracking-widest bg-card/70 px-6 py-3 rounded-full border border-ring/40 shadow-[0_8px_24px_rgba(0,0,0,0.5)]">
                                 coming soon
@@ -310,4 +310,3 @@ export function ProfileCard({ className }: CommonProps = {}) {
         </div>
     )
 }
-

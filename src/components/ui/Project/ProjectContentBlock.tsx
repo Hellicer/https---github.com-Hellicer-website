@@ -22,7 +22,7 @@ export default function ProjectContentBlock() {
                 {/* <SpecTypeToggle /> */}
             </div>
 
-            <div className="mt-16 mb-16 flex items-center justify-between">
+            <div className="px-5 mt-16 mb-16 flex items-center justify-between">
                 <ProjectsFilters filters={filters} setFilters={setFilters} />
                 <button
                     title={t('common.resetFilter')}
@@ -35,7 +35,9 @@ export default function ProjectContentBlock() {
                     <RotateCcw className="h-4 w-4 cursor-pointer" />
                 </button>
             </div>
-            <ProjectsGrid filters={filters} />
+            <div className="px-5">
+                <ProjectsGrid filters={filters} />
+            </div>
         </section>
     )
 }

@@ -91,7 +91,7 @@ export function BentoCard({
         >
             <div className="relative h-full w-full rounded-2xl transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* front */}
-                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-card p-6 backdrop-blur-md [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] shadow-[0_24px_60px_rgba(0,0,0,0.45)] transition-transform duration-500 group-hover:[transform:translateZ(18px)]">
+                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-card p-6 backdrop-blur-md [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] shadow-[0_14px_30px_rgba(0,0,0,0.28)] transition-transform duration-500 group-hover:[transform:translateZ(18px)]">
                     {/* glow */}
                     <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                         <div className="absolute -inset-px rounded-2xl" />
@@ -104,7 +104,7 @@ export function BentoCard({
                 </div>
 
                 {/* back */}
-                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-accent p-6 [transform:rotateY(180deg)_translateZ(0)] [backface-visibility:hidden] [-webkit-backface-visibility:hidden] shadow-[0_24px_60px_rgba(0,0,0,0.45)] transition-transform duration-500 group-hover:[transform:rotateY(180deg)_translateZ(18px)]">
+                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-accent p-6 [transform:rotateY(180deg)_translateZ(0)] [backface-visibility:hidden] [-webkit-backface-visibility:hidden] shadow-[0_14px_30px_rgba(0,0,0,0.28)] transition-transform duration-500 group-hover:[transform:rotateY(180deg)_translateZ(18px)]">
                     <h3 className="text-2xl font-semibold text-white min-h-11">
                         {name}
                     </h3>

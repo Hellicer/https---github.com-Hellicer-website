@@ -12,8 +12,22 @@ const Globe = dynamic(
 export default function GlobeWrapper({ children }: { children: ReactNode }) {
     const sectionRef = useRef<HTMLElement | null>(null)
     const [shouldRenderGlobe, setShouldRenderGlobe] = useState(false)
+    const [isDesktop, setIsDesktop] = useState(false)
 
     useEffect(() => {
+        const mediaQuery = window.matchMedia('(min-width: 1024px)')
+        const updateIsDesktop = () => setIsDesktop(mediaQuery.matches)
+
+        updateIsDesktop()
+        mediaQuery.addEventListener('change', updateIsDesktop)
+        return () => mediaQuery.removeEventListener('change', updateIsDesktop)
+    }, [])
+
+    useEffect(() => {
+        if (!isDesktop) {
+            setShouldRenderGlobe(false)
+            return
+        }
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             return
         }
@@ -31,16 +45,16 @@ export default function GlobeWrapper({ children }: { children: ReactNode }) {
 
         observer.observe(sectionRef.current)
         return () => observer.disconnect()
-    }, [shouldRenderGlobe])
+    }, [isDesktop, shouldRenderGlobe])
 
     return (
         <section
             ref={sectionRef}
-            className="relative overflow-hidden text-white  m-auto h-212.5"
+            className="relative overflow-hidden text-white  m-auto min-h-212.5"
         >
             {/* -mt-[150px] */}
             {/* Globe background */}
-            <div className="absolute top-2/5 right-0 translate-y-[-40%] translate-x-1/2 w-5xl h-245 md:w-225 md:h-225 z-0 opacity-90">
+            <div className="absolute top-2/5 right-0 translate-y-[-40%] translate-x-1/2 w-5xl h-245 md:w-225 md:h-225 z-0 opacity-90 hidden lg:block">
                 {shouldRenderGlobe ? <Globe /> : null}
             </div>
             {children}

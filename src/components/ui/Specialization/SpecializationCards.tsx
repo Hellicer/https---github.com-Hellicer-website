@@ -83,17 +83,17 @@ export function BentoCard({
     return (
         <div
             className={cn(
-                'h-64 w-64 group relative m-4 rounded-2xl transition-all [perspective:1000px]',
+                'group relative mx-auto w-full max-w-[17rem] sm:max-w-[18rem] lg:w-64 h-56 sm:h-60 lg:h-64 rounded-2xl transition-all [perspective:1000px]',
                 '[transform:translateZ(0)]',
                 'hover:border-black/20',
                 className,
             )}
         >
-            <div className="relative h-full w-full rounded-2xl transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+            <div className="relative h-full w-full rounded-2xl transition-transform duration-500 [transform-style:preserve-3d] lg:group-hover:[transform:rotateY(180deg)]">
                 {/* front */}
-                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-card p-6 backdrop-blur-md [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] shadow-[0_14px_30px_rgba(0,0,0,0.28)] transition-transform duration-500 group-hover:[transform:translateZ(18px)]">
+                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-card p-6 backdrop-blur-md [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] shadow-[0_14px_30px_rgba(0,0,0,0.28)] transition-transform duration-500 lg:group-hover:[transform:translateZ(18px)]">
                     {/* glow */}
-                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 lg:group-hover:opacity-100">
                         <div className="absolute -inset-px rounded-2xl" />
                     </div>
 
@@ -104,11 +104,11 @@ export function BentoCard({
                 </div>
 
                 {/* back */}
-                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-accent p-6 [transform:rotateY(180deg)_translateZ(0)] [backface-visibility:hidden] [-webkit-backface-visibility:hidden] shadow-[0_14px_30px_rgba(0,0,0,0.28)] transition-transform duration-500 group-hover:[transform:rotateY(180deg)_translateZ(18px)]">
-                    <h3 className="text-2xl font-semibold text-white min-h-11">
+                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-accent p-6 [transform:rotateY(180deg)_translateZ(0)] [backface-visibility:hidden] [-webkit-backface-visibility:hidden] shadow-[0_14px_30px_rgba(0,0,0,0.28)] transition-transform duration-500 lg:group-hover:[transform:rotateY(180deg)_translateZ(18px)]">
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white min-h-11">
                         {name}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-gray11 font-bold">
+                    <p className="mt-3 text-xs sm:text-sm leading-relaxed text-gray11 font-bold">
                         {description}
                     </p>
                 </div>
@@ -119,25 +119,17 @@ export function BentoCard({
 
 export function SpecializationCards() {
     return (
-        <div
-            className="cursor-default w-full grid grid-flow-row
-        "
-        >
+        <div className="cursor-default w-full grid grid-flow-row">
             <div
-                className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold mb-10"
+                className="w-full grid gap-4 lg:grid-flow-col lg:items-center font-silkscreen font-bold mb-8 lg:mb-10"
                 id="specialization"
             >
-                <h1>Specialization</h1>
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl">Specialization</h1>
                 <SpecTypeToggle />
             </div>
 
             <BentoGrid
-                className="cursor-default grid
-            justify-items-center
-    grid-cols-1
-    sm:grid-cols-2
-    lg:grid-cols-4
-     w-full place-self-start "
+                className="cursor-default grid place-items-center grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 w-full place-self-center mx-auto"
             >
                 {features.map(({ icon, ...rest }) => (
                     <BentoCard key={rest.name} Icon={icon} {...rest} />

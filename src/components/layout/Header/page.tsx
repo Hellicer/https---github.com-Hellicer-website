@@ -13,6 +13,7 @@ export default function Header({ className }: { className?: string }) {
     const [isHidden, setIsHidden] = useState(false)
     const [isHoverReveal, setIsHoverReveal] = useState(false)
     const [isScrollingUp, setIsScrollingUp] = useState(false)
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const glowRef = useRef<HTMLDivElement | null>(null)
     const currentGlowXRef = useRef(50)
     const targetGlowXRef = useRef(50)
@@ -52,7 +53,10 @@ export default function Header({ className }: { className?: string }) {
     useEffect(() => {
         const updateGlowVar = (value: number) => {
             if (glowRef.current) {
-                glowRef.current.style.setProperty('--header-glow-x', `${value}%`)
+                glowRef.current.style.setProperty(
+                    '--header-glow-x',
+                    `${value}%`,
+                )
             }
         }
         const updateGlowColorVar = () => {
@@ -110,6 +114,16 @@ export default function Header({ className }: { className?: string }) {
         }
     }, [])
 
+    useEffect(() => {
+        const closeOnDesktop = () => {
+            if (window.innerWidth >= 1024) {
+                setIsMobileMenuOpen(false)
+            }
+        }
+        window.addEventListener('resize', closeOnDesktop)
+        return () => window.removeEventListener('resize', closeOnDesktop)
+    }, [])
+
     return (
         <>
             <div
@@ -145,21 +159,79 @@ export default function Header({ className }: { className?: string }) {
                 <section
                     id="HeaderBar"
                     className={cn(
-                        'bg-card relative z-10 grid grid-flow-col w-full h-18.5 text-sm font-bold font-silkscreen items-center-safe px-9 select-none',
+                        'bg-card relative z-10 grid w-full h-18.5 text-sm font-bold font-silkscreen items-center-safe px-4 sm:px-9 select-none',
+                        'grid-cols-[auto_1fr_auto] lg:grid-flow-col',
                         ' rounded-0',
                         isHidden ? 'shadow-none' : 'shadow-md',
                         className,
                     )}
                 >
                     <Logotype />
-                    <div className="max-sm:hidden">
+                    <div className="hidden lg:block">
                         <NavbarMenu />
                     </div>
-                    <div className="grid grid-flow-col gap-3.25 justify-end max-sm:hidden">
+                    <button
+                        type="button"
+                        aria-expanded={isMobileMenuOpen}
+                        aria-controls="mobile-header-menu"
+                        aria-label="Toggle navigation menu"
+                        onClick={() => setIsMobileMenuOpen(prev => !prev)}
+                        className="lg:hidden justify-self-end inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card/80"
+                    >
+                        <span className="sr-only">Toggle menu</span>
+                        <span
+                            className={cn(
+                                'relative block h-4.5 w-5',
+                                '[&>i]:absolute [&>i]:left-0 [&>i]:block [&>i]:h-0.5 [&>i]:w-full [&>i]:bg-foreground [&>i]:transition-transform [&>i]:duration-200',
+                            )}
+                        >
+                            <i
+                                className={cn(
+                                    'top-0',
+                                    isMobileMenuOpen
+                                        ? 'translate-y-2 rotate-45'
+                                        : '',
+                                )}
+                            />
+                            <i
+                                className={cn(
+                                    'top-2 opacity-100 transition-opacity',
+                                    isMobileMenuOpen ? 'opacity-0' : '',
+                                )}
+                            />
+                            <i
+                                className={cn(
+                                    'top-4',
+                                    isMobileMenuOpen
+                                        ? '-translate-y-2 -rotate-45'
+                                        : '',
+                                )}
+                            />
+                        </span>
+                    </button>
+                    <div className="hidden lg:grid grid-flow-col gap-3.25 justify-end">
                         <LanguageSwitcher />
                     </div>
                     {/* <SwitcherTheme /> */}
                 </section>
+                <div
+                    id="mobile-header-menu"
+                    className={cn(
+                        'lg:hidden overflow-hidden border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/85 transition-[max-height,opacity] duration-250 ease-out',
+                        isMobileMenuOpen
+                            ? 'max-h-96 opacity-100'
+                            : 'max-h-0 opacity-0',
+                    )}
+                >
+                    <div className="px-4 pt-3 pb-4 grid gap-4">
+                        <NavbarMenu
+                            className="grid-flow-row justify-items-start gap-4"
+                            itemClassName="text-sm"
+                            onItemClick={() => setIsMobileMenuOpen(false)}
+                        />
+                        <LanguageSwitcher className="justify-self-start" />
+                    </div>
+                </div>
                 <div
                     ref={glowRef}
                     aria-hidden

@@ -7,8 +7,8 @@ export default function SpecTypeToggle() {
         'frontend',
     )
     return (
-        <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold">
-            <div className="cursor-pointer text-end">
+        <div className="w-full lg:justify-self-end font-silkscreen font-bold">
+            <div className="cursor-pointer text-left lg:text-end text-xl sm:text-2xl lg:text-4xl leading-tight">
                 <span
                     className={
                         selected === 'frontend' ? 'text-destructive' : ''

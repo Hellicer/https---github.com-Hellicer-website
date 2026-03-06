@@ -111,84 +111,108 @@ function IconCloudDemo() {
     )
 }
 
-const features = [
-    {
-        Icon: FileTextIcon,
-        name: 'About us',
-        description: 'Learn more about our team.',
-        href: '/',
-        cta: 'Learn more',
-        background: (
-            <div
-                className="absolute top-2 right-2 h-[250px] w-full scale-75 border-none [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] transition-all duration-500 ease-out mr-[-8px]
-group-hover:scale-90"
-            >
-                <IconCloudDemo />
-            </div>
-        ),
-        className: 'max-w-60 w-full', //'lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3',
-    },
-    {
-        Icon: GlobeIcon,
-        name: 'Projects',
-        description: 'Check out some of our recent projects.',
-        href: '/',
-        cta: 'Learn more',
-        background: (
-            <Marquee
-                reverse
-                pauseOnHover
-                className="absolute top-10 [mask-image:linear-gradient(to_top,transparent_40%,#000_100%)] [--duration:20s]"
-            >
-                {files.map((f, idx) => (
-                    <figure
-                        key={idx}
-                        className={cn(
-                            'relative w-32 cursor-pointer overflow-hidden rounded-xl border p-4',
-                            'border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]',
-                            'dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]',
-                            'transform-gpu transition-all duration-300 ease-out',
-                        )}
-                    >
-                        <div className="flex flex-row items-center gap-2">
-                            <div className="flex flex-col">
-                                <figcaption className="text-sm font-medium dark:text-white">
-                                    {f.name}
-                                </figcaption>
-                            </div>
-                        </div>
-                        <blockquote className="mt-2 text-xs">
-                            {f.body}
-                        </blockquote>
-                    </figure>
-                ))}
-            </Marquee>
-        ),
-        className: 'w-full ', //'lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4',
-    },
-    {
-        Icon: InputIcon,
-        name: 'Services',
-        description: 'Learn more about our services.',
-        href: '/',
-        cta: 'Learn more',
-        background: (
-            <div
-                className="absolute mr-[-6px] top-2 right-2 h-[340px] w-full scale-85 border-none
-            [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)]
-            transition-all duration-300 ease-out
-            group-hover:scale-90"
-            >
-                <AnimatedListDemo />
-            </div>
-        ),
-        className: ' max-w-60 w-full col-span-3',
-    },
-]
-// sa
-export function BentoMenu() {
+function renderFileCard(f: (typeof files)[number], idx: number) {
     return (
-        <BentoGrid className="flex gap-4 h-[320px] max-w-5xl">
+        <figure
+            key={idx}
+            className={cn(
+                'relative w-32 cursor-pointer overflow-hidden rounded-xl border p-4',
+                'border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]',
+                'dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]',
+                'transform-gpu transition-all duration-300 ease-out',
+            )}
+        >
+            <div className="flex flex-row items-center gap-2">
+                <div className="flex flex-col">
+                    <figcaption className="text-sm font-medium dark:text-white">
+                        {f.name}
+                    </figcaption>
+                </div>
+            </div>
+            <blockquote className="mt-2 text-xs">{f.body}</blockquote>
+        </figure>
+    )
+}
+
+function createFeatures(disableAnimations: boolean) {
+    return [
+        {
+            Icon: FileTextIcon,
+            name: 'About us',
+            description: 'Learn more about our team.',
+            href: '/',
+            cta: 'Learn more',
+            background: disableAnimations ? (
+                <div className="absolute top-6 right-2 h-[250px] w-full border-none [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] mr-[-8px] px-4">
+                    <div className="flex flex-wrap gap-2">
+                        {slugs.slice(0, 14).map(slug => (
+                            <span
+                                key={slug}
+                                className="rounded-md border border-white/20 px-2 py-1 text-xs text-white/70"
+                            >
+                                {slug}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <div className="absolute top-2 right-2 h-[250px] w-full scale-75 border-none [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] transition-all duration-500 ease-out mr-[-8px] group-hover:scale-90">
+                    <IconCloudDemo />
+                </div>
+            ),
+            className: 'w-full lg:max-w-60',
+        },
+        {
+            Icon: GlobeIcon,
+            name: 'Projects',
+            description: 'Check out some of our recent projects.',
+            href: '/',
+            cta: 'Learn more',
+            background: disableAnimations ? (
+                <div className="absolute top-10 px-2 [mask-image:linear-gradient(to_top,transparent_40%,#000_100%)]">
+                    <div className="flex flex-row gap-4 overflow-hidden">
+                        {files.slice(0, 5).map(renderFileCard)}
+                    </div>
+                </div>
+            ) : (
+                <Marquee
+                    reverse
+                    pauseOnHover
+                    className="absolute top-10 [mask-image:linear-gradient(to_top,transparent_40%,#000_100%)] [--duration:20s]"
+                >
+                    {files.map(renderFileCard)}
+                </Marquee>
+            ),
+            className: 'w-full',
+        },
+        {
+            Icon: InputIcon,
+            name: 'Services',
+            description: 'Learn more about our services.',
+            href: '/',
+            cta: 'Learn more',
+            background: disableAnimations ? (
+                <div className="absolute mr-[-6px] top-2 right-2 h-[340px] w-full border-none [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)]">
+                    <div className="grid gap-2 p-2">
+                        {notifications.slice(0, 3).map((item, idx) => (
+                            <Notification {...item} key={idx} />
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <div className="absolute mr-[-6px] top-2 right-2 h-[340px] w-full scale-85 border-none [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] transition-all duration-300 ease-out group-hover:scale-90">
+                    <AnimatedListDemo />
+                </div>
+            ),
+            className: 'w-full lg:max-w-60',
+        },
+    ]
+}
+
+export function BentoMenu({ disableAnimations = false }: { disableAnimations?: boolean }) {
+    const features = createFeatures(disableAnimations)
+    return (
+        <BentoGrid className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[320px] max-w-5xl">
             {features.map(feature => (
                 <BentoCard key={feature.name} {...feature} />
             ))}

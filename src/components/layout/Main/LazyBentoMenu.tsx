@@ -12,8 +12,22 @@ const BentoMenu = dynamic(
 export default function LazyBentoMenu() {
     const containerRef = useRef<HTMLDivElement | null>(null)
     const [isVisible, setIsVisible] = useState(false)
+    const [isDesktop, setIsDesktop] = useState(false)
 
     useEffect(() => {
+        const mediaQuery = window.matchMedia('(min-width: 1024px)')
+        const updateIsDesktop = () => setIsDesktop(mediaQuery.matches)
+
+        updateIsDesktop()
+        mediaQuery.addEventListener('change', updateIsDesktop)
+        return () => mediaQuery.removeEventListener('change', updateIsDesktop)
+    }, [])
+
+    useEffect(() => {
+        if (!isDesktop) {
+            setIsVisible(true)
+            return
+        }
         if (!containerRef.current || isVisible) return
 
         const observer = new IntersectionObserver(
@@ -28,7 +42,11 @@ export default function LazyBentoMenu() {
 
         observer.observe(containerRef.current)
         return () => observer.disconnect()
-    }, [isVisible])
+    }, [isDesktop, isVisible])
 
-    return <div ref={containerRef}>{isVisible ? <BentoMenu /> : null}</div>
+    return (
+        <div ref={containerRef}>
+            {isVisible ? <BentoMenu disableAnimations={!isDesktop} /> : null}
+        </div>
+    )
 }

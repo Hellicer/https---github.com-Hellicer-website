@@ -7,24 +7,24 @@ export function AboutSection() {
     const t = useTranslations('about')
 
     return (
-        <section className="grid max-w-[1440px] w-full h-full mx-auto">
-            <div className=" cursor-default w-full grid grid-flow-col font-silkscreen text-4xl font-bold">
+        <section className="mx-auto grid h-full w-full min-w-0 max-w-[1440px] px-4 sm:px-5 lg:px-8">
+            <div className="grid w-full cursor-default grid-flow-col font-silkscreen text-3xl font-bold sm:text-4xl">
                 <h1> {t('title')}</h1>
             </div>
 
-            <div className="grid xl:grid-cols-2 gap-10 mt-12 justify-items-center h-auto px-5 ">
-                <div className="cursor-default grid grid-flow-row w-fit max-w-158 gap-10 mt-12 ">
+            <div className="mt-8 grid h-auto min-w-0 gap-8 justify-items-center lg:mt-12 lg:grid-cols-2 lg:gap-10">
+                <div className="grid w-full min-w-0 max-w-158 cursor-default grid-flow-row gap-8 lg:gap-10">
                     <div className="grid">
-                        <h3 className="text-4xl font-inter font-extrabold h-fit">
+                        <h3 className="h-fit text-2xl leading-tight font-inter font-extrabold sm:text-3xl lg:text-4xl">
                             {t('subtitle')}
                         </h3>
-                        <StatsCard className="w-full max-w-158 grid items-stretch content-between h-full " />
+                        <StatsCard className="grid h-full w-full max-w-158 items-stretch content-between" />
                     </div>
 
-                    <TestimonialsMarquee className="cursor-default w-fit h-fit self-end " />
+                    <TestimonialsMarquee className="h-fit w-full cursor-default self-end" />
                 </div>
 
-                <div className="cursor-pointer grid gap-10 mt-12 ">
+                <div className="grid w-full min-w-0 cursor-pointer gap-8 lg:mt-12 lg:gap-10">
                     <ProfileCard className="w-full max-w-158" />
                 </div>
             </div>

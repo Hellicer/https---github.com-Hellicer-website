@@ -61,7 +61,7 @@ const ReviewCard = ({
     return (
         <figure
             className={cn(
-                'relative h-full w-80 cursor-default overflow-hidden rounded-xl p-4',
+                'relative h-full w-64 cursor-default overflow-hidden rounded-xl p-4 sm:w-80',
                 // light styles
                 'bg-card  backdrop-blur-md transition-all hover:border-black/20 hover:bg-accent ',
             )}
@@ -98,7 +98,10 @@ export function TestimonialsMarquee({ className }: CommonProps = {}) {
 
     return (
         <div
-            className="relative w-full items-center justify-center overflow-hidden place-self-end"
+            className={cn(
+                'relative w-full place-self-end items-center justify-center overflow-hidden',
+                className,
+            )}
             style={
                 isFirefox
                     ? undefined

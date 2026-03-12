@@ -192,7 +192,7 @@ function createFeatures(disableAnimations: boolean) {
             href: '/',
             cta: 'Learn more',
             background: disableAnimations ? (
-                <div className="absolute mr-[-6px] top-2 right-2 h-[340px] w-full border-none [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)]">
+                <div className="absolute mr-[-6px] top-2 right-2 lg:h-[340px]  w-full border-none [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)]">
                     <div className="grid gap-2 p-2">
                         {notifications.slice(0, 3).map((item, idx) => (
                             <Notification {...item} key={idx} />
@@ -209,7 +209,11 @@ function createFeatures(disableAnimations: boolean) {
     ]
 }
 
-export function BentoMenu({ disableAnimations = false }: { disableAnimations?: boolean }) {
+export function BentoMenu({
+    disableAnimations = false,
+}: {
+    disableAnimations?: boolean
+}) {
     const features = createFeatures(disableAnimations)
     return (
         <BentoGrid className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[320px] max-w-5xl">

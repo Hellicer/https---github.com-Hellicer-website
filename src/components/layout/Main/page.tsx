@@ -53,7 +53,7 @@ export default async function MainPage() {
                     <LazyBentoMenu />
                 </div>
             </GlobeWrapper>
-            <div className="relative mx-auto grid max-w-360 z-10 justify-items-center p-4 gap-50 items-stretch mt-20">
+            <div className="relative mx-auto grid max-w-360 z-10 justify-items-center max-lg:px-2 lg:p-4 gap-50 items-stretch mt-20">
                 <SpecializationCards />
                 <LazyAboutSection />
             </div>

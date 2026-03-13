@@ -58,30 +58,63 @@ export function SkillTiles() {
     const [hasOverflow, setHasOverflow] = useState(false)
 
     useEffect(() => {
+        let frameId1 = 0
+        let frameId2 = 0
+
         const checkOverflow = () => {
-            if (!wrapperRef.current || !contentRef.current) {
+            const wrapper = wrapperRef.current
+            const content = contentRef.current
+
+            if (!wrapper || !content) {
                 setHasOverflow(false)
                 return
             }
 
-            setHasOverflow(
-                contentRef.current.scrollHeight >
-                    wrapperRef.current.clientHeight,
-            )
+            const verticalOverflow = content.scrollHeight - wrapper.clientHeight
+            const horizontalOverflow =
+                content.scrollWidth - wrapper.clientWidth
+
+            setHasOverflow(verticalOverflow > 1 || horizontalOverflow > 1)
         }
 
-        checkOverflow()
+        const scheduleCheck = () => {
+            cancelAnimationFrame(frameId1)
+            cancelAnimationFrame(frameId2)
+            frameId1 = requestAnimationFrame(() => {
+                checkOverflow()
+                frameId2 = requestAnimationFrame(checkOverflow)
+            })
+        }
 
-        const observer = new ResizeObserver(checkOverflow)
-        if (wrapperRef.current) observer.observe(wrapperRef.current)
-        if (contentRef.current) observer.observe(contentRef.current)
+        scheduleCheck()
 
-        return () => observer.disconnect()
+        const resizeObserver = new ResizeObserver(scheduleCheck)
+        if (wrapperRef.current) resizeObserver.observe(wrapperRef.current)
+        if (contentRef.current) resizeObserver.observe(contentRef.current)
+
+        const mutationObserver = new MutationObserver(scheduleCheck)
+        if (contentRef.current) {
+            mutationObserver.observe(contentRef.current, {
+                childList: true,
+                subtree: true,
+                characterData: true,
+            })
+        }
+
+        window.addEventListener('resize', scheduleCheck)
+
+        return () => {
+            cancelAnimationFrame(frameId1)
+            cancelAnimationFrame(frameId2)
+            resizeObserver.disconnect()
+            mutationObserver.disconnect()
+            window.removeEventListener('resize', scheduleCheck)
+        }
     }, [])
 
     return (
         <div
-            className="relative h-[210px] overflow-hidden sm:h-[243px]"
+            className="relative h-[210px] overflow-hidden min-[581px]:h-[243px]"
             ref={wrapperRef}
         >
             <div className="flex flex-wrap gap-2 pl-2 pt-1" ref={contentRef}>
@@ -105,7 +138,7 @@ export function SkillTiles() {
                 ))}
             </div>
             {hasOverflow && (
-                <div className="pointer-events-none absolute right-2 bottom-2 sm:right-22">
+                <div className="pointer-events-none absolute right-2 bottom-2 min-[581px]:right-22">
                     <span className="inline-flex items-center rounded-md bg-accent px-3 py-1 text-xs font-semibold tracking-widest">
                         ...
                     </span>
@@ -139,57 +172,40 @@ export function ProfileCard({ className }: CommonProps = {}) {
     }, [])
 
     const profileCardContent = (
-        <div className="grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 lg:min-h-[954px]">
+        <div className="grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 min-[581px]:min-h-[954px]">
             {/* MAIN INFO */}
-            <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_auto]">
-                <div className="grid min-w-0 grid-flow-row gap-6">
-                    <div className="font-inter text-base font-semibold">
-                        <TitleBar title="main info" />
-                        <div className="pl-2 pt-1">
-                            <p>
-                                <span className="text-chart-1">&gt; Name: </span>
-                                {d.mainInfo.name}
-                            </p>
-                            <p>
-                                <span className="text-chart-1">
-                                    &gt; Position:{' '}
-                                </span>
-                                {d.mainInfo.position}
-                            </p>
-                            <p>
-                                <span className="text-chart-1">&gt; Sex: </span>
-                                {d.mainInfo.sex}
-                            </p>
-                            <p>
-                                <span className="text-chart-1">&gt; Old: </span>
-                                {d.mainInfo.age}
-                            </p>
-                        </div>
-                    </div>
-                    {/* SKILLS */}
-                    <div>
-                        <TitleBar title="skills" />
-
-                        <div className="pl-2 pt-1">
-                            {d.skills.map(s => (
-                                <p
-                                    className="font-inter text-base font-semibold"
-                                    key={s}
-                                >
-                                    {s}
-                                </p>
-                            ))}
-                        </div>
+            <div className="grid min-w-0 gap-6 min-[581px]:grid-cols-[minmax(0,1fr)_auto]">
+                <div className="order-1 min-w-0 font-inter text-base font-semibold min-[581px]:col-start-1 min-[581px]:row-start-1">
+                    <TitleBar title="main info" />
+                    <div className="pl-2 pt-1">
+                        <p>
+                            <span className="text-chart-1">&gt; Name: </span>
+                            {d.mainInfo.name}
+                        </p>
+                        <p>
+                            <span className="text-chart-1">
+                                &gt; Position:{' '}
+                            </span>
+                            {d.mainInfo.position}
+                        </p>
+                        <p>
+                            <span className="text-chart-1">&gt; Sex: </span>
+                            {d.mainInfo.sex}
+                        </p>
+                        <p>
+                            <span className="text-chart-1">&gt; Old: </span>
+                            {d.mainInfo.age}
+                        </p>
                     </div>
                 </div>
 
                 {/* AVATAR */}
-                <div className="grid min-w-0 content-start gap-4 sm:grid-cols-[auto_minmax(0,1fr)] lg:grid-cols-1">
-                    <div className="flex h-32 w-32 items-center justify-center rounded-xl bg-gray-500/40 sm:h-40 sm:w-40 lg:h-50 lg:w-50">
+                <div className="order-2 grid min-w-0 content-start gap-4 min-[581px]:col-start-2 min-[581px]:row-span-2 min-[581px]:row-start-1 min-[581px]:grid-cols-1">
+                    <div className="flex h-32 w-32 max-[580px]:h-48 max-[580px]:w-full items-center justify-center rounded-xl bg-gray-500/40 min-[581px]:h-50 min-[581px]:w-50">
                         <span>Photo</span>
                     </div>
 
-                    <div className="flex w-full min-w-0 flex-col gap-2 lg:max-w-50">
+                    <div className="flex w-full min-w-0 flex-col gap-2 min-[581px]:max-w-50">
                         <Button
                             variant="secondary"
                             asChild
@@ -240,6 +256,22 @@ export function ProfileCard({ className }: CommonProps = {}) {
                         </div>
                     </div>
                 </div>
+
+                {/* SKILLS */}
+                <div className="order-3 min-[581px]:col-start-1 min-[581px]:row-start-2">
+                    <TitleBar title="skills" />
+
+                    <div className="pl-2 pt-1">
+                        {d.skills.map(s => (
+                            <p
+                                className="font-inter text-base font-semibold"
+                                key={s}
+                            >
+                                {s}
+                            </p>
+                        ))}
+                    </div>
+                </div>
             </div>
 
             {/* TECH STACK */}
@@ -252,7 +284,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
             </div>
 
             {/* BOTTOM */}
-            <div className="grid min-w-0 grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="grid min-w-0 grid-cols-1 gap-6 min-[581px]:grid-cols-2">
                 <div className="grid grid-flow-row">
                     <TitleBar title="Other Info" />
 
@@ -263,7 +295,8 @@ export function ProfileCard({ className }: CommonProps = {}) {
                     <TitleBar title="projects" />
                     <div className="letter-spacing-wide grid grid-flow-row space-y-3 py-3 pt-4 pl-2 font-inter text-sm font-semibold sm:pt-6 sm:text-base">
                         <a href="#" className="underline">
-                            &gt; Open-source: <span>{d.projects.openSource}</span>
+                            &gt; Open-source:{' '}
+                            <span>{d.projects.openSource}</span>
                         </a>
                         <a href="#" className="underline">
                             &gt; Startups: <span>{d.projects.startups}</span>
@@ -281,7 +314,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
     )
 
     const comingSoonContent = (
-        <div className="grid min-h-[860px] min-w-0 place-items-center rounded-2xl bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)] lg:min-h-[954px]">
+        <div className="grid min-h-[860px] min-w-0 place-items-center rounded-2xl bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)] min-[581px]:min-h-[954px]">
             <div className="grid gap-4">
                 <p className="rounded-full border border-ring/40 bg-card/70 px-4 py-3 font-silkscreen text-2xl tracking-widest text-ring uppercase shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:px-6 sm:text-3xl">
                     coming soon

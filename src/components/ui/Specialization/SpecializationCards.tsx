@@ -1,5 +1,8 @@
+'use client'
+
 import { BentoGrid } from '../bento-grid'
 import { cn } from '@/lib/utils'
+import { useState } from 'react'
 
 import {
     GlobeIcon,
@@ -80,18 +83,45 @@ export function BentoCard({
     description,
     className,
 }: BentoCardProps) {
+    const [isFlipped, setIsFlipped] = useState(false)
+
+    const toggleFlip = () => {
+        setIsFlipped(prev => !prev)
+    }
+
     return (
         <div
             className={cn(
-                'group relative mx-auto w-full max-w-[17rem] sm:max-w-[18rem] lg:w-64 h-56 sm:h-60 lg:h-64 rounded-2xl transition-all [perspective:1000px]',
+                'group relative mx-auto h-56 w-full max-w-[17rem] cursor-pointer rounded-2xl transition-all [perspective:1000px] sm:h-60 sm:max-w-[18rem] lg:h-64 lg:w-64',
                 '[transform:translateZ(0)]',
                 'hover:border-black/20',
                 className,
             )}
+            onClick={toggleFlip}
+            onKeyDown={event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    toggleFlip()
+                }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-pressed={isFlipped}
+            aria-label={`${name} card`}
         >
-            <div className="relative h-full w-full rounded-2xl transition-transform duration-500 [transform-style:preserve-3d] lg:group-hover:[transform:rotateY(180deg)]">
+            <div
+                className={cn(
+                    'relative h-full w-full rounded-2xl transition-transform duration-500 [transform-style:preserve-3d] lg:group-hover:[transform:rotateY(180deg)]',
+                    isFlipped && '[transform:rotateY(180deg)]',
+                )}
+            >
                 {/* front */}
-                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-card p-6 backdrop-blur-md [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] shadow-[0_14px_30px_rgba(0,0,0,0.28)] transition-transform duration-500 lg:group-hover:[transform:translateZ(18px)]">
+                <div
+                    className={cn(
+                        'absolute inset-0 h-full w-full rounded-2xl border border-black bg-card p-6 shadow-[0_14px_30px_rgba(0,0,0,0.28)] backdrop-blur-md transition-transform duration-500 [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] lg:group-hover:[transform:translateZ(18px)]',
+                        isFlipped && '[transform:translateZ(18px)]',
+                    )}
+                >
                     {/* glow */}
                     <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 lg:group-hover:opacity-100">
                         <div className="absolute -inset-px rounded-2xl" />
@@ -104,7 +134,13 @@ export function BentoCard({
                 </div>
 
                 {/* back */}
-                <div className="absolute inset-0 h-full w-full rounded-2xl border border-black bg-accent p-6 [transform:rotateY(180deg)_translateZ(0)] [backface-visibility:hidden] [-webkit-backface-visibility:hidden] shadow-[0_14px_30px_rgba(0,0,0,0.28)] transition-transform duration-500 lg:group-hover:[transform:rotateY(180deg)_translateZ(18px)]">
+                <div
+                    className={cn(
+                        'absolute inset-0 h-full w-full rounded-2xl border border-black bg-accent p-6 shadow-[0_14px_30px_rgba(0,0,0,0.28)] transition-transform duration-500 [transform:rotateY(180deg)_translateZ(0)] [backface-visibility:hidden] [-webkit-backface-visibility:hidden] lg:group-hover:[transform:rotateY(180deg)_translateZ(18px)]',
+                        isFlipped &&
+                            '[transform:rotateY(180deg)_translateZ(18px)]',
+                    )}
+                >
                     <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white min-h-11">
                         {name}
                     </h3>
@@ -124,13 +160,13 @@ export function SpecializationCards() {
                 className="w-full grid gap-4 lg:grid-flow-col lg:items-center font-silkscreen font-bold mb-8 lg:mb-10"
                 id="specialization"
             >
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl">Specialization</h1>
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl">
+                    Specialization
+                </h1>
                 <SpecTypeToggle />
             </div>
 
-            <BentoGrid
-                className="cursor-default grid place-items-center grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 w-full place-self-center mx-auto"
-            >
+            <BentoGrid className="cursor-default grid place-items-center grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 w-full place-self-center mx-auto">
                 {features.map(({ icon, ...rest }) => (
                     <BentoCard key={rest.name} Icon={icon} {...rest} />
                 ))}

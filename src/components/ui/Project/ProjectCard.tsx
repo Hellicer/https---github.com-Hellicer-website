@@ -14,11 +14,13 @@ function Tag({
     return (
         <span
             className={`
-                px-3 py-1 
+                inline-flex max-w-full items-center
+                px-2 py-1 min-[581px]:px-3
                 rounded-md
-                text-xs 
+                text-[11px] leading-4 min-[581px]:text-xs
                 capitalize
                 cursor-default
+                [overflow-wrap:anywhere]
                 bg-accent text-secondary-foreground hover:bg-accent/80
                 ${className}
                 ${variant === 'online' ? 'text-green-500' : ''}
@@ -31,16 +33,16 @@ function Tag({
 
 export default function ProjectCard({ project }: { project: Project }) {
     return (
-        <div className="h-full rounded-2xl bg-card p-6 backdrop-blur-md transition-all flex flex-col gap-4 project-card-anim animate-fade-in-up card-hover-effect">
-            <h3 className="text-2xl font-semibold text-white">
+        <div className="project-card-anim card-hover-effect animate-fade-in-up flex h-full min-h-[320px] flex-col gap-3 rounded-2xl bg-card p-4 backdrop-blur-md transition-all min-[581px]:min-h-[360px] min-[581px]:gap-4 min-[581px]:p-5 min-[900px]:p-6">
+            <h3 className="text-xl leading-tight font-semibold text-white min-[581px]:text-2xl">
                 {project.title}
             </h3>
-            <p className="text-sm leading-relaxed text-gray11 font-bold">
+            <p className="text-gray11 text-sm leading-relaxed font-bold min-[581px]:text-base">
                 {project.description}
             </p>
-            <div className="aspect-[16/10] bg-gray-200 rounded-xl" />
+            <div className="aspect-[4/3] min-h-[152px] rounded-xl bg-gray-200 min-[581px]:aspect-[16/10] min-[581px]:min-h-[172px]" />
 
-            <div className="flex flex-wrap gap-2">
+            <div className="mt-auto flex flex-wrap gap-1.5 min-[581px]:gap-2">
                 <Tag variant={project.status}>{project.status}</Tag>
                 {project.tech.map(t => (
                     <Tag className="capitalize" key={t}>

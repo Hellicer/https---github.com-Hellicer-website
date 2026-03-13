@@ -22,11 +22,15 @@ function ProjectsGrid({ filters }: { filters: FiltersState }) {
             return true
         })
     }, [filters.stack, filters.status, techFilterKey])
+    const filteredProjectsKey = filteredProjects.map(project => project.id).join('|')
 
     const [displayedProjects, setDisplayedProjects] = useState(filteredProjects)
     const [isExiting, setIsExiting] = useState(false)
     const [showNoFound, setShowNoFound] = useState(filteredProjects.length === 0)
     const exitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const displayedProjectsKey = displayedProjects
+        .map(project => project.id)
+        .join('|')
 
     useEffect(() => {
         if (exitTimeoutRef.current) {
@@ -34,27 +38,25 @@ function ProjectsGrid({ filters }: { filters: FiltersState }) {
             exitTimeoutRef.current = null
         }
 
-        if (filteredProjects.length === 0) {
-            if (displayedProjects.length === 0) {
-                setShowNoFound(true)
-                setIsExiting(false)
-                return
-            }
-
-            setIsExiting(true)
-            setShowNoFound(false)
-            exitTimeoutRef.current = setTimeout(() => {
-                setDisplayedProjects([])
-                setIsExiting(false)
-                setShowNoFound(true)
-            }, EXIT_DURATION_MS)
+        if (filteredProjectsKey === displayedProjectsKey) {
+            setShowNoFound(filteredProjects.length === 0)
+            setIsExiting(false)
             return
         }
 
+        setIsExiting(true)
         setShowNoFound(false)
-        setIsExiting(false)
-        setDisplayedProjects(filteredProjects)
-    }, [filteredProjects, displayedProjects.length])
+        exitTimeoutRef.current = setTimeout(() => {
+            setDisplayedProjects(filteredProjects)
+            setIsExiting(false)
+            setShowNoFound(filteredProjects.length === 0)
+        }, EXIT_DURATION_MS)
+    }, [
+        displayedProjectsKey,
+        filteredProjects,
+        filteredProjectsKey,
+        filteredProjects.length,
+    ])
 
     useEffect(() => {
         return () => {
@@ -65,10 +67,10 @@ function ProjectsGrid({ filters }: { filters: FiltersState }) {
     }, [])
 
     return (
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-h-[404px]">
+        <div className="grid min-h-[404px] grid-cols-1 gap-4 min-[581px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1280px]:grid-cols-4 min-[581px]:gap-6 xl:gap-8">
             {displayedProjects.map(project => (
                 <div
-                    className={`h-[404px] project-grid-item ${
+                    className={`h-full project-grid-item ${
                         isExiting ? 'project-grid-item-exit' : ''
                     }`}
                     key={project.id}

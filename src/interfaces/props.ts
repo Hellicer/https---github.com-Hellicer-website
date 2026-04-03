@@ -1,3 +1,5 @@
+import { ProjectStack, ProjectStatus } from '@/types/github'
+
 export interface CommonProps {
     t?: (key: string) => string
     className?: string
@@ -9,7 +11,7 @@ export interface CommonProps {
 }
 
 export type FiltersState = {
-    stack: string | null
-    status: string | null
+    stack: ProjectStack | null
+    status: ProjectStatus | null
     tech: string[]
 }

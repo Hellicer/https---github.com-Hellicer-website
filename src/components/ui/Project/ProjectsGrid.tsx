@@ -1,11 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { FiltersState } from '@/interfaces/props'
 import ProjectCard from './ProjectCard'
-import { projects } from '@/data/projects.data'
+import { Project } from '@/data/projects.data'
 import { NoFoundProjectsBlock } from './NoFoundProjectsBlock'
 
-function ProjectsGrid({ filters }: { filters: FiltersState }) {
+function ProjectsGrid({
+    filters,
+    projects,
+}: {
+    filters: FiltersState
+    projects: Project[]
+}) {
     const EXIT_DURATION_MS = 260
+
     const techFilterKey = filters.tech.join('|')
     const filteredProjects = useMemo(() => {
         return projects.filter(project => {
@@ -21,7 +28,7 @@ function ProjectsGrid({ filters }: { filters: FiltersState }) {
 
             return true
         })
-    }, [filters.stack, filters.status, techFilterKey])
+    }, [projects, filters.stack, filters.status, techFilterKey])
     const filteredProjectsKey = filteredProjects.map(project => project.id).join('|')
 
     const [displayedProjects, setDisplayedProjects] = useState(filteredProjects)

@@ -1,14 +1,19 @@
 import { FiltersState } from '@/interfaces/props'
-import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { ProjectStack, ProjectStatus } from '@/types/github'
 import { Button } from '../button'
 
 function ProjectsFilters({
     filters,
     setFilters,
+    options,
 }: {
     filters: FiltersState
     setFilters: React.Dispatch<React.SetStateAction<FiltersState>>
+    options: {
+        stacks: ProjectStack[]
+        statuses: ProjectStatus[]
+        tech: string[]
+    }
 }) {
     const toggleTech = (tech: string) => {
         setFilters(prev => ({
@@ -23,7 +28,7 @@ function ProjectsFilters({
         <div className="flex flex-wrap gap-6">
             <FilterRow
                 title="Stack"
-                items={['frontend', 'backend', 'fullstack']}
+                items={options.stacks}
                 active={filters.stack}
                 onClick={value =>
                     setFilters(f => ({
@@ -35,7 +40,7 @@ function ProjectsFilters({
 
             <FilterRow
                 title="Status"
-                items={['online', 'beta', 'archived']}
+                items={options.statuses}
                 active={filters.status}
                 onClick={value =>
                     setFilters(f => ({
@@ -47,13 +52,7 @@ function ProjectsFilters({
 
             <FilterRow
                 title="Tech"
-                items={[
-                    'Next.js',
-                    'React',
-                    'Typescript',
-                    'Firebase',
-                    'Node.js',
-                ]}
+                items={options.tech}
                 multiple
                 activeList={filters.tech}
                 onClick={toggleTech}
@@ -62,7 +61,7 @@ function ProjectsFilters({
     )
 }
 
-function FilterRow({
+function FilterRow<T extends string>({
     title,
     items,
     onClick,
@@ -71,10 +70,10 @@ function FilterRow({
     multiple = false,
 }: {
     title: string
-    items: string[]
-    onClick: (value: string) => void
-    active?: string | null
-    activeList?: string[]
+    items: T[]
+    onClick: (value: T) => void
+    active?: T | null
+    activeList?: T[]
     multiple?: boolean
 }) {
     return (

@@ -1,6 +1,13 @@
 'use client'
 
 import { Project } from '@/data/projects.data'
+import {
+    PROJECT_PREVIEW_PLACEHOLDER,
+    resolveProjectPreviewUrl,
+} from '@/lib/projectPreview'
+import { CircleEllipsis, ExternalLink, Github } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 function Tag({
     children,
@@ -32,17 +39,67 @@ function Tag({
 }
 
 export default function ProjectCard({ project }: { project: Project }) {
+    const t = useTranslations('')
+    const [previewSrc, setPreviewSrc] = useState(
+        resolveProjectPreviewUrl(project.previewUrl)
+    )
+    const detailsUrl = project.codeUrl ?? project.liveUrl
+
+    useEffect(() => {
+        setPreviewSrc(resolveProjectPreviewUrl(project.previewUrl))
+    }, [project.previewUrl])
+
     return (
         <div className="project-card-anim card-hover-effect animate-fade-in-up flex h-full min-h-[320px] flex-col gap-3 rounded-2xl bg-card p-4 backdrop-blur-md transition-all min-[581px]:min-h-[360px] min-[581px]:gap-4 min-[581px]:p-5 min-[900px]:p-6">
-            <h3 className="text-xl leading-tight font-semibold text-white min-[581px]:text-2xl">
+            <h3 className="h-14 overflow-hidden text-xl leading-tight font-semibold text-white min-[581px]:h-16 min-[581px]:text-2xl">
                 {project.title}
             </h3>
-            <p className="text-gray11 text-sm leading-relaxed font-bold min-[581px]:text-base">
-                {project.description}
-            </p>
-            <div className="aspect-[4/3] min-h-[152px] rounded-xl bg-gray-200 min-[581px]:aspect-[16/10] min-[581px]:min-h-[172px]" />
+            <div className="relative h-40 overflow-hidden rounded-xl bg-gray-200 min-[581px]:h-44">
+                <img
+                    alt={`${project.title} preview`}
+                    className="h-full w-full object-contain"
+                    onError={() => setPreviewSrc(PROJECT_PREVIEW_PLACEHOLDER)}
+                    src={previewSrc}
+                />
+            </div>
 
-            <div className="mt-auto flex flex-wrap gap-1.5 min-[581px]:gap-2">
+            <div className="flex h-9 flex-wrap items-center gap-2 overflow-hidden">
+                {project.liveUrl ? (
+                    <a
+                        className="inline-flex h-8 items-center gap-1 rounded-md bg-secondary px-3 py-1.5 text-xs font-semibold text-secondary-foreground transition hover:opacity-90"
+                        href={project.liveUrl}
+                        rel="noreferrer"
+                        target="_blank"
+                    >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                        Live
+                    </a>
+                ) : null}
+                {project.codeUrl ? (
+                    <a
+                        className="inline-flex h-8 items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition hover:bg-accent"
+                        href={project.codeUrl}
+                        rel="noreferrer"
+                        target="_blank"
+                    >
+                        <Github className="h-3.5 w-3.5" />
+                        Code
+                    </a>
+                ) : null}
+                {detailsUrl ? (
+                    <a
+                        className="inline-flex h-8 items-center gap-1 rounded-md border border-white/15 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/90 transition hover:border-white/30 hover:bg-white/[0.1] hover:text-white"
+                        href={detailsUrl}
+                        rel="noreferrer"
+                        target="_blank"
+                    >
+                        <CircleEllipsis className="h-3.5 w-3.5" />
+                        {t('common.details')}
+                    </a>
+                ) : null}
+            </div>
+
+            <div className="mt-auto flex h-16 flex-wrap content-start gap-1.5 overflow-hidden min-[581px]:h-18 min-[581px]:gap-2">
                 <Tag variant={project.status}>{project.status}</Tag>
                 {project.tech.map(t => (
                     <Tag className="capitalize" key={t}>

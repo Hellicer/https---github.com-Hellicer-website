@@ -128,6 +128,7 @@
         "technologies": "Tech",
         "status": "Status",
         "resetFilter": "Reset Filter",
-        "download": "Download"
+        "download": "Download",
+        "details": "Details"
     }
 }

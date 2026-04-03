@@ -8,6 +8,9 @@ export type ProjectDto = {
     status: ProjectStatus
     stack: ProjectStack
     tech: string[]
+    liveUrl: string | null
+    codeUrl: string | null
+    previewUrl: string | null
 }
 
 export type GithubRepo = {
@@ -17,4 +20,10 @@ export type GithubRepo = {
     language: string | null
     archived: boolean
     topics?: string[]
+    homepage: string | null
+    html_url: string
+    default_branch: string
+    owner: {
+        login: string
+    }
 }

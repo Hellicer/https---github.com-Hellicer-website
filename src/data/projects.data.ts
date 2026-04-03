@@ -6,6 +6,9 @@ export type Project = {
     status: 'online' | 'beta' | 'archived'
     stack: 'frontend' | 'backend' | 'fullstack'
     tech: string[]
+    liveUrl: string | null
+    codeUrl: string | null
+    previewUrl: string | null
 }
 
 export const projects: Project[] = [
@@ -16,6 +19,9 @@ export const projects: Project[] = [
         status: 'online',
         stack: 'frontend',
         tech: ['Next.js', 'React', 'Typescript'],
+        liveUrl: null,
+        codeUrl: null,
+        previewUrl: null,
     },
     {
         id: 'chatbot',
@@ -24,5 +30,8 @@ export const projects: Project[] = [
         status: 'beta',
         stack: 'backend',
         tech: ['Node.js', 'Firebase'],
+        liveUrl: null,
+        codeUrl: null,
+        previewUrl: null,
     },
 ]

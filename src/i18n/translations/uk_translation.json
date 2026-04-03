@@ -135,6 +135,7 @@
         "technologies": "Технології",
         "status": "Статус",
         "resetFilter": "Скинути фільтр",
-        "download": "Скачати"
+        "download": "Скачати",
+        "details": "Докладніше"
     }
 }

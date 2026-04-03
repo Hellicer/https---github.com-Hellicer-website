@@ -11,8 +11,8 @@ import { useEffect, useRef, useState } from 'react'
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCards } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/effect-cards'
+// import 'swiper/css'
+// import 'swiper/css/effect-cards'
 // import { UIIcon } from '../ui-icon'
 // import MemoryDownload from '../../../../public/memoryDownload.svg'
 
@@ -71,8 +71,7 @@ export function SkillTiles() {
             }
 
             const verticalOverflow = content.scrollHeight - wrapper.clientHeight
-            const horizontalOverflow =
-                content.scrollWidth - wrapper.clientWidth
+            const horizontalOverflow = content.scrollWidth - wrapper.clientWidth
 
             setHasOverflow(verticalOverflow > 1 || horizontalOverflow > 1)
         }

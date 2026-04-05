@@ -8,6 +8,7 @@ generator client {
   output   = "../src/generated/prisma"
 }
 
+// @ts-expect-error
 datasource db {
    provider  = "postgresql"
 

@@ -11,10 +11,39 @@ import { useEffect, useRef, useState } from 'react'
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCards } from 'swiper/modules'
+import type { ProfileDataShape, ProfileLoadResult } from '@/types/profile'
 // import 'swiper/css'
 // import 'swiper/css/effect-cards'
 // import { UIIcon } from '../ui-icon'
 // import MemoryDownload from '../../../../public/memoryDownload.svg'
+
+let profileDataFromGistPromise: Promise<ProfileLoadResult> | null = null
+
+function getProfileDataFromGist(): Promise<ProfileLoadResult> {
+    if (!profileDataFromGistPromise) {
+        profileDataFromGistPromise = fetch('/api/profile/stat', {
+            cache: 'no-store',
+        })
+            .then(async response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile stat payload.')
+                }
+
+                const payload = (await response.json()) as ProfileLoadResult
+                return payload
+            })
+            .catch(error => ({
+                data: null,
+                source: 'local' as const,
+                reason:
+                    error instanceof Error
+                        ? error.message
+                        : 'Unknown profile stat error.',
+            }))
+    }
+
+    return profileDataFromGistPromise
+}
 
 function SkillIcon({ skill }: { skill: string }) {
     const [isAvailable, setIsAvailable] = useState<boolean | null>(null)
@@ -153,9 +182,18 @@ const TitleBar = ({ title }: { title: string }) => (
     </p>
 )
 export function ProfileCard({ className }: CommonProps = {}) {
-    const d = profileData
     const t = useTranslations('')
     const [isDesktop, setIsDesktop] = useState(false)
+    const [profileFromGist, setProfileFromGist] =
+        useState<ProfileDataShape | null>(null)
+    const [profileSource, setProfileSource] = useState<
+        'loading' | 'gist' | 'local'
+    >('loading')
+    const [profileLoadReason, setProfileLoadReason] = useState<string | null>(
+        null,
+    )
+    const d = profileFromGist ?? profileData
+    const shouldShowComingSoonFallback = profileSource === 'loading'
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(min-width: 1024px)')
@@ -170,8 +208,46 @@ export function ProfileCard({ className }: CommonProps = {}) {
             mediaQuery.removeEventListener('change', updateDesktopState)
     }, [])
 
+    useEffect(() => {
+        let isMounted = true
+
+        getProfileDataFromGist().then(result => {
+            if (!isMounted) {
+                return
+            }
+
+            if (result.data) {
+                setProfileFromGist(result.data)
+                setProfileSource('gist')
+                setProfileLoadReason(null)
+            } else {
+                setProfileSource('local')
+                setProfileLoadReason(result.reason ?? null)
+            }
+        })
+
+        return () => {
+            isMounted = false
+        }
+    }, [])
+
     const profileCardContent = (
         <div className="grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 min-[581px]:min-h-[954px]">
+            <div className="flex items-center justify-between rounded-md border border-ring/40 bg-card/70 px-3 py-2 text-xs font-semibold">
+                <span>
+                    Data source:{' '}
+                    {profileSource === 'loading'
+                        ? 'loading'
+                        : profileSource === 'gist'
+                          ? 'StatGist'
+                          : 'local fallback'}
+                </span>
+                {profileLoadReason && (
+                    <span className="ml-2 max-w-60 truncate text-muted-foreground">
+                        {profileLoadReason}
+                    </span>
+                )}
+            </div>
             {/* MAIN INFO */}
             <div className="grid min-w-0 gap-6 min-[581px]:grid-cols-[minmax(0,1fr)_auto]">
                 <div className="order-1 min-w-0 font-inter text-base font-semibold min-[581px]:col-start-1 min-[581px]:row-start-1">
@@ -324,6 +400,16 @@ export function ProfileCard({ className }: CommonProps = {}) {
             </div>
         </div>
     )
+
+    if (shouldShowComingSoonFallback) {
+        return (
+            <div
+                className={`group w-full min-w-0 max-w-xl [perspective:1000px] ${className}`}
+            >
+                {comingSoonContent}
+            </div>
+        )
+    }
 
     return (
         <div

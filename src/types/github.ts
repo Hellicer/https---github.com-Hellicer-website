@@ -1,6 +1,12 @@
 export type ProjectStatus = 'online' | 'beta' | 'archived'
 export type ProjectStack = 'frontend' | 'backend' | 'fullstack'
 
+export type FiltersState = {
+    stack: ProjectStack | null
+    status: ProjectStatus | null
+    tech: string[]
+}
+
 export type ProjectDto = {
     id: string
     title: string
@@ -26,4 +32,38 @@ export type GithubRepo = {
     owner: {
         login: string
     }
+}
+
+export type GistFile = {
+    filename: string | null
+    type: string | null
+    language: string | null
+    raw_url: string
+    size: number
+}
+
+export type GithubGist = {
+    id: string
+    description: string | null
+    html_url: string
+    public: boolean
+    created_at: string
+    updated_at: string
+    files: Record<string, GistFile>
+}
+
+export type GistDto = {
+    id: string
+    description: string
+    url: string
+    isPublic: boolean
+    createdAt: string
+    updatedAt: string
+    files: Array<{
+        name: string
+        language: string | null
+        type: string | null
+        size: number
+        rawUrl: string
+    }>
 }

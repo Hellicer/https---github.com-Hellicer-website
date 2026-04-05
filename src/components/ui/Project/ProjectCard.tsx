@@ -41,7 +41,7 @@ function Tag({
 export default function ProjectCard({ project }: { project: Project }) {
     const t = useTranslations('')
     const [previewSrc, setPreviewSrc] = useState(
-        resolveProjectPreviewUrl(project.previewUrl)
+        resolveProjectPreviewUrl(project.previewUrl),
     )
     const detailsUrl = project.codeUrl ?? project.liveUrl
 
@@ -75,7 +75,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                         Live
                     </a>
                 ) : null}
-                {project.codeUrl ? (
+                {/* {project.codeUrl ? (
                     <a
                         className="inline-flex h-8 items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition hover:bg-accent"
                         href={project.codeUrl}
@@ -85,10 +85,10 @@ export default function ProjectCard({ project }: { project: Project }) {
                         <Github className="h-3.5 w-3.5" />
                         Code
                     </a>
-                ) : null}
+                ) : null} */}
                 {detailsUrl ? (
                     <a
-                        className="inline-flex h-8 items-center gap-1 rounded-md border border-white/15 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/90 transition hover:border-white/30 hover:bg-white/[0.1] hover:text-white"
+                        className="inline-flex h-8 items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition hover:bg-accent"
                         href={detailsUrl}
                         rel="noreferrer"
                         target="_blank"
@@ -99,7 +99,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                 ) : null}
             </div>
 
-            <div className="mt-auto flex h-16 flex-wrap content-start gap-1.5 overflow-hidden min-[581px]:h-18 min-[581px]:gap-2">
+            <div className="mt-auto flex h-16 flex-wrap content-end gap-1.5 overflow-hidden min-[581px]:gap-2">
                 <Tag variant={project.status}>{project.status}</Tag>
                 {project.tech.map(t => (
                     <Tag className="capitalize" key={t}>

@@ -9,7 +9,8 @@ type ProfileStatGistPayload = {
         name: string
         position: string
         sex?: string
-        age?: number
+        age?: number | string
+        photo?: string
     }
     skills: string
     techStack: string[]
@@ -20,16 +21,16 @@ type ProfileStatGistPayload = {
         corporate: number
     }
     otherInfo: {
-        skillsChart: {
+        skillsChart?: Partial<{
             architecture: number
             coding: number
             performance: number
             consistency: number
             communication: number
-        }
+        }>
     }
     stats: {
-        wakatime: number
+        wakatime?: number
     }
     links: {
         linkedin?: string
@@ -42,11 +43,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function isProfileStatGistPayload(value: unknown): value is ProfileStatGistPayload {
-    if (!value || typeof value !== 'object') {
+    if (!isRecord(value)) {
         return false
     }
 
-    const payload = value as Record<string, unknown>
+    const payload = value
     const mainInfo = payload.mainInfo as Record<string, unknown> | undefined
     const skills = payload.skills
     const techStack = payload.techStack
@@ -60,6 +61,11 @@ function isProfileStatGistPayload(value: unknown): value is ProfileStatGistPaylo
         !!mainInfo &&
         typeof mainInfo.name === 'string' &&
         typeof mainInfo.position === 'string' &&
+        (mainInfo.sex === undefined || typeof mainInfo.sex === 'string') &&
+        (mainInfo.age === undefined ||
+            typeof mainInfo.age === 'number' ||
+            typeof mainInfo.age === 'string') &&
+        (mainInfo.photo === undefined || typeof mainInfo.photo === 'string') &&
         typeof skills === 'string' &&
         Array.isArray(techStack) &&
         techStack.every(item => typeof item === 'string') &&
@@ -68,14 +74,10 @@ function isProfileStatGistPayload(value: unknown): value is ProfileStatGistPaylo
         typeof projects.startups === 'number' &&
         typeof projects.freelance === 'number' &&
         typeof projects.corporate === 'number' &&
-        !!skillsChart &&
-        typeof skillsChart.architecture === 'number' &&
-        typeof skillsChart.coding === 'number' &&
-        typeof skillsChart.performance === 'number' &&
-        typeof skillsChart.consistency === 'number' &&
-        typeof skillsChart.communication === 'number' &&
+        (!!otherInfo || typeof otherInfo === 'object') &&
+        (skillsChart === undefined || isRecord(skillsChart)) &&
         !!stats &&
-        typeof stats.wakatime === 'number' &&
+        (stats.wakatime === undefined || typeof stats.wakatime === 'number') &&
         isRecord(links)
     )
 }
@@ -88,7 +90,32 @@ function splitSkills(rawSkills: string): string[] {
 }
 
 function normalizeRadarValue(value: number): number {
-    return value > 10 ? Math.round((value / 10) * 10) / 10 : value
+    return value > 10 ? Math.round(value / 10) : value
+}
+
+function parseAge(value: number | string | undefined): number | undefined {
+    if (typeof value === 'number') {
+        return value
+    }
+
+    if (typeof value === 'string') {
+        const parsed = Number(value)
+        return Number.isFinite(parsed) ? parsed : undefined
+    }
+
+    return undefined
+}
+
+function pickChartValue(
+    chart: ProfileStatGistPayload['otherInfo']['skillsChart'],
+    key: 'architecture' | 'coding' | 'performance' | 'consistency' | 'communication',
+): number {
+    const value = chart?.[key]
+    if (typeof value === 'number') {
+        return normalizeRadarValue(value)
+    }
+
+    return 6
 }
 
 function mapProfileStatToProfileData(payload: ProfileStatGistPayload): ProfileDataShape {
@@ -97,11 +124,12 @@ function mapProfileStatToProfileData(payload: ProfileStatGistPayload): ProfileDa
             name: payload.mainInfo.name,
             position: payload.mainInfo.position,
             sex: payload.mainInfo.sex,
-            age: payload.mainInfo.age,
+            age: parseAge(payload.mainInfo.age),
+            avatar: payload.mainInfo.photo ?? null,
         },
         skills: splitSkills(payload.skills),
         wakatime: {
-            text: `${payload.stats.wakatime} hrs`,
+            text: `${payload.stats.wakatime ?? 0} hrs`,
             url: 'https://wakatime.com',
         },
         social: {
@@ -121,11 +149,11 @@ function mapProfileStatToProfileData(payload: ProfileStatGistPayload): ProfileDa
         radar: {
             labels: ['Architecture', 'Coding', 'Speed', 'Rhythm', 'Soft skills'],
             values: [
-                normalizeRadarValue(payload.otherInfo.skillsChart.architecture),
-                normalizeRadarValue(payload.otherInfo.skillsChart.coding),
-                normalizeRadarValue(payload.otherInfo.skillsChart.performance),
-                normalizeRadarValue(payload.otherInfo.skillsChart.consistency),
-                normalizeRadarValue(payload.otherInfo.skillsChart.communication),
+                pickChartValue(payload.otherInfo.skillsChart, 'architecture'),
+                pickChartValue(payload.otherInfo.skillsChart, 'coding'),
+                pickChartValue(payload.otherInfo.skillsChart, 'performance'),
+                pickChartValue(payload.otherInfo.skillsChart, 'consistency'),
+                pickChartValue(payload.otherInfo.skillsChart, 'communication'),
             ],
         },
         techStack: payload.techStack.map(name => ({
@@ -153,59 +181,86 @@ function buildGithubHeaders(): HeadersInit {
     }
 }
 
-export async function fetchProfileDataFromStatGist(): Promise<ProfileLoadResult> {
+function pickProfileFiles(
+    gists: Awaited<ReturnType<typeof fetchGithubGists>>,
+): Array<{ rawUrl: string }> {
+    const selected = new Map<string, { rawUrl: string }>()
+
+    for (const gist of gists) {
+        const isStatGist = gist.description
+            .toLowerCase()
+            .includes(STAT_GIST_KEYWORD)
+
+        for (const file of gist.files) {
+            const name = file.name.toLowerCase()
+            const isJson = name.endsWith('.json')
+            const isStatFile = name.includes(STAT_GIST_KEYWORD)
+
+            if (isJson || isStatFile || isStatGist) {
+                selected.set(file.rawUrl, { rawUrl: file.rawUrl })
+            }
+        }
+    }
+
+    return Array.from(selected.values())
+}
+
+async function loadProfileFromRawUrl(rawUrl: string): Promise<ProfileDataShape | null> {
+    const profileResponse = await fetch(rawUrl, {
+        cache: 'no-store',
+        headers: buildGithubHeaders(),
+    })
+
+    if (!profileResponse.ok) {
+        return null
+    }
+
+    const payload: unknown = await profileResponse.json()
+    if (!isProfileStatGistPayload(payload)) {
+        return null
+    }
+
+    return mapProfileStatToProfileData(payload)
+}
+
+export async function fetchProfileCardsFromGists(): Promise<ProfileLoadResult> {
     try {
         const gists = await fetchGithubGists()
-        const targetGist = gists.find(gist => {
-            const byDescription = gist.description
-                .toLowerCase()
-                .includes(STAT_GIST_KEYWORD)
-            const byFileName = gist.files.some(file =>
-                file.name.toLowerCase().includes(STAT_GIST_KEYWORD),
-            )
-            return byDescription || byFileName
-        })
+        const files = pickProfileFiles(gists)
 
-        if (!targetGist || targetGist.files.length === 0) {
+        if (files.length === 0) {
             return {
-                data: null,
+                data: [],
                 source: 'local',
-                reason: 'StatGist not found or empty.',
+                reason: 'No profile files found in gists.',
             }
         }
 
-        const preferredFile =
-            targetGist.files.find(file =>
-                file.name.toLowerCase().endsWith('.json'),
-            ) ?? targetGist.files[0]
+        const loaded = await Promise.all(
+            files.map(file => loadProfileFromRawUrl(file.rawUrl)),
+        )
+        const cards = loaded.filter((item): item is ProfileDataShape => item !== null)
 
-        const profileResponse = await fetch(preferredFile.rawUrl, {
-            cache: 'no-store',
-            headers: buildGithubHeaders(),
-        })
-        if (!profileResponse.ok) {
-            throw new Error('Failed to fetch StatGist file content.')
-        }
-
-        const profilePayload: unknown = await profileResponse.json()
-        if (!isProfileStatGistPayload(profilePayload)) {
-            throw new Error(
-                'StatGist payload does not match expected profile format.',
-            )
+        if (cards.length === 0) {
+            return {
+                data: [],
+                source: 'local',
+                reason: 'No valid profile JSON files were found in gists.',
+            }
         }
 
         return {
-            data: mapProfileStatToProfileData(profilePayload),
+            data: cards,
             source: 'gist',
         }
     } catch (error) {
         return {
-            data: null,
+            data: [],
             source: 'local',
             reason:
                 error instanceof Error
                     ? error.message
-                    : 'Unknown StatGist error.',
+                    : 'Unknown profile gists error.',
         }
     }
 }

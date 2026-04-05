@@ -34,7 +34,7 @@ export type ProfileDataShape = {
 }
 
 export type ProfileLoadResult = {
-    data: ProfileDataShape | null
+    data: ProfileDataShape[]
     source: 'gist' | 'local'
     reason?: string
 }

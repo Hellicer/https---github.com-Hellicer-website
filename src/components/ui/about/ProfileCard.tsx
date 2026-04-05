@@ -1,9 +1,6 @@
 'use client'
-
-import { profileData } from '../../../data/UserData'
 import { RadarSimple } from './RadarSkills'
 import { CommonProps } from '@/interfaces/props'
-import { SLUGS as skills } from '@/data/slugs'
 import { Button } from '../button'
 // import { Download } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -33,7 +30,7 @@ function getProfileDataFromGist(): Promise<ProfileLoadResult> {
                 return payload
             })
             .catch(error => ({
-                data: null,
+                data: [],
                 source: 'local' as const,
                 reason:
                     error instanceof Error
@@ -81,7 +78,15 @@ function SkillIcon({ skill }: { skill: string }) {
     )
 }
 
-export function SkillTiles() {
+function toSimpleIconsSlug(value: string): string {
+    return value.toLowerCase().replace(/[^a-z0-9]/g, '')
+}
+
+export function SkillTiles({
+    techStack,
+}: {
+    techStack: ProfileDataShape['techStack']
+}) {
     const wrapperRef = useRef<HTMLDivElement | null>(null)
     const contentRef = useRef<HTMLDivElement | null>(null)
     const [hasOverflow, setHasOverflow] = useState(false)
@@ -146,9 +151,9 @@ export function SkillTiles() {
             ref={wrapperRef}
         >
             <div className="flex flex-wrap gap-2 pl-2 pt-1" ref={contentRef}>
-                {skills.map(skill => (
+                {techStack.map(tech => (
                     <div
-                        key={skill}
+                        key={tech.name}
                         className={`
             bg-accent
             px-3 py-1
@@ -160,8 +165,20 @@ export function SkillTiles() {
             // hover:scale-105 transition
           `}
                     >
-                        <SkillIcon skill={skill} />
-                        <p className="capitalize">{skill}</p>
+                        {tech.icon ? (
+                            <img
+                                className="mr-2 h-4 w-4"
+                                src={tech.icon}
+                                width={16}
+                                height={16}
+                                loading="lazy"
+                                decoding="async"
+                                alt={`${tech.name} logo`}
+                            />
+                        ) : (
+                            <SkillIcon skill={toSimpleIconsSlug(tech.name)} />
+                        )}
+                        <p>{tech.name}</p>
                     </div>
                 ))}
             </div>
@@ -184,16 +201,15 @@ const TitleBar = ({ title }: { title: string }) => (
 export function ProfileCard({ className }: CommonProps = {}) {
     const t = useTranslations('')
     const [isDesktop, setIsDesktop] = useState(false)
-    const [profileFromGist, setProfileFromGist] =
-        useState<ProfileDataShape | null>(null)
+    const [profileCards, setProfileCards] = useState<ProfileDataShape[]>([])
     const [profileSource, setProfileSource] = useState<
         'loading' | 'gist' | 'local'
     >('loading')
     const [profileLoadReason, setProfileLoadReason] = useState<string | null>(
         null,
     )
-    const d = profileFromGist ?? profileData
-    const shouldShowComingSoonFallback = profileSource === 'loading'
+    const shouldShowComingSoonFallback = profileCards.length === 0
+    const shouldUseSwiper = isDesktop || profileCards.length > 1
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(min-width: 1024px)')
@@ -216,9 +232,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
                 return
             }
 
-            if (result.data) {
-                setProfileFromGist(result.data)
-                setProfileSource('gist')
+            if (result.data.length > 0) {
+                setProfileCards(result.data)
+                setProfileSource(result.source)
                 setProfileLoadReason(null)
             } else {
                 setProfileSource('local')
@@ -231,9 +247,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
         }
     }, [])
 
-    const profileCardContent = (
+    const renderProfileCardContent = (d: ProfileDataShape) => (
         <div className="grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 min-[581px]:min-h-[954px]">
-            <div className="flex items-center justify-between rounded-md border border-ring/40 bg-card/70 px-3 py-2 text-xs font-semibold">
+            {/* <div className="flex items-center justify-between rounded-md border border-ring/40 bg-card/70 px-3 py-2 text-xs font-semibold">
                 <span>
                     Data source:{' '}
                     {profileSource === 'loading'
@@ -247,8 +263,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
                         {profileLoadReason}
                     </span>
                 )}
-            </div>
-            {/* MAIN INFO */}
+            </div> */}
             <div className="grid min-w-0 gap-6 min-[581px]:grid-cols-[minmax(0,1fr)_auto]">
                 <div className="order-1 min-w-0 font-inter text-base font-semibold min-[581px]:col-start-1 min-[581px]:row-start-1">
                     <TitleBar title="main info" />
@@ -277,7 +292,17 @@ export function ProfileCard({ className }: CommonProps = {}) {
                 {/* AVATAR */}
                 <div className="order-2 grid min-w-0 content-start gap-4 min-[581px]:col-start-2 min-[581px]:row-span-2 min-[581px]:row-start-1 min-[581px]:grid-cols-1">
                     <div className="flex h-32 w-32 max-[580px]:h-48 max-[580px]:w-full items-center justify-center rounded-xl bg-gray-500/40 min-[581px]:h-50 min-[581px]:w-50">
-                        <span>Photo</span>
+                        {d.mainInfo.avatar ? (
+                            <img
+                                src={d.mainInfo.avatar}
+                                alt={`${d.mainInfo.name} photo`}
+                                className="h-full w-full rounded-xl object-cover"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        ) : (
+                            <span>Photo</span>
+                        )}
                     </div>
 
                     <div className="flex w-full min-w-0 flex-col gap-2 min-[581px]:max-w-50">
@@ -298,7 +323,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
                             <div className="text-card-foreground mt-1 flex text-xs pointer-events-cursor">
                                 <a
                                     className="bg-gray-600 flex py-1 px-1 rounded-l-sm"
-                                    href="#"
+                                    href={d.wakatime.url}
                                 >
                                     <img
                                         className="me-1"
@@ -349,16 +374,14 @@ export function ProfileCard({ className }: CommonProps = {}) {
                 </div>
             </div>
 
-            {/* TECH STACK */}
             <div>
                 <div className="pb-2.5">
                     <TitleBar title="tech stack" />
                 </div>
 
-                <SkillTiles />
+                <SkillTiles techStack={d.techStack} />
             </div>
 
-            {/* BOTTOM */}
             <div className="grid min-w-0 grid-cols-1 gap-6 min-[581px]:grid-cols-2">
                 <div className="grid grid-flow-row">
                     <TitleBar title="Other Info" />
@@ -369,19 +392,16 @@ export function ProfileCard({ className }: CommonProps = {}) {
                 <div className="grid min-w-0 content-start">
                     <TitleBar title="projects" />
                     <div className="letter-spacing-wide grid grid-flow-row space-y-3 py-3 pt-4 pl-2 font-inter text-sm font-semibold sm:pt-6 sm:text-base">
-                        <a href="#" className="underline">
-                            &gt; Open-source:{' '}
-                            <span>{d.projects.openSource}</span>
-                        </a>
-                        <a href="#" className="underline">
-                            &gt; Startups: <span>{d.projects.startups}</span>
-                        </a>
-                        <a href="#" className="underline">
-                            &gt; Freelance: <span>{d.projects.freelance}</span>
-                        </a>
-                        <a href="#" className="underline">
-                            &gt; Corporate: <span>{d.projects.corporate}</span>
-                        </a>
+                        {[
+                            ['Open-source', d.projects.openSource],
+                            ['Startups', d.projects.startups],
+                            ['Freelance', d.projects.freelance],
+                            ['Corporate', d.projects.corporate],
+                        ].map(([label, value]) => (
+                            <a key={label} href="#" className="underline">
+                                &gt; {label}: <span>{value}</span>
+                            </a>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -415,7 +435,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
         <div
             className={`group w-full min-w-0 max-w-xl [perspective:1000px] ${className}`}
         >
-            {isDesktop ? (
+            {shouldUseSwiper ? (
                 <Swiper
                     effect="cards"
                     grabCursor
@@ -423,15 +443,22 @@ export function ProfileCard({ className }: CommonProps = {}) {
                     modules={[EffectCards]}
                     className="w-full min-w-0"
                 >
-                    <SwiperSlide className="min-w-0">
-                        {profileCardContent}
-                    </SwiperSlide>
-                    <SwiperSlide className="min-w-0">
-                        {comingSoonContent}
-                    </SwiperSlide>
+                    {profileCards.map((card, index) => (
+                        <SwiperSlide
+                            key={`${card.mainInfo.name}-${index}`}
+                            className="min-w-0"
+                        >
+                            {renderProfileCardContent(card)}
+                        </SwiperSlide>
+                    ))}
+                    {profileCards.length === 1 && (
+                        <SwiperSlide className="min-w-0">
+                            {comingSoonContent}
+                        </SwiperSlide>
+                    )}
                 </Swiper>
             ) : (
-                profileCardContent
+                renderProfileCardContent(profileCards[0])
             )}
         </div>
     )

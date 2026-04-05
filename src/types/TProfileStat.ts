@@ -12,6 +12,7 @@ export type TProfileStat = {
         position: string
         sex?: string
         age?: number | string
+        photo?: string
     }
     skills: string
     techStack: string[]
@@ -20,7 +21,7 @@ export type TProfileStat = {
         skillsChart?: Record<SkillKey, number>
     }
     stats: {
-        wakatime?: number
+        wakatime?: number | null
     }
     links: {
         linkedin?: string

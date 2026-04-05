@@ -147,7 +147,7 @@ export function SkillTiles({
 
     return (
         <div
-            className="relative h-[210px] overflow-hidden min-[581px]:h-[243px]"
+            className="relative h-[210px] overflow-hidden min-[581px]:h-[200px]"
             ref={wrapperRef}
         >
             <div className="flex flex-wrap gap-2 pl-2 pt-1" ref={contentRef}>
@@ -343,13 +343,13 @@ export function ProfileCard({ className }: CommonProps = {}) {
 
                             <a href={d.social.linkedin}>
                                 <LinkedInLogoIcon
-                                    className="ms-1 h-6 w-6 text-white"
+                                    className="h-[24px] w-[24px] mt-1  text-white"
                                     aria-label="LinkedIn icon"
                                 />
                             </a>
                             <a href={d.social.github}>
                                 <GitHubLogoIcon
-                                    className="ms-1 h-6 w-6 text-white"
+                                    className="h-[24px] w-[24px] mt-1 text-white"
                                     aria-label="GitHub icon"
                                 />
                             </a>

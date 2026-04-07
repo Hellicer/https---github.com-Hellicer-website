@@ -1,11 +1,10 @@
 import 'server-only'
 import { ProjectDto } from '@/types/github'
-import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
+import { getPrismaClient } from '@/lib/prisma'
 import { fetchGithubProjects } from '@/api/githubApi'
 
-type GithubProjectRow = Awaited<
-    ReturnType<typeof prisma.githubProject.findMany>
->[number]
+type GithubProjectRow = Prisma.GithubProjectGetPayload<Record<string, never>>
 
 function mapDbProjectToProjectDto(project: GithubProjectRow): ProjectDto {
     return {
@@ -22,6 +21,7 @@ function mapDbProjectToProjectDto(project: GithubProjectRow): ProjectDto {
 }
 
 export async function syncGithubProjectsToDb(): Promise<void> {
+    const prisma = getPrismaClient()
     const projects = await fetchGithubProjects()
 
     await prisma.$transaction(async tx => {
@@ -48,6 +48,7 @@ export async function syncGithubProjectsToDb(): Promise<void> {
 }
 
 export async function getGithubProjectsFromDb(): Promise<ProjectDto[]> {
+    const prisma = getPrismaClient()
     const rows = await prisma.githubProject.findMany({
         orderBy: { updatedAt: 'desc' },
     })

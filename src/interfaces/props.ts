@@ -1,4 +1,4 @@
-import { ProjectStack, ProjectStatus } from '@/generated/prisma/edge'
+import { ProjectStack, ProjectStatus } from '@prisma/client'
 
 export interface CommonProps {
     t?: (key: string) => string

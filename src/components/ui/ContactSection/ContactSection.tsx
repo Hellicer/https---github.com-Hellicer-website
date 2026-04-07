@@ -8,14 +8,19 @@ import { PiTelegramLogo } from 'react-icons/pi'
 import { FaWhatsapp } from 'react-icons/fa'
 import { MdOutlineContentCopy } from 'react-icons/md'
 import { FaFigma } from 'react-icons/fa'
+import { useTranslations } from 'next-intl'
 
 export default function ContactSection() {
+    const t = useTranslations('contact')
     return (
-        <section className="w-full px-4 sm:px-6 lg:px-8 text-white" id="contact">
+        <section
+            className="w-full px-4 sm:px-6 lg:px-8 text-white"
+            id="contact"
+        >
             <div className="max-w-[1400px] mx-auto">
                 {/* Title */}
                 <h2 className="font-silkscreen text-2xl sm:text-3xl font-bold tracking-widest uppercase mb-8 sm:mb-12">
-                    Contact us
+                    {t('title')}
                 </h2>
 
                 {/* Content */}
@@ -25,7 +30,7 @@ export default function ContactSection() {
                         {/* Telegram / WhatsApp */}
                         <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-3">
                             <span className="underline underline-offset-4">
-                                Let&apos;s chat on telegram:
+                                {t('tg')}
                             </span>
 
                             <Link href="#" className="hover:opacity-70">
@@ -33,7 +38,7 @@ export default function ContactSection() {
                             </Link>
 
                             <span className="underline underline-offset-4">
-                                or whatsapp:
+                                {t('whatsapp')}:
                             </span>
 
                             <Link href="#" className="hover:opacity-70">
@@ -64,7 +69,7 @@ export default function ContactSection() {
                     {/* Right Side */}
                     <div className="flex items-center flex-wrap gap-3 sm:gap-4 text-sm sm:text-base lg:text-lg self-start md:self-end">
                         <span className="underline underline-offset-4">
-                            Other link:
+                            {t('otherLinks')}:
                         </span>
 
                         <Link href="#" className="hover:opacity-70">

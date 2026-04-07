@@ -82,17 +82,6 @@ export function StatsCard({ className }: CommonProps = {}) {
                         </span>
                     </div>
                 ))}
-                <div className="flex items-center gap-3 sm:gap-4">
-                    <Code2
-                        size={28}
-                        strokeWidth={2}
-                        color="white"
-                        className="h-7 w-7 shrink-0 text-white sm:h-8 sm:w-8 lg:h-9 lg:w-9"
-                    />
-                    <span className="text-lg leading-snug font-semibold text-white sm:text-xl lg:text-2xl">
-                        Gists: {gistsCount ?? '...'}
-                    </span>
-                </div>
             </div>
         </div>
     )

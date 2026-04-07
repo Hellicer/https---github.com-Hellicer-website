@@ -4,173 +4,19 @@ import { CommonProps } from '@/interfaces/props'
 import { Button } from '../button'
 // import { Download } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCards } from 'swiper/modules'
 import type { ProfileDataShape } from '@/types/profile'
 import { fetchProfileStat } from '@/api/profileClientApi'
+import { SkillTiles } from './SkillTiles'
+import { TitleBar } from './TitleBar'
 // import 'swiper/css'
 // import 'swiper/css/effect-cards'
 // import { UIIcon } from '../ui-icon'
 // import MemoryDownload from '../../../../public/memoryDownload.svg'
 
-function SkillIcon({ skill }: { skill: string }) {
-    const [isAvailable, setIsAvailable] = useState<boolean | null>(null)
-    const src = `https://cdn.simpleicons.org/${skill}/${skill}`
-
-    useEffect(() => {
-        let isMounted = true
-        const image = new Image()
-
-        image.onload = () => {
-            if (isMounted) setIsAvailable(true)
-        }
-        image.onerror = () => {
-            if (isMounted) setIsAvailable(false)
-        }
-        image.src = src
-
-        return () => {
-            isMounted = false
-        }
-    }, [src])
-
-    if (isAvailable !== true) return null
-
-    return (
-        <img
-            className="mr-2"
-            src={src}
-            width={16}
-            height={16}
-            loading="lazy"
-            decoding="async"
-            alt={`${skill} logo`}
-        />
-    )
-}
-
-function toSimpleIconsSlug(value: string): string {
-    return value.toLowerCase().replace(/[^a-z0-9]/g, '')
-}
-
-export function SkillTiles({
-    techStack,
-}: {
-    techStack: ProfileDataShape['techStack']
-}) {
-    const wrapperRef = useRef<HTMLDivElement | null>(null)
-    const contentRef = useRef<HTMLDivElement | null>(null)
-    const [hasOverflow, setHasOverflow] = useState(false)
-
-    useEffect(() => {
-        let frameId1 = 0
-        let frameId2 = 0
-
-        const checkOverflow = () => {
-            const wrapper = wrapperRef.current
-            const content = contentRef.current
-
-            if (!wrapper || !content) {
-                setHasOverflow(false)
-                return
-            }
-
-            const verticalOverflow = content.scrollHeight - wrapper.clientHeight
-            const horizontalOverflow = content.scrollWidth - wrapper.clientWidth
-
-            setHasOverflow(verticalOverflow > 1 || horizontalOverflow > 1)
-        }
-
-        const scheduleCheck = () => {
-            cancelAnimationFrame(frameId1)
-            cancelAnimationFrame(frameId2)
-            frameId1 = requestAnimationFrame(() => {
-                checkOverflow()
-                frameId2 = requestAnimationFrame(checkOverflow)
-            })
-        }
-
-        scheduleCheck()
-
-        const resizeObserver = new ResizeObserver(scheduleCheck)
-        if (wrapperRef.current) resizeObserver.observe(wrapperRef.current)
-        if (contentRef.current) resizeObserver.observe(contentRef.current)
-
-        const mutationObserver = new MutationObserver(scheduleCheck)
-        if (contentRef.current) {
-            mutationObserver.observe(contentRef.current, {
-                childList: true,
-                subtree: true,
-                characterData: true,
-            })
-        }
-
-        window.addEventListener('resize', scheduleCheck)
-
-        return () => {
-            cancelAnimationFrame(frameId1)
-            cancelAnimationFrame(frameId2)
-            resizeObserver.disconnect()
-            mutationObserver.disconnect()
-            window.removeEventListener('resize', scheduleCheck)
-        }
-    }, [])
-
-    return (
-        <div
-            className="relative h-[210px] overflow-hidden min-[581px]:h-[200px]"
-            ref={wrapperRef}
-        >
-            <div className="flex flex-wrap gap-2 pl-2 pt-1" ref={contentRef}>
-                {techStack.map(tech => (
-                    <div
-                        key={tech.name}
-                        className={`
-            bg-accent
-            px-3 py-1
-            rounded-md
-            text-xs font-semibold
-            flex items-center
-            shadow-md
-            h-8
-            // hover:scale-105 transition
-          `}
-                    >
-                        {tech.icon ? (
-                            <img
-                                className="mr-2 h-4 w-4"
-                                src={tech.icon}
-                                width={16}
-                                height={16}
-                                loading="lazy"
-                                decoding="async"
-                                alt={`${tech.name} logo`}
-                            />
-                        ) : (
-                            <SkillIcon skill={toSimpleIconsSlug(tech.name)} />
-                        )}
-                        <p>{tech.name}</p>
-                    </div>
-                ))}
-            </div>
-            {hasOverflow && (
-                <div className="pointer-events-none absolute right-2 bottom-2 min-[581px]:right-22">
-                    <span className="inline-flex items-center rounded-md bg-accent px-3 py-1 text-xs font-semibold tracking-widest">
-                        ...
-                    </span>
-                </div>
-            )}
-        </div>
-    )
-}
-
-const TitleBar = ({ title }: { title: string }) => (
-    <p className="text-ring h-fit font-silkscreen text-base font-semibold sm:text-lg lg:text-xl">
-        $: cd ./${title}
-    </p>
-)
 export function ProfileCard({ className }: CommonProps = {}) {
     const t = useTranslations('')
     const [isDesktop, setIsDesktop] = useState(false)
@@ -385,7 +231,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
         <div className="grid min-h-[860px] min-w-0 place-items-center rounded-2xl bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)] min-[581px]:min-h-[954px]">
             <div className="grid gap-4">
                 <p className="rounded-full border border-ring/40 bg-card/70 px-4 py-3 font-silkscreen text-2xl tracking-widest text-ring uppercase shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:px-6 sm:text-3xl">
-                    coming soon
+                    {t('common.comingSoon')}
                 </p>
                 <p className="text-sm text-muted-foreground font-semibold">
                     The next profile card is in progress.

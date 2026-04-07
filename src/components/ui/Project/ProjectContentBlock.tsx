@@ -45,9 +45,9 @@ export default function ProjectContentBlock() {
     const filterOptions = useMemo(() => {
         const stacks = Array.from(new Set(activeProjects.map(p => p.stack)))
         const statuses = Array.from(new Set(activeProjects.map(p => p.status)))
-        const tech = Array.from(new Set(activeProjects.flatMap(p => p.tech))).sort(
-            (a, b) => a.localeCompare(b)
-        )
+        const tech = Array.from(
+            new Set(activeProjects.flatMap(p => p.tech)),
+        ).sort((a, b) => a.localeCompare(b))
 
         return { stacks, statuses, tech }
     }, [activeProjects])
@@ -58,9 +58,12 @@ export default function ProjectContentBlock() {
             const validStatuses = new Set(filterOptions.statuses)
             const validTech = new Set(filterOptions.tech)
 
-            const nextStack = prev.stack && validStacks.has(prev.stack) ? prev.stack : null
+            const nextStack =
+                prev.stack && validStacks.has(prev.stack) ? prev.stack : null
             const nextStatus =
-                prev.status && validStatuses.has(prev.status) ? prev.status : null
+                prev.status && validStatuses.has(prev.status)
+                    ? prev.status
+                    : null
             const nextTech = prev.tech.filter(item => validTech.has(item))
 
             if (
@@ -82,7 +85,7 @@ export default function ProjectContentBlock() {
     return (
         <section className="w-full min-h-200">
             <div className=" w-full grid grid-flow-col font-silkscreen text-4xl font-bold ">
-                <h1>Projects</h1>
+                <h1>{t('project.title')}</h1>
                 {/* <SpecTypeToggle /> */}
             </div>
 

@@ -104,11 +104,15 @@
         }
     },
     "project": {
-        "title": "Projects"
+        "title": "Projects",
+        "nextProfile": "The next profile card is in progress."
     },
     "contact": {
         "title": "Let's discuss your project",
-        "description": "We are ready to bring your ideas to life and help your business grow."
+        "description": "We are ready to bring your ideas to life and help your business grow.",
+        "tg": "Write to us on Telegram:",
+        "whatsapp": "or WhatsApp",
+        "otherLinks": "Other Links"
     },
     "common": {
         "learnMore": "Learn more",
@@ -129,6 +133,10 @@
         "status": "Status",
         "resetFilter": "Reset Filter",
         "download": "Download",
-        "details": "Details"
+        "details": "Details",
+        "empty": "Empty state",
+        "noProjects": "No projects found",
+        "comingSoon": "Coming soon",
+        "tryClearFilters": "Try clearing filters or choosing fewer tech tags."
     }
 }

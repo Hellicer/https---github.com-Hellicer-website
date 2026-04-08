@@ -19,7 +19,6 @@ import { TitleBar } from './TitleBar'
 
 export function ProfileCard({ className }: CommonProps = {}) {
     const t = useTranslations('')
-    const [isDesktop, setIsDesktop] = useState(false)
     const [profileCards, setProfileCards] = useState<ProfileDataShape[]>([])
     const [profileSource, setProfileSource] = useState<
         'loading' | 'gist' | 'local'
@@ -28,20 +27,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
         null,
     )
     const shouldShowComingSoonFallback = profileCards.length === 0
-    const shouldUseSwiper = isDesktop || profileCards.length > 1
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(min-width: 1024px)')
-        const updateDesktopState = () => {
-            setIsDesktop(mediaQuery.matches)
-        }
-
-        updateDesktopState()
-        mediaQuery.addEventListener('change', updateDesktopState)
-
-        return () =>
-            mediaQuery.removeEventListener('change', updateDesktopState)
-    }, [])
+    const shouldUseSwiper = profileCards.length > 0
 
     useEffect(() => {
         let isMounted = true
@@ -66,6 +52,13 @@ export function ProfileCard({ className }: CommonProps = {}) {
         }
     }, [])
 
+    // const mapTitleToKey = {
+    //     mainInfo: 'mainInfo',
+    //     skills: 'skills',
+    //     techStack: 'techStack',
+    //     radar: 'radar',
+    //     projects: 'projects',
+    // }
     const renderProfileCardContent = (d: ProfileDataShape) => (
         <div className="grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 min-[581px]:min-h-[954px]">
             {/* <div className="flex items-center justify-between rounded-md border border-ring/40 bg-card/70 px-3 py-2 text-xs font-semibold">
@@ -85,24 +78,30 @@ export function ProfileCard({ className }: CommonProps = {}) {
             </div> */}
             <div className="grid min-w-0 gap-6 min-[581px]:grid-cols-[minmax(0,1fr)_auto]">
                 <div className="order-1 min-w-0 font-inter text-base font-semibold min-[581px]:col-start-1 min-[581px]:row-start-1">
-                    <TitleBar title="main info" />
+                    <TitleBar title={t('profileCard.mainInfo')} />
                     <div className="pl-2 pt-1">
                         <p>
-                            <span className="text-chart-1">&gt; Name: </span>
+                            <span className="text-chart-1">
+                                &gt; {t('profileCard.name')}:{' '}
+                            </span>
                             {d.mainInfo.name}
                         </p>
                         <p>
                             <span className="text-chart-1">
-                                &gt; Position:{' '}
+                                &gt; {t('profileCard.position')}:{' '}
                             </span>
                             {d.mainInfo.position}
                         </p>
                         <p>
-                            <span className="text-chart-1">&gt; Sex: </span>
+                            <span className="text-chart-1">
+                                &gt; {t('profileCard.sex')}:{' '}
+                            </span>
                             {d.mainInfo.sex}
                         </p>
                         <p>
-                            <span className="text-chart-1">&gt; Old: </span>
+                            <span className="text-chart-1">
+                                &gt; {t('profileCard.age')}:{' '}
+                            </span>
                             {d.mainInfo.age}
                         </p>
                     </div>
@@ -120,7 +119,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                 decoding="async"
                             />
                         ) : (
-                            <span>Photo</span>
+                            <span>{t('profileCard.photo')}</span>
                         )}
                     </div>
 
@@ -178,7 +177,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
 
                 {/* SKILLS */}
                 <div className="order-3 min-[581px]:col-start-1 min-[581px]:row-start-2">
-                    <TitleBar title="skills" />
+                    <TitleBar title={t('profileCard.skills')} />
 
                     <div className="pl-2 pt-1">
                         {d.skills.map(s => (
@@ -195,7 +194,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
 
             <div>
                 <div className="pb-2.5">
-                    <TitleBar title="tech stack" />
+                    <TitleBar title={t('profileCard.techStack')} />
                 </div>
 
                 <SkillTiles techStack={d.techStack} />
@@ -203,13 +202,13 @@ export function ProfileCard({ className }: CommonProps = {}) {
 
             <div className="grid min-w-0 grid-cols-1 gap-6 min-[581px]:grid-cols-2">
                 <div className="grid grid-flow-row">
-                    <TitleBar title="Other Info" />
+                    <TitleBar title={t('profileCard.otherInfo')} />
 
                     <RadarSimple {...d.radar} />
                 </div>
 
                 <div className="grid min-w-0 content-start">
-                    <TitleBar title="projects" />
+                    <TitleBar title={t('profileCard.projects')} />
                     <div className="letter-spacing-wide grid grid-flow-row space-y-3 py-3 pt-4 pl-2 font-inter text-sm font-semibold sm:pt-6 sm:text-base">
                         {[
                             ['Open-source', d.projects.openSource],
@@ -227,25 +226,57 @@ export function ProfileCard({ className }: CommonProps = {}) {
         </div>
     )
 
-    const comingSoonContent = (
-        <div className="grid min-h-[860px] min-w-0 place-items-center rounded-2xl bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)] min-[581px]:min-h-[954px]">
-            <div className="grid gap-4">
-                <p className="rounded-full border border-ring/40 bg-card/70 px-4 py-3 font-silkscreen text-2xl tracking-widest text-ring uppercase shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:px-6 sm:text-3xl">
-                    {t('common.comingSoon')}
-                </p>
-                <p className="text-sm text-muted-foreground font-semibold">
-                    The next profile card is in progress.
-                </p>
+    const emptyProfileCardContent = (
+        <div className="grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 min-[581px]:min-h-[954px]">
+            <div className="grid min-w-0 gap-6 min-[581px]:grid-cols-[minmax(0,1fr)_auto]">
+                <div className="order-1 min-w-0 font-inter text-base font-semibold min-[581px]:col-start-1 min-[581px]:row-start-1">
+                    <TitleBar title="main info" />
+                </div>
+                <div className="order-2 grid min-w-0 content-start gap-4 min-[581px]:col-start-2 min-[581px]:row-span-2 min-[581px]:row-start-1 min-[581px]:grid-cols-1">
+                    <div className="flex h-32 w-32 max-[580px]:h-48 max-[580px]:w-full items-center justify-center rounded-xl bg-gray-500/20 min-[581px]:h-50 min-[581px]:w-50" />
+                </div>
+                <div className="order-3 min-[581px]:col-start-1 min-[581px]:row-start-2">
+                    <TitleBar title="skills" />
+                </div>
+            </div>
+
+            <div>
+                <div className="pb-2.5">
+                    <TitleBar title="tech stack" />
+                </div>
+            </div>
+
+            <div className="grid min-w-0 grid-cols-1 gap-6 min-[581px]:grid-cols-2">
+                <div className="grid grid-flow-row">
+                    <TitleBar title="Other Info" />
+                </div>
+
+                <div className="grid min-w-0 content-start">
+                    <TitleBar title="projects" />
+                </div>
             </div>
         </div>
     )
+
+    // const comingSoonContent = (
+    //     <div className="grid min-h-[860px] min-w-0 place-items-center rounded-2xl bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)] min-[581px]:min-h-[954px]">
+    //         <div className="grid gap-4">
+    //             <p className="rounded-full border border-ring/40 bg-card/70 px-4 py-3 font-silkscreen text-2xl tracking-widest text-ring uppercase shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:px-6 sm:text-3xl">
+    //                 {t('common.comingSoon')}
+    //             </p>
+    //             <p className="text-sm text-muted-foreground font-semibold">
+    //                 The next profile card is in progress.
+    //             </p>
+    //         </div>
+    //     </div>
+    // )
 
     if (shouldShowComingSoonFallback) {
         return (
             <div
                 className={`group w-full min-w-0 max-w-xl [perspective:1000px] ${className}`}
             >
-                {comingSoonContent}
+                {emptyProfileCardContent}
             </div>
         )
     }
@@ -270,11 +301,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
                             {renderProfileCardContent(card)}
                         </SwiperSlide>
                     ))}
-                    {profileCards.length === 1 && (
-                        <SwiperSlide className="min-w-0">
-                            {comingSoonContent}
-                        </SwiperSlide>
-                    )}
+                    <SwiperSlide className="min-w-0">
+                        {emptyProfileCardContent}
+                    </SwiperSlide>
                 </Swiper>
             ) : (
                 renderProfileCardContent(profileCards[0])

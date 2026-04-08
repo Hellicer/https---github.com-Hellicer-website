@@ -1,8 +1,10 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 export default function SpecTypeToggle() {
+    const t = useTranslations('')
     const [selected, setSelected] = React.useState<'frontend' | 'backend'>(
         'frontend',
     )
@@ -15,14 +17,14 @@ export default function SpecTypeToggle() {
                     }
                     onClick={() => setSelected('frontend')}
                 >
-                    Frontend
+                    {t('sideSwitcherLeft')}
                 </span>{' '}
                 /{' '}
                 <span
                     className={selected === 'backend' ? 'text-destructive' : ''}
                     onClick={() => setSelected('backend')}
                 >
-                    Backend
+                    {t('sideSwitcherRight')}
                 </span>
             </div>
         </div>

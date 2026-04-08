@@ -107,13 +107,26 @@
         "title": "Projects",
         "nextProfile": "The next profile card is in progress."
     },
+    "profileCard": {
+        "name": "Name",
+        "position": "Position",
+        "age": "Age",
+        "sex": "Sex",
+        "photo": "Photo",
+        "skills": "Skills",
+        "mainInfo": "Main Info",
+        "techStack": "Tech Stack",
+        "otherInfo": "Other Info",
+        "projects": "Projects"
+    },
     "contact": {
-        "title": "Let's discuss your project",
+        "title": "Contact Us",
         "description": "We are ready to bring your ideas to life and help your business grow.",
         "tg": "Write to us on Telegram:",
         "whatsapp": "or WhatsApp",
         "otherLinks": "Other Links"
     },
+
     "common": {
         "learnMore": "Learn more",
         "hireUs": "Hire Us",

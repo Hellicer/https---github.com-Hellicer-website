@@ -1,10 +1,10 @@
-'use client'
+﻿'use client'
 import { RadarSimple } from './RadarSkills'
 import { CommonProps } from '@/interfaces/props'
 import { Button } from '../button'
-// import { Download } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCards } from 'swiper/modules'
@@ -12,14 +12,12 @@ import type { ProfileDataShape } from '@/types/profile'
 import { fetchProfileStat } from '@/api/profileClientApi'
 import { SkillTiles } from './SkillTiles'
 import { TitleBar } from './TitleBar'
-// import 'swiper/css'
-// import 'swiper/css/effect-cards'
-// import { UIIcon } from '../ui-icon'
-// import MemoryDownload from '../../../../public/memoryDownload.svg'
+import { EmptyProfileCard } from './EmptyProfileCard'
 
 export function ProfileCard({ className }: CommonProps = {}) {
     const t = useTranslations('')
     const [profileCards, setProfileCards] = useState<ProfileDataShape[]>([])
+    const [isEmptyCardModalOpen, setIsEmptyCardModalOpen] = useState(false)
     const [profileSource, setProfileSource] = useState<
         'loading' | 'gist' | 'local'
     >('loading')
@@ -52,13 +50,46 @@ export function ProfileCard({ className }: CommonProps = {}) {
         }
     }, [])
 
-    // const mapTitleToKey = {
-    //     mainInfo: 'mainInfo',
-    //     skills: 'skills',
-    //     techStack: 'techStack',
-    //     radar: 'radar',
-    //     projects: 'projects',
-    // }
+    useEffect(() => {
+        if (!isEmptyCardModalOpen) {
+            return
+        }
+
+        const html = document.documentElement
+        const body = document.body
+        const scrollY = window.scrollY
+
+        const originalHtmlOverflow = html.style.overflow
+        const originalHtmlOverscroll = html.style.overscrollBehavior
+        const originalBodyOverflow = body.style.overflow
+        const originalBodyPosition = body.style.position
+        const originalBodyTop = body.style.top
+        const originalBodyWidth = body.style.width
+        const originalBodyOverscroll = body.style.overscrollBehavior
+        const originalBodyTouchAction = body.style.touchAction
+
+        html.style.overflow = 'hidden'
+        html.style.overscrollBehavior = 'none'
+        body.style.overflow = 'hidden'
+        body.style.position = 'fixed'
+        body.style.top = `-${scrollY}px`
+        body.style.width = '100%'
+        body.style.overscrollBehavior = 'none'
+        body.style.touchAction = 'none'
+
+        return () => {
+            html.style.overflow = originalHtmlOverflow
+            html.style.overscrollBehavior = originalHtmlOverscroll
+            body.style.overflow = originalBodyOverflow
+            body.style.position = originalBodyPosition
+            body.style.top = originalBodyTop
+            body.style.width = originalBodyWidth
+            body.style.overscrollBehavior = originalBodyOverscroll
+            body.style.touchAction = originalBodyTouchAction
+            window.scrollTo(0, scrollY)
+        }
+    }, [isEmptyCardModalOpen])
+
     const renderProfileCardContent = (d: ProfileDataShape) => (
         <div className="grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 min-[581px]:min-h-[954px]">
             {/* <div className="flex items-center justify-between rounded-md border border-ring/40 bg-card/70 px-3 py-2 text-xs font-semibold">
@@ -107,7 +138,6 @@ export function ProfileCard({ className }: CommonProps = {}) {
                     </div>
                 </div>
 
-                {/* AVATAR */}
                 <div className="order-2 grid min-w-0 content-start gap-4 min-[581px]:col-start-2 min-[581px]:row-span-2 min-[581px]:row-start-1 min-[581px]:grid-cols-1">
                     <div className="flex h-32 w-32 max-[580px]:h-48 max-[580px]:w-full items-center justify-center rounded-xl bg-gray-500/40 min-[581px]:h-50 min-[581px]:w-50">
                         {d.mainInfo.avatar ? (
@@ -175,7 +205,6 @@ export function ProfileCard({ className }: CommonProps = {}) {
                     </div>
                 </div>
 
-                {/* SKILLS */}
                 <div className="order-3 min-[581px]:col-start-1 min-[581px]:row-start-2">
                     <TitleBar title={t('profileCard.skills')} />
 
@@ -226,88 +255,94 @@ export function ProfileCard({ className }: CommonProps = {}) {
         </div>
     )
 
-    const emptyProfileCardContent = (
-        <div className="grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 min-[581px]:min-h-[954px]">
-            <div className="grid min-w-0 gap-6 min-[581px]:grid-cols-[minmax(0,1fr)_auto]">
-                <div className="order-1 min-w-0 font-inter text-base font-semibold min-[581px]:col-start-1 min-[581px]:row-start-1">
-                    <TitleBar title="main info" />
-                </div>
-                <div className="order-2 grid min-w-0 content-start gap-4 min-[581px]:col-start-2 min-[581px]:row-span-2 min-[581px]:row-start-1 min-[581px]:grid-cols-1">
-                    <div className="flex h-32 w-32 max-[580px]:h-48 max-[580px]:w-full items-center justify-center rounded-xl bg-gray-500/20 min-[581px]:h-50 min-[581px]:w-50" />
-                </div>
-                <div className="order-3 min-[581px]:col-start-1 min-[581px]:row-start-2">
-                    <TitleBar title="skills" />
-                </div>
-            </div>
-
-            <div>
-                <div className="pb-2.5">
-                    <TitleBar title="tech stack" />
-                </div>
-            </div>
-
-            <div className="grid min-w-0 grid-cols-1 gap-6 min-[581px]:grid-cols-2">
-                <div className="grid grid-flow-row">
-                    <TitleBar title="Other Info" />
-                </div>
-
-                <div className="grid min-w-0 content-start">
-                    <TitleBar title="projects" />
-                </div>
+    const comingSoonContent = (
+        <div className="grid min-h-[860px] min-w-0 place-items-center rounded-2xl bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)] min-[581px]:min-h-[954px]">
+            <div className="grid gap-4">
+                <p className="rounded-full border border-ring/40 bg-card/70 px-4 py-3 font-silkscreen text-2xl tracking-widest text-ring uppercase shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:px-6 sm:text-3xl">
+                    {t('profile.comingSoon')}
+                </p>
+                <p className="text-sm text-muted-foreground font-semibold">
+                    {t('profile.comingSoonDescription')}
+                </p>
+                <Button
+                    variant="secondary"
+                    size="default"
+                    className="mx-auto text-2xl pointer-events-auto"
+                    onClick={() => setIsEmptyCardModalOpen(true)}
+                >
+                    {'+ ' + t('profile.submitApplication')}
+                </Button>
             </div>
         </div>
     )
 
-    // const comingSoonContent = (
-    //     <div className="grid min-h-[860px] min-w-0 place-items-center rounded-2xl bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)] min-[581px]:min-h-[954px]">
-    //         <div className="grid gap-4">
-    //             <p className="rounded-full border border-ring/40 bg-card/70 px-4 py-3 font-silkscreen text-2xl tracking-widest text-ring uppercase shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:px-6 sm:text-3xl">
-    //                 {t('common.comingSoon')}
-    //             </p>
-    //             <p className="text-sm text-muted-foreground font-semibold">
-    //                 The next profile card is in progress.
-    //             </p>
-    //         </div>
-    //     </div>
-    // )
+    const emptyCardModalContent = (
+        <div className="fixed inset-0 z-[9999] overflow-y-auto overscroll-contain bg-black/70 p-4">
+            <div
+                className="relative mx-auto w-full max-w-xl pt-8"
+                onClick={e => e.stopPropagation()}
+            >
+                <button
+                    type="button"
+                    className="absolute top-10 -right-12 z-10 rounded-md border border-ring/40 bg-card px-2 py-1 text-sm font-semibold text-white hover:bg-card/90"
+                    onClick={() => setIsEmptyCardModalOpen(false)}
+                    aria-label="Close modal"
+                >
+                    {'\u00D7'}
+                </button>
+                <EmptyProfileCard />
+            </div>
+        </div>
+    )
+
+    const emptyCardModal =
+        isEmptyCardModalOpen && typeof document !== 'undefined'
+            ? createPortal(emptyCardModalContent, document.body)
+            : null
 
     if (shouldShowComingSoonFallback) {
         return (
-            <div
-                className={`group w-full min-w-0 max-w-xl [perspective:1000px] ${className}`}
-            >
-                {emptyProfileCardContent}
-            </div>
+            <>
+                <div
+                    className={`group w-full min-w-0 max-w-xl [perspective:1000px] ${className}`}
+                >
+                    {comingSoonContent}
+                </div>
+                {emptyCardModal}
+            </>
         )
     }
 
     return (
-        <div
-            className={`group w-full min-w-0 max-w-xl [perspective:1000px] ${className}`}
-        >
-            {shouldUseSwiper ? (
-                <Swiper
-                    effect="cards"
-                    grabCursor
-                    autoHeight
-                    modules={[EffectCards]}
-                    className="w-full min-w-0"
-                >
-                    {profileCards.map((card, index) => (
-                        <SwiperSlide
-                            key={`${card.mainInfo.name}-${index}`}
-                            className="min-w-0"
-                        >
-                            {renderProfileCardContent(card)}
+        <>
+            <div
+                className={`group w-full min-w-0 max-w-xl [perspective:1000px] ${className}`}
+            >
+                {shouldUseSwiper ? (
+                    <Swiper
+                        effect="cards"
+                        grabCursor
+                        autoHeight
+                        modules={[EffectCards]}
+                        className="w-full min-w-0"
+                    >
+                        {profileCards.map((card, index) => (
+                            <SwiperSlide
+                                key={`${card.mainInfo.name}-${index}`}
+                                className="min-w-0"
+                            >
+                                {renderProfileCardContent(card)}
+                            </SwiperSlide>
+                        ))}
+                        <SwiperSlide className="min-w-0">
+                            {comingSoonContent}
                         </SwiperSlide>
-                    ))}
-                    <SwiperSlide className="min-w-0">
-                        {emptyProfileCardContent}
-                    </SwiperSlide>
-                </Swiper>
-            ) : (
-                renderProfileCardContent(profileCards[0])
-            )}
-        </div>
+                    </Swiper>
+                ) : (
+                    renderProfileCardContent(profileCards[0])
+                )}
+            </div>
+            {emptyCardModal}
+        </>
     )
 }

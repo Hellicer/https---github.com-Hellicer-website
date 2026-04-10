@@ -5,10 +5,21 @@ import type { ProfileDataShape } from '@/types/profile'
 import { SkillIcon } from './SkillIcon'
 import { toSimpleIconsSlug } from './toSimpleIconsSlug'
 
+export type SkillTileItem = {
+    name: string
+    icon?: string | null
+}
+
 export function SkillTiles({
     techStack,
+    onRemove,
+    fixedHeight = true,
+    showOverflowIndicator = true,
 }: {
-    techStack: ProfileDataShape['techStack']
+    techStack: ProfileDataShape['techStack'] | SkillTileItem[]
+    onRemove?: (name: string) => void
+    fixedHeight?: boolean
+    showOverflowIndicator?: boolean
 }) {
     const wrapperRef = useRef<HTMLDivElement | null>(null)
     const contentRef = useRef<HTMLDivElement | null>(null)
@@ -70,42 +81,62 @@ export function SkillTiles({
 
     return (
         <div
-            className="relative h-[210px] overflow-hidden min-[581px]:h-[200px]"
+            className={`relative ${fixedHeight ? 'h-[210px] overflow-hidden min-[581px]:h-[200px]' : ''}`}
             ref={wrapperRef}
         >
             <div className="flex flex-wrap gap-2 pl-2 pt-1" ref={contentRef}>
                 {techStack.map(tech => (
-                    <div
-                        key={tech.name}
-                        className={`
-            bg-accent
-            px-3 py-1
-            rounded-md
-            text-xs font-semibold
-            flex items-center
-            shadow-md
-            h-8
-            // hover:scale-105 transition
-          `}
-                    >
-                        {tech.icon ? (
-                            <img
-                                className="mr-2 h-4 w-4"
-                                src={tech.icon}
-                                width={16}
-                                height={16}
-                                loading="lazy"
-                                decoding="async"
-                                alt={`${tech.name} logo`}
-                            />
+                    <div key={tech.name}>
+                        {onRemove ? (
+                            <button
+                                type="button"
+                                onClick={() => onRemove(tech.name)}
+                                className="bg-accent px-3 py-1 rounded-md text-xs font-semibold flex items-center shadow-md h-8 hover:opacity-90 transition-opacity"
+                                title="Remove"
+                                aria-label={`Remove ${tech.name}`}
+                            >
+                                {tech.icon ? (
+                                    <img
+                                        className="mr-2 h-4 w-4"
+                                        src={tech.icon}
+                                        width={16}
+                                        height={16}
+                                        loading="lazy"
+                                        decoding="async"
+                                        alt={`${tech.name} logo`}
+                                    />
+                                ) : (
+                                    <SkillIcon
+                                        skill={toSimpleIconsSlug(tech.name)}
+                                    />
+                                )}
+                                <p>{tech.name}</p>
+                                <span className="ml-2 leading-none">×</span>
+                            </button>
                         ) : (
-                            <SkillIcon skill={toSimpleIconsSlug(tech.name)} />
+                            <div className="bg-accent px-3 py-1 rounded-md text-xs font-semibold flex items-center shadow-md h-8">
+                                {tech.icon ? (
+                                    <img
+                                        className="mr-2 h-4 w-4"
+                                        src={tech.icon}
+                                        width={16}
+                                        height={16}
+                                        loading="lazy"
+                                        decoding="async"
+                                        alt={`${tech.name} logo`}
+                                    />
+                                ) : (
+                                    <SkillIcon
+                                        skill={toSimpleIconsSlug(tech.name)}
+                                    />
+                                )}
+                                <p>{tech.name}</p>
+                            </div>
                         )}
-                        <p>{tech.name}</p>
                     </div>
                 ))}
             </div>
-            {hasOverflow && (
+            {showOverflowIndicator && hasOverflow && (
                 <div className="pointer-events-none absolute right-2 bottom-2 min-[581px]:right-22">
                     <span className="inline-flex items-center rounded-md bg-accent px-3 py-1 text-xs font-semibold tracking-widest">
                         ...

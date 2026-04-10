@@ -40,7 +40,7 @@ export default async function MainPage() {
                             >
                                 <a href={'#'} className="">
                                     {/* {cta} */}
-                                    <span className="">
+                                    <span className="text-2xl">
                                         {t('common.hireUs')}
                                     </span>
                                     <Inbox className=" ms-2 min-h-5.5 min-w-5.5" />

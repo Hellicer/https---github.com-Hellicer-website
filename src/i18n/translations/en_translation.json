@@ -117,7 +117,15 @@
         "mainInfo": "Main Info",
         "techStack": "Tech Stack",
         "otherInfo": "Other Info",
-        "projects": "Projects"
+        "projects": "Projects",
+        "uploadCv": "Upload CV"
+    },
+    "profile": {
+        "soon": "Soon",
+        "comingSoon": "Coming Soon",
+        "comingSoonDescription": "This section is under development.",
+        "viewEmptyCard": "View Empty Profile Card",
+        "submitApplication": "Submit Application"
     },
     "contact": {
         "title": "Contact Us",
@@ -131,6 +139,8 @@
         "learnMore": "Learn more",
         "hireUs": "Hire Us",
         "reset": "Reset",
+        "cancel": "Cancel",
+        "submit": "Submit",
         "applyFilters": "Apply Filters",
         "all": "All",
         "noProjectsFound": "No projects found",
@@ -149,7 +159,7 @@
         "details": "Details",
         "empty": "Empty state",
         "noProjects": "No projects found",
-        "comingSoon": "Coming soon",
-        "tryClearFilters": "Try clearing filters or choosing fewer tech tags."
+        "tryClearFilters": "Try clearing filters or choosing fewer tech tags.",
+        "upload": "Upload resume in PDF or DOCX format"
     }
 }

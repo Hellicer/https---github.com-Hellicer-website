@@ -211,7 +211,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
                     <div className="pl-2 pt-1">
                         {d.skills.map(s => (
                             <p
-                                className="font-inter text-base font-semibold"
+                                className="font-inter text-base font-semibold  w-full  wrap-break-word "
                                 key={s}
                             >
                                 {s}
@@ -290,7 +290,9 @@ export function ProfileCard({ className }: CommonProps = {}) {
                 >
                     {'\u00D7'}
                 </button>
-                <EmptyProfileCard />
+                <EmptyProfileCard
+                    onCancel={() => setIsEmptyCardModalOpen(false)}
+                />
             </div>
         </div>
     )

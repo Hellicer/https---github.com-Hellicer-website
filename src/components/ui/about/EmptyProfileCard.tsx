@@ -9,8 +9,18 @@ import { useTranslations } from 'next-intl'
 import { ChevronDown, FileText, ImagePlus } from 'lucide-react'
 import { TECH_NAMES as techNames } from '@/data/techNames'
 import { SkillTiles } from './SkillTiles'
+import type {
+    ProfileSubmissionPayload,
+    ProfileSubmissionResult,
+} from '@/types/profile'
 
-export function EmptyProfileCard() {
+type EmptyProfileCardProps = {
+    onCancel?: () => void
+}
+
+const MAX_PHOTO_SIZE_BYTES = 1024 * 1024
+
+export function EmptyProfileCard({ onCancel }: EmptyProfileCardProps = {}) {
     const t = useTranslations()
     const [mainInfoDraft, setMainInfoDraft] = useState({
         name: '',
@@ -32,6 +42,14 @@ export function EmptyProfileCard() {
     const [isPhotoDragActive, setIsPhotoDragActive] = useState(false)
     const [photoFileName, setPhotoFileName] = useState('')
     const [photoPreviewUrl, setPhotoPreviewUrl] = useState('')
+    const [cvFile, setCvFile] = useState<File | null>(null)
+    const [photoFile, setPhotoFile] = useState<File | null>(null)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitError, setSubmitError] = useState<string | null>(null)
+    const [submitResult, setSubmitResult] =
+        useState<ProfileSubmissionResult | null>(null)
+    const [photoError, setPhotoError] = useState<string | null>(null)
+    const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
     const normalizedSearch = techSearch.trim().toLowerCase()
     const filteredTechOptions = techNames
@@ -76,7 +94,9 @@ export function EmptyProfileCard() {
         if (!files || files.length === 0) {
             return
         }
-        setCvFileName(files[0].name)
+        const file = files[0]
+        setCvFileName(file.name)
+        setCvFile(file)
     }
 
     const handlePhotoFiles = (files: FileList | null) => {
@@ -86,8 +106,15 @@ export function EmptyProfileCard() {
 
         const file = files[0]
         if (!file.type.startsWith('image/')) {
+            setPhotoError('Please upload an image file.')
             return
         }
+
+        if (file.size > MAX_PHOTO_SIZE_BYTES) {
+            setPhotoError('Photo must be up to 1 MB.')
+            return
+        }
+        setPhotoError(null)
 
         const nextUrl = URL.createObjectURL(file)
         setPhotoPreviewUrl(prev => {
@@ -97,6 +124,93 @@ export function EmptyProfileCard() {
             return nextUrl
         })
         setPhotoFileName(file.name)
+        setPhotoFile(file)
+    }
+
+    const handleSubmit = async () => {
+        const name = mainInfoDraft.name.trim()
+        const position = mainInfoDraft.position.trim()
+        const ageRaw = mainInfoDraft.age.trim()
+        const age = Number(ageRaw)
+        const skillsLength = skillsDraft.trim().length
+
+        if (!name || !position || !ageRaw) {
+            setSubmitError('Name, position and age are required.')
+            return
+        }
+
+        if (!Number.isFinite(age) || age < 14 || age > 91) {
+            setSubmitError('Age must be between 14 and 91.')
+            return
+        }
+
+        if (selectedTech.length < 2) {
+            setSubmitError('Add at least 2 technologies in tech stack.')
+            return
+        }
+
+        if (skillsLength < 50) {
+            setSubmitError('Skills must contain at least 50 characters.')
+            return
+        }
+
+        if (photoFile && photoFile.size > MAX_PHOTO_SIZE_BYTES) {
+            setSubmitError('Photo must be up to 1 MB.')
+            return
+        }
+
+        setIsSubmitting(true)
+        setSubmitError(null)
+        setSubmitResult(null)
+
+        const payload: ProfileSubmissionPayload = {
+            mainInfo: {
+                name,
+                position,
+                sex: mainInfoDraft.sex.trim(),
+                age,
+            },
+            skills: skillsDraft
+                .split('\n')
+                .map(item => item.trim())
+                .filter(Boolean),
+            techStack: selectedTech,
+        }
+
+        try {
+            const formData = new FormData()
+            formData.set('payload', JSON.stringify(payload))
+            if (photoFile) {
+                formData.set('photo', photoFile)
+            }
+            if (cvFile) {
+                formData.set('cv', cvFile)
+            }
+
+            const response = await fetch('/api/profile/submit', {
+                method: 'POST',
+                body: formData,
+            })
+
+            if (!response.ok) {
+                throw new Error('Failed to submit profile form.')
+            }
+
+            const result = (await response.json()) as ProfileSubmissionResult
+            setSubmitResult(result)
+            setSuccessMessage('вашу вакансія була відправлена, дякую!')
+            setTimeout(() => {
+                window.location.reload()
+            }, 1200)
+        } catch (error) {
+            setSubmitError(
+                error instanceof Error
+                    ? error.message
+                    : 'Unknown submit error.',
+            )
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     useEffect(() => {
@@ -220,6 +334,9 @@ export function EmptyProfileCard() {
                             </div>
                         )}
                     </div>
+                    {photoError && (
+                        <p className="text-xs text-destructive">{photoError}</p>
+                    )}
                     {photoPreviewUrl && (
                         <Button
                             type="button"
@@ -426,6 +543,26 @@ export function EmptyProfileCard() {
                     variant="destructive"
                     size="sm"
                     className="font-silkscreen text-2xl cursor-pointer"
+                    onClick={() => {
+                        if (onCancel) {
+                            onCancel()
+                            return
+                        }
+                        setMainInfoDraft({
+                            name: '',
+                            position: '',
+                            age: '',
+                            sex: '',
+                        })
+                        setSkillsDraft('')
+                        setSelectedTech([])
+                        setCvFileName('')
+                        setCvFile(null)
+                        setPhotoFileName('')
+                        setPhotoFile(null)
+                        setSubmitError(null)
+                        setSubmitResult(null)
+                    }}
                 >
                     {t('common.cancel')}
                 </Button>
@@ -434,10 +571,43 @@ export function EmptyProfileCard() {
                     variant="secondary"
                     size="sm"
                     className="font-silkscreen text-2xl cursor-pointer"
+                    onClick={handleSubmit}
+                    disabled={isSubmitting}
                 >
-                    {t('common.submit')}
+                    {isSubmitting ? t('common.loading') : t('common.submit')}
                 </Button>
             </div>
+            {(submitError || submitResult || successMessage) && (
+                <div className="rounded-md border border-ring/40 bg-card/40 p-3 text-xs">
+                    {submitError && (
+                        <p className="text-destructive">{submitError}</p>
+                    )}
+                    {successMessage && (
+                        <p className="text-green-400 font-semibold">
+                            {successMessage}
+                        </p>
+                    )}
+                    {submitResult && (
+                        <div className="grid gap-1 text-muted-foreground">
+                            <p>Submitted: {submitResult.submissionId}</p>
+                            <p>Photo URL: {submitResult.photoUrl ?? 'not provided'}</p>
+                            <p>CV URL: {submitResult.cvUrl ?? 'not provided'}</p>
+                            <p>Gist ID: {submitResult.gistId}</p>
+                            <p>
+                                Gist URL:{' '}
+                                <a
+                                    href={submitResult.gistUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="underline text-chart-1"
+                                >
+                                    {submitResult.gistUrl}
+                                </a>
+                            </p>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     )
 }

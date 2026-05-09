@@ -40,6 +40,9 @@ export function IconCloud({ icons, images }: IconCloudProps) {
   const rotationRef = useRef({ x: 0, y: 0 })
   const iconCanvasesRef = useRef<HTMLCanvasElement[]>([])
   const imagesLoadedRef = useRef<boolean[]>([])
+  const isInViewRef = useRef(true)
+  const isPageVisibleRef = useRef(true)
+  const prefersReducedMotionRef = useRef(false)
 
   // Create icon canvases once when icons/images change
   useEffect(() => {
@@ -215,6 +218,18 @@ export function IconCloud({ icons, images }: IconCloudProps) {
     const ctx = canvas?.getContext("2d")
     if (!canvas || !ctx) return
 
+    const shouldAnimate = () =>
+      isInViewRef.current &&
+      isPageVisibleRef.current &&
+      !prefersReducedMotionRef.current
+
+    const stopAnimation = () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current)
+        animationFrameRef.current = 0
+      }
+    }
+
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
@@ -245,7 +260,7 @@ export function IconCloud({ icons, images }: IconCloudProps) {
         if (progress >= 1) {
           targetRotationRef.current = null
         }
-      } else if (!isDraggingRef.current) {
+      } else if (!isDraggingRef.current && !prefersReducedMotionRef.current) {
         rotationRef.current = {
           x: rotationRef.current.x + (dy / canvas.height) * speed,
           y: rotationRef.current.y + (dx / canvas.width) * speed,
@@ -293,15 +308,71 @@ export function IconCloud({ icons, images }: IconCloudProps) {
 
         ctx.restore()
       })
+      if (shouldAnimate()) {
+        animationFrameRef.current = requestAnimationFrame(animate)
+      } else {
+        animationFrameRef.current = 0
+      }
+    }
+
+    const startAnimation = () => {
+      if (animationFrameRef.current) return
       animationFrameRef.current = requestAnimationFrame(animate)
     }
 
-    animate()
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
+    prefersReducedMotionRef.current = mediaQuery.matches
+    isPageVisibleRef.current = !document.hidden
+
+    const handleVisibilityChange = () => {
+      isPageVisibleRef.current = !document.hidden
+      if (shouldAnimate()) {
+        startAnimation()
+      } else {
+        stopAnimation()
+        animate()
+      }
+    }
+
+    const handleReducedMotionChange = () => {
+      prefersReducedMotionRef.current = mediaQuery.matches
+      if (shouldAnimate()) {
+        startAnimation()
+      } else {
+        stopAnimation()
+        animate()
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isInViewRef.current = Boolean(entries[0]?.isIntersecting)
+        if (shouldAnimate()) {
+          startAnimation()
+        } else {
+          stopAnimation()
+          animate()
+        }
+      },
+      { threshold: 0.05 }
+    )
+
+    observer.observe(canvas)
+
+    if (shouldAnimate()) {
+      startAnimation()
+    } else {
+      animate()
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+    mediaQuery.addEventListener("change", handleReducedMotionChange)
 
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
-      }
+      stopAnimation()
+      observer.disconnect()
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+      mediaQuery.removeEventListener("change", handleReducedMotionChange)
     }
   }, [icons, images, iconPositions])
 

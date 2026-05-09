@@ -1,9 +1,7 @@
-import type { Metadata } from 'next'
 import { Inter, Silkscreen, Handjet } from 'next/font/google'
 import './globals.css'
 import localFont from 'next/font/local'
-import { NextIntlClientProvider } from 'next-intl'
-import { getLocale, getMessages } from 'next-intl/server'
+import { getLocale } from 'next-intl/server'
 
 const interSans = Inter({
     variable: '--font-inter-sans',
@@ -35,16 +33,13 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode
 }>) {
-    const messages = await getMessages()
     const locale = await getLocale()
     return (
         <html lang={locale}>
             <body
                 className={`${interSans.variable} ${silkscreen.variable} ${handjet.variable} antialiased w-full justify-self-center`}
             >
-                <NextIntlClientProvider messages={messages} locale={locale}>
-                    {children}
-                </NextIntlClientProvider>
+                {children}
             </body>
         </html>
     )

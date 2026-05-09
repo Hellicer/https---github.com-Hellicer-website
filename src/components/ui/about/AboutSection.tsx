@@ -2,8 +2,13 @@ import { useTranslations } from 'next-intl'
 import { StatsCard } from './StatsCard'
 import { ProfileCard } from './ProfileCard'
 import { TestimonialsMarquee } from './TestimonialsMarquee'
+import type { ProfileLoadResult } from '@/types/profile'
 
-export function AboutSection() {
+export function AboutSection({
+    initialProfileLoad,
+}: {
+    initialProfileLoad?: ProfileLoadResult
+}) {
     const t = useTranslations('about')
 
     return (
@@ -25,7 +30,10 @@ export function AboutSection() {
                 </div>
 
                 <div className=" max-lg:justify-items-center grid w-full min-w-0 cursor-pointer gap-8 lg:mt-12 lg:gap-10 lg:ml-20">
-                    <ProfileCard className="w-full max-w-158" />
+                    <ProfileCard
+                        className="w-full max-w-158"
+                        initialProfileLoad={initialProfileLoad}
+                    />
                 </div>
             </div>
         </section>

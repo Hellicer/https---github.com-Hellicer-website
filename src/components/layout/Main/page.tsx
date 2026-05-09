@@ -6,9 +6,22 @@ import { Inbox } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import LazyAboutSection from './LazyAboutSection'
 import LazyBentoMenu from './LazyBentoMenu'
+import { getGithubProjectsFromDb } from '@/lib/github'
+import { fetchProfileCardsFromGists } from '@/api/profileStatApi'
+import { projects, type Project } from '@/data/projects.data'
 
 export default async function MainPage() {
     const t = await getTranslations('')
+    const [dbProjects, initialProfileLoad] = await Promise.all([
+        getGithubProjectsFromDb().catch(() => []),
+        fetchProfileCardsFromGists().catch(() => ({
+            data: [],
+            source: 'local' as const,
+            reason: 'Failed to load profile cards on server.',
+        })),
+    ])
+    const initialProjects: Project[] =
+        dbProjects.length > 0 ? dbProjects : projects
 
     return (
         <main className="pt-20 ">
@@ -55,13 +68,13 @@ export default async function MainPage() {
             </GlobeWrapper>
             <div className="relative mx-auto grid max-w-360 z-10 justify-items-center max-lg:px-2 lg:p-4 gap-50 items-stretch mt-20">
                 <SpecializationCards />
-                <LazyAboutSection />
+                <LazyAboutSection initialProfileLoad={initialProfileLoad} />
             </div>
             <div
                 className="relative mx-auto grid max-w-360 mt-40 z-10 justify-items-center p-4 gap-16 items-stretch  "
                 id="projects"
             >
-                <ProjectContentBlock />
+                <ProjectContentBlock initialProjects={initialProjects} />
             </div>
         </main>
     )

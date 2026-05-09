@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
                 hostname: 'cdn.simpleicons.org',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'raw.githubusercontent.com',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'placehold.net',
+                pathname: '/**',
+            },
         ],
     },
 

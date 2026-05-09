@@ -5,42 +5,21 @@ import { ProjectsGrid } from '@/components/ui/Project/ProjectsGrid'
 import { FiltersState } from '@/interfaces/props'
 import { Project, projects } from '@/data/projects.data'
 import { useEffect, useMemo, useState } from 'react'
-import SpecTypeToggle from '../SpecTypeToggle/SpecTypeToggle'
 import { useTranslations } from 'next-intl'
 import { RotateCcw } from 'lucide-react'
 
-export default function ProjectContentBlock() {
+export default function ProjectContentBlock({
+    initialProjects = projects,
+}: {
+    initialProjects?: Project[]
+}) {
     const t = useTranslations('')
-    const [activeProjects, setActiveProjects] = useState<Project[]>(projects)
+    const [activeProjects] = useState<Project[]>(initialProjects)
     const [filters, setFilters] = useState<FiltersState>({
         stack: null,
         status: null,
         tech: [],
     })
-
-    useEffect(() => {
-        let isMounted = true
-
-        const loadGithubProjects = async () => {
-            try {
-                const response = await fetch('/api/github/repos')
-                if (!response.ok) return
-
-                const data = (await response.json()) as Project[]
-                if (isMounted && Array.isArray(data) && data.length > 0) {
-                    setActiveProjects(data)
-                }
-            } catch {
-                // Keep local fallback projects if request fails.
-            }
-        }
-
-        loadGithubProjects()
-
-        return () => {
-            isMounted = false
-        }
-    }, [])
 
     const filterOptions = useMemo(() => {
         const stacks = Array.from(new Set(activeProjects.map(p => p.stack)))

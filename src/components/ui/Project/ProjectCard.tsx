@@ -5,10 +5,11 @@ import {
     PROJECT_PREVIEW_PLACEHOLDER,
     resolveProjectPreviewUrl,
 } from '@/lib/projectPreview'
-import { CircleEllipsis, ExternalLink, Github } from 'lucide-react'
+import { CircleEllipsis, ExternalLink } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Tag from '@/components/ui/Tag'
+import Image from 'next/image'
 export default function ProjectCard({ project }: { project: Project }) {
     const t = useTranslations('')
     const [previewSrc, setPreviewSrc] = useState(
@@ -26,11 +27,13 @@ export default function ProjectCard({ project }: { project: Project }) {
                 {project.title}
             </h3>
             <div className="relative h-40 overflow-hidden rounded-xl bg-gray-200 min-[581px]:h-44">
-                <img
+                <Image
                     alt={`${project.title} preview`}
                     className="h-full w-full object-contain"
                     onError={() => setPreviewSrc(PROJECT_PREVIEW_PLACEHOLDER)}
                     src={previewSrc}
+                    fill
+                    sizes="(max-width: 580px) 100vw, 360px"
                 />
             </div>
 

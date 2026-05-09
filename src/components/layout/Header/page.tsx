@@ -51,6 +51,8 @@ export default function Header({ className }: { className?: string }) {
     }, [])
 
     useEffect(() => {
+        const isDesktopViewport = () => window.innerWidth >= 768
+
         const updateGlowVar = (value: number) => {
             if (glowRef.current) {
                 glowRef.current.style.setProperty(
@@ -75,42 +77,90 @@ export default function Header({ className }: { className?: string }) {
             )
         }
 
+        const stopAnimation = () => {
+            if (rafRef.current !== null) {
+                window.cancelAnimationFrame(rafRef.current)
+                rafRef.current = null
+            }
+        }
+
+        const animate = () => {
+            if (document.hidden || !isDesktopViewport()) {
+                stopAnimation()
+                return
+            }
+
+            const target = targetGlowXRef.current
+            const current = currentGlowXRef.current
+            const next = current + (target - current) * 0.12
+            const hasSettled = Math.abs(target - next) < 0.05
+
+            currentGlowXRef.current = hasSettled ? target : next
+            updateGlowVar(currentGlowXRef.current)
+
+            if (hasSettled) {
+                stopAnimation()
+                return
+            }
+
+            rafRef.current = window.requestAnimationFrame(animate)
+        }
+
+        const startAnimation = () => {
+            if (rafRef.current !== null || document.hidden) {
+                return
+            }
+
+            rafRef.current = window.requestAnimationFrame(animate)
+        }
+
         const handleMouseMove = (event: MouseEvent) => {
-            if (window.innerWidth < 768) return
+            if (!isDesktopViewport()) return
             const next = Math.min(
                 90,
                 Math.max(10, (event.clientX / window.innerWidth) * 100),
             )
             targetGlowXRef.current = next
+            startAnimation()
         }
 
         const handleResize = () => {
-            if (window.innerWidth < 768) {
+            if (!isDesktopViewport()) {
+                stopAnimation()
                 currentGlowXRef.current = 50
                 targetGlowXRef.current = 50
                 updateGlowVar(50)
             }
         }
 
-        const animate = () => {
-            const target = targetGlowXRef.current
-            const current = currentGlowXRef.current
-            const next = current + (target - current) * 0.01
-            currentGlowXRef.current =
-                Math.abs(target - next) < 0.05 ? target : next
-            updateGlowVar(currentGlowXRef.current)
-            rafRef.current = window.requestAnimationFrame(animate)
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                stopAnimation()
+                return
+            }
+
+            if (
+                isDesktopViewport() &&
+                Math.abs(targetGlowXRef.current - currentGlowXRef.current) >= 0.05
+            ) {
+                startAnimation()
+            }
         }
 
         updateGlowColorVar()
         updateGlowVar(currentGlowXRef.current)
         window.addEventListener('mousemove', handleMouseMove, { passive: true })
         window.addEventListener('resize', handleResize)
-        rafRef.current = window.requestAnimationFrame(animate)
+        document.addEventListener('visibilitychange', handleVisibilityChange)
+
         return () => {
             window.removeEventListener('mousemove', handleMouseMove)
             window.removeEventListener('resize', handleResize)
-            if (rafRef.current) window.cancelAnimationFrame(rafRef.current)
+            document.removeEventListener(
+                'visibilitychange',
+                handleVisibilityChange,
+            )
+            stopAnimation()
         }
     }, [])
 

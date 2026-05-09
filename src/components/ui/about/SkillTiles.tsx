@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { ProfileDataShape } from '@/types/profile'
 import { SkillIcon } from './SkillIcon'
 import { toSimpleIconsSlug } from './toSimpleIconsSlug'
+import Image from 'next/image'
 
 export type SkillTileItem = {
     name: string
@@ -96,14 +97,13 @@ export function SkillTiles({
                                 aria-label={`Remove ${tech.name}`}
                             >
                                 {tech.icon ? (
-                                    <img
+                                    <Image
                                         className="mr-2 h-4 w-4"
                                         src={tech.icon}
                                         width={16}
                                         height={16}
-                                        loading="lazy"
-                                        decoding="async"
                                         alt={`${tech.name} logo`}
+                                        unoptimized
                                     />
                                 ) : (
                                     <SkillIcon
@@ -116,14 +116,13 @@ export function SkillTiles({
                         ) : (
                             <div className="bg-accent px-3 py-1 rounded-md text-xs font-semibold flex items-center shadow-md h-8">
                                 {tech.icon ? (
-                                    <img
+                                    <Image
                                         className="mr-2 h-4 w-4"
                                         src={tech.icon}
                                         width={16}
                                         height={16}
-                                        loading="lazy"
-                                        decoding="async"
                                         alt={`${tech.name} logo`}
+                                        unoptimized
                                     />
                                 ) : (
                                     <SkillIcon

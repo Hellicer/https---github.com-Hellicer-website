@@ -8,26 +8,38 @@ import { createPortal } from 'react-dom'
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCards } from 'swiper/modules'
-import type { ProfileDataShape } from '@/types/profile'
+import type { ProfileDataShape, ProfileLoadResult } from '@/types/profile'
 import { fetchProfileStat } from '@/api/profileClientApi'
 import { SkillTiles } from './SkillTiles'
 import { TitleBar } from './TitleBar'
 import { EmptyProfileCard } from './EmptyProfileCard'
+import Image from 'next/image'
 
-export function ProfileCard({ className }: CommonProps = {}) {
+export function ProfileCard({
+    className,
+    initialProfileLoad,
+}: CommonProps & {
+    initialProfileLoad?: ProfileLoadResult
+} = {}) {
     const t = useTranslations('')
-    const [profileCards, setProfileCards] = useState<ProfileDataShape[]>([])
+    const [profileCards, setProfileCards] = useState<ProfileDataShape[]>(
+        initialProfileLoad?.data ?? [],
+    )
     const [isEmptyCardModalOpen, setIsEmptyCardModalOpen] = useState(false)
     const [profileSource, setProfileSource] = useState<
         'loading' | 'gist' | 'local'
-    >('loading')
+    >(initialProfileLoad?.source ?? 'loading')
     const [profileLoadReason, setProfileLoadReason] = useState<string | null>(
-        null,
+        initialProfileLoad?.reason ?? null,
     )
     const shouldShowComingSoonFallback = profileCards.length === 0
     const shouldUseSwiper = profileCards.length > 0
 
     useEffect(() => {
+        if (initialProfileLoad) {
+            return
+        }
+
         let isMounted = true
 
         fetchProfileStat().then(result => {
@@ -48,7 +60,7 @@ export function ProfileCard({ className }: CommonProps = {}) {
         return () => {
             isMounted = false
         }
-    }, [])
+    }, [initialProfileLoad])
 
     useEffect(() => {
         if (!isEmptyCardModalOpen) {
@@ -139,14 +151,15 @@ export function ProfileCard({ className }: CommonProps = {}) {
                 </div>
 
                 <div className="order-2 grid min-w-0 content-start gap-4 min-[581px]:col-start-2 min-[581px]:row-span-2 min-[581px]:row-start-1 min-[581px]:grid-cols-1">
-                    <div className="flex h-32 w-32 max-[580px]:h-48 max-[580px]:w-full items-center justify-center rounded-xl bg-gray-500/40 min-[581px]:h-50 min-[581px]:w-50">
+                    <div className="relative flex h-32 w-32 max-[580px]:h-48 max-[580px]:w-full items-center justify-center rounded-xl bg-gray-500/40 min-[581px]:h-50 min-[581px]:w-50">
                         {d.mainInfo.avatar ? (
-                            <img
+                            <Image
                                 src={d.mainInfo.avatar}
                                 alt={`${d.mainInfo.name} photo`}
                                 className="h-full w-full rounded-xl object-cover"
-                                loading="lazy"
-                                decoding="async"
+                                fill
+                                sizes="(max-width: 580px) 100vw, 200px"
+                                unoptimized
                             />
                         ) : (
                             <span>{t('profileCard.photo')}</span>
@@ -173,13 +186,11 @@ export function ProfileCard({ className }: CommonProps = {}) {
                                     className="bg-gray-600 flex py-1 px-1 rounded-l-sm"
                                     href={d.wakatime.url}
                                 >
-                                    <img
+                                    <Image
                                         className="me-1"
                                         src={`https://cdn.simpleicons.org/wakatime/wakatime`}
                                         width={14}
                                         height={14}
-                                        loading="lazy"
-                                        decoding="async"
                                         alt="Wakatime logo"
                                     />
                                     wakatime

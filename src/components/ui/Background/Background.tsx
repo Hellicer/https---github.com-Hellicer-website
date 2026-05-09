@@ -56,6 +56,9 @@ export function DotPattern({
     const mouseRef = useRef({ x: -1000, y: -1000 })
     const animationRef = useRef<number>(0)
     const startTimeRef = useRef(Date.now())
+    const isInViewRef = useRef(true)
+    const isPageVisibleRef = useRef(true)
+    const prefersReducedMotionRef = useRef(false)
 
     const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor])
     const glowRgb = useMemo(() => hexToRgb(glowColor), [glowColor])
@@ -181,7 +184,15 @@ export function DotPattern({
             ctx.fill()
         }
 
-        animationRef.current = requestAnimationFrame(draw)
+        if (
+            isInViewRef.current &&
+            isPageVisibleRef.current &&
+            !prefersReducedMotionRef.current
+        ) {
+            animationRef.current = requestAnimationFrame(draw)
+        } else {
+            animationRef.current = 0
+        }
     }, [proximity, baseRgb, glowRgb, dotSize, glowIntensity, waveSpeed])
 
     useEffect(() => {
@@ -197,9 +208,97 @@ export function DotPattern({
     }, [buildGrid])
 
     useEffect(() => {
-        animationRef.current = requestAnimationFrame(draw)
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+        const stopAnimation = () => {
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current)
+                animationRef.current = 0
+            }
+        }
+
+        const startAnimation = () => {
+            if (animationRef.current) {
+                return
+            }
+
+            animationRef.current = requestAnimationFrame(draw)
+        }
+
+        const handleVisibilityChange = () => {
+            isPageVisibleRef.current = !document.hidden
+            if (
+                isInViewRef.current &&
+                isPageVisibleRef.current &&
+                !prefersReducedMotionRef.current
+            ) {
+                startAnimation()
+            } else {
+                stopAnimation()
+                draw()
+            }
+        }
+
+        const handleReducedMotionChange = () => {
+            prefersReducedMotionRef.current = mediaQuery.matches
+            if (
+                isInViewRef.current &&
+                isPageVisibleRef.current &&
+                !prefersReducedMotionRef.current
+            ) {
+                startAnimation()
+            } else {
+                stopAnimation()
+                draw()
+            }
+        }
+
+        const observer = new IntersectionObserver(
+            entries => {
+                isInViewRef.current = Boolean(entries[0]?.isIntersecting)
+
+                if (
+                    isInViewRef.current &&
+                    isPageVisibleRef.current &&
+                    !prefersReducedMotionRef.current
+                ) {
+                    startAnimation()
+                } else {
+                    stopAnimation()
+                    draw()
+                }
+            },
+            { threshold: 0.05 },
+        )
+
+        prefersReducedMotionRef.current = mediaQuery.matches
+        isPageVisibleRef.current = !document.hidden
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current)
+        }
+
+        if (
+            isInViewRef.current &&
+            isPageVisibleRef.current &&
+            !prefersReducedMotionRef.current
+        ) {
+            startAnimation()
+        } else {
+            draw()
+        }
+
+        document.addEventListener('visibilitychange', handleVisibilityChange)
+        mediaQuery.addEventListener('change', handleReducedMotionChange)
+
         return () => {
-            if (animationRef.current) cancelAnimationFrame(animationRef.current)
+            stopAnimation()
+            observer.disconnect()
+            document.removeEventListener(
+                'visibilitychange',
+                handleVisibilityChange,
+            )
+            mediaQuery.removeEventListener('change', handleReducedMotionChange)
         }
     }, [draw])
 

@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
+import type { ProfileLoadResult } from '@/types/profile'
 
 const AboutSection = dynamic(
     () =>
@@ -9,7 +10,11 @@ const AboutSection = dynamic(
     { ssr: false },
 )
 
-export default function LazyAboutSection() {
+export default function LazyAboutSection({
+    initialProfileLoad,
+}: {
+    initialProfileLoad?: ProfileLoadResult
+}) {
     const containerRef = useRef<HTMLDivElement | null>(null)
     const [isVisible, setIsVisible] = useState(false)
 
@@ -32,7 +37,11 @@ export default function LazyAboutSection() {
 
     return (
         <div ref={containerRef}>
-            {isVisible ? <AboutSection /> : <div className="min-h-[800px]" />}
+            {isVisible ? (
+                <AboutSection initialProfileLoad={initialProfileLoad} />
+            ) : (
+                <div className="min-h-[800px]" />
+            )}
         </div>
     )
 }

@@ -1,14 +1,14 @@
+import { fetchProfileCardsFromGists } from '@/api/profileStatApi'
 import { GlobeWrapper } from '@/components/layout/index'
 import { Button } from '@/components/ui/button'
 import ProjectContentBlock from '@/components/ui/Project/ProjectContentBlock'
 import { SpecializationCards } from '@/components/ui/Specialization/SpecializationCards'
+import { projects, type Project } from '@/data/projects.data'
+import { getGithubProjectsFromDb } from '@/lib/github'
 import { Inbox } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import LazyAboutSection from './LazyAboutSection'
 import LazyBentoMenu from './LazyBentoMenu'
-import { getGithubProjectsFromDb } from '@/lib/github'
-import { fetchProfileCardsFromGists } from '@/api/profileStatApi'
-import { projects, type Project } from '@/data/projects.data'
 
 export default async function MainPage() {
     const t = await getTranslations('')
@@ -20,6 +20,7 @@ export default async function MainPage() {
             reason: 'Failed to load profile cards on server.',
         })),
     ])
+    // console.log(dbProjects)
     const initialProjects: Project[] =
         dbProjects.length > 0 ? dbProjects : projects
 

@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server'
 import { fetchGithubGists } from '@/api/githubApi'
+import { NextResponse } from 'next/server'
 
 export async function GET() {
     try {
@@ -9,7 +9,8 @@ export async function GET() {
         return NextResponse.json(
             {
                 error: 'Failed to fetch gists.',
-                details: error instanceof Error ? error.message : 'Unknown error',
+                details:
+                    error instanceof Error ? error.message : 'Unknown error',
             },
             { status: 500 },
         )

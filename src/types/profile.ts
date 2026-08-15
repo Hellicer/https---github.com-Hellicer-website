@@ -1,36 +1,73 @@
-export type ProfileDataShape = {
-    mainInfo: {
-        name: string
-        position: string
-        sex?: string
-        age?: number
-        avatar?: string | null
-    }
-    skills: string[]
-    cvUrl?: string
-    wakatime: {
-        text: string
-        url: string
-    }
-    social: {
-        linkedin: string
-        github: string
-    }
-    projects: {
-        openSource: number
-        startups: number
-        freelance: number
-        corporate: number
-    }
-    radar: {
-        labels: string[]
-        values: number[]
-    }
-    techStack: Array<{
-        name: string
-        icon: string
-        url: string
-    }>
+// export type ProfileDataShape = {
+//     mainInfo: {
+//         name: string
+//         position: string
+//         sex?: string
+//         age?: number
+//         photo?: string | null
+//     }
+//     skills: string
+//     cvUrl?: string
+//     wakatime: {
+//         text: string
+//         url: string
+//     }
+//     links: {
+//         linkedin: string
+//         github: string
+//     }
+//     projects: {}
+//     radar: {
+//         labels: string[]
+//         values: number[]
+//     }
+//     techStack: string[]
+// }
+
+export interface ProfileDataShape {
+    mainInfo: MainInfo
+    skills: string
+    techStack: string[]
+    projects: Projects
+    otherInfo: OtherInfo
+    stats: Stats
+    links: Links
+}
+
+export interface MainInfo {
+    name: string
+    position: string
+    sex: string
+    age: number
+    photo: string
+}
+
+export interface Projects {
+    'open source': number
+    startups: number
+    freelance: number
+    corporate: number
+}
+
+export interface OtherInfo {
+    skillsChart: SkillsChart
+}
+
+export interface SkillsChart {
+    architecture: number
+    coding: number
+    performance: number
+    consistency: number
+    communication: number
+}
+
+export interface Stats {
+    wakatime: string
+}
+
+export interface Links {
+    linkedin: string
+    github: string
 }
 
 export type ProfileLoadResult = {

@@ -1,6 +1,6 @@
-import 'server-only'
 import { fetchGithubGists } from '@/api/githubApi'
 import type { ProfileDataShape, ProfileLoadResult } from '@/types/profile'
+import 'server-only'
 
 const STAT_GIST_KEYWORD = 'statgist'
 
@@ -42,7 +42,9 @@ function isRecord(value: unknown): value is Record<string, unknown> {
     return Boolean(value) && typeof value === 'object'
 }
 
-function isProfileStatGistPayload(value: unknown): value is ProfileStatGistPayload {
+function isProfileStatGistPayload(
+    value: unknown,
+): value is ProfileStatGistPayload {
     if (!isRecord(value)) {
         return false
     }
@@ -53,7 +55,9 @@ function isProfileStatGistPayload(value: unknown): value is ProfileStatGistPaylo
     const techStack = payload.techStack
     const projects = payload.projects as Record<string, unknown> | undefined
     const otherInfo = payload.otherInfo as Record<string, unknown> | undefined
-    const skillsChart = otherInfo?.skillsChart as Record<string, unknown> | undefined
+    const skillsChart = otherInfo?.skillsChart as
+        | Record<string, unknown>
+        | undefined
     const stats = payload.stats as Record<string, unknown> | undefined
     const links = payload.links
 
@@ -108,7 +112,12 @@ function parseAge(value: number | string | undefined): number | undefined {
 
 function pickChartValue(
     chart: ProfileStatGistPayload['otherInfo']['skillsChart'],
-    key: 'architecture' | 'coding' | 'performance' | 'consistency' | 'communication',
+    key:
+        | 'architecture'
+        | 'coding'
+        | 'performance'
+        | 'consistency'
+        | 'communication',
 ): number {
     const value = chart?.[key]
     if (typeof value === 'number') {
@@ -118,7 +127,9 @@ function pickChartValue(
     return 6
 }
 
-function mapProfileStatToProfileData(payload: ProfileStatGistPayload): ProfileDataShape {
+function mapProfileStatToProfileData(
+    payload: ProfileStatGistPayload,
+): ProfileDataShape {
     return {
         mainInfo: {
             name: payload.mainInfo.name,
@@ -138,7 +149,9 @@ function mapProfileStatToProfileData(payload: ProfileStatGistPayload): ProfileDa
                     ? payload.links.linkedin
                     : '#',
             github:
-                typeof payload.links.github === 'string' ? payload.links.github : '#',
+                typeof payload.links.github === 'string'
+                    ? payload.links.github
+                    : '#',
         },
         projects: {
             openSource: payload.projects['open source'],
@@ -147,7 +160,13 @@ function mapProfileStatToProfileData(payload: ProfileStatGistPayload): ProfileDa
             corporate: payload.projects.corporate,
         },
         radar: {
-            labels: ['Architecture', 'Coding', 'Speed', 'Rhythm', 'Soft skills'],
+            labels: [
+                'Architecture',
+                'Coding',
+                'Speed',
+                'Rhythm',
+                'Soft skills',
+            ],
             values: [
                 pickChartValue(payload.otherInfo.skillsChart, 'architecture'),
                 pickChartValue(payload.otherInfo.skillsChart, 'coding'),
@@ -205,11 +224,15 @@ function pickProfileFiles(
     return Array.from(selected.values())
 }
 
-async function loadProfileFromRawUrl(rawUrl: string): Promise<ProfileDataShape | null> {
+async function loadProfileFromRawUrl(
+    rawUrl: string,
+): Promise<ProfileDataShape | null> {
     const profileResponse = await fetch(rawUrl, {
         cache: 'no-store',
         headers: buildGithubHeaders(),
     })
+    // console.log(1)
+    // console.log('profileResponse:', profileResponse)
 
     if (!profileResponse.ok) {
         return null
@@ -220,6 +243,8 @@ async function loadProfileFromRawUrl(rawUrl: string): Promise<ProfileDataShape |
         return null
     }
 
+    // console.log('Loaded profile payload:', payload)
+
     return mapProfileStatToProfileData(payload)
 }
 
@@ -227,7 +252,6 @@ export async function fetchProfileCardsFromGists(): Promise<ProfileLoadResult> {
     try {
         const gists = await fetchGithubGists()
         const files = pickProfileFiles(gists)
-
         if (files.length === 0) {
             return {
                 data: [],
@@ -239,7 +263,10 @@ export async function fetchProfileCardsFromGists(): Promise<ProfileLoadResult> {
         const loaded = await Promise.all(
             files.map(file => loadProfileFromRawUrl(file.rawUrl)),
         )
-        const cards = loaded.filter((item): item is ProfileDataShape => item !== null)
+
+        const cards = loaded.filter(
+            (item): item is ProfileDataShape => item !== null,
+        )
 
         if (cards.length === 0) {
             return {

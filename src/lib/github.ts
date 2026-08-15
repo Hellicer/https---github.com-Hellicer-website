@@ -1,8 +1,8 @@
-import 'server-only'
+import { fetchGithubProjects } from '@/api/githubApi'
+import { getPrismaClient } from '@/lib/prisma'
 import { ProjectDto } from '@/types/github'
 import { Prisma } from '@prisma/client'
-import { getPrismaClient } from '@/lib/prisma'
-import { fetchGithubProjects } from '@/api/githubApi'
+import 'server-only'
 
 type GithubProjectRow = Prisma.GithubProjectGetPayload<Record<string, never>>
 
@@ -48,10 +48,15 @@ export async function syncGithubProjectsToDb(): Promise<void> {
 }
 
 export async function getGithubProjectsFromDb(): Promise<ProjectDto[]> {
+    // console.log('Fetching projects from DB...')
     const prisma = getPrismaClient()
+
+  
+
     const rows = await prisma.githubProject.findMany({
         orderBy: { updatedAt: 'desc' },
     })
-
+    // console.log(prisma)
+    // console.log('Fetched projects from DB:', rows)
     return rows.map(mapDbProjectToProjectDto)
 }

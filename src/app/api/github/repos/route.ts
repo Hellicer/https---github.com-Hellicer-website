@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server'
 import { getGithubProjectsFromDb, syncGithubProjectsToDb } from '@/lib/github'
+import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,7 +13,6 @@ export async function GET(request: Request) {
         }
 
         let projects = await getGithubProjectsFromDb()
-
         if (projects.length === 0 && !shouldSync) {
             await syncGithubProjectsToDb()
             projects = await getGithubProjectsFromDb()
@@ -24,9 +23,10 @@ export async function GET(request: Request) {
         return NextResponse.json(
             {
                 error: 'Failed to fetch repositories.',
-                details: error instanceof Error ? error.message : 'Unknown error',
+                details:
+                    error instanceof Error ? error.message : 'Unknown error',
             },
-            { status: 500 }
+            { status: 500 },
         )
     }
 }

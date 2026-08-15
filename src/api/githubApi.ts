@@ -1,6 +1,6 @@
-import 'server-only'
-import { GistDto, GithubGist, GithubRepo, ProjectDto } from '@/types/github'
 import { buildGithubPreviewUrl } from '@/lib/projectPreview'
+import { GistDto, GithubGist, GithubRepo, ProjectDto } from '@/types/github'
+import 'server-only'
 
 function isGithubRepo(value: unknown): value is GithubRepo {
     if (!value || typeof value !== 'object') {
@@ -9,7 +9,6 @@ function isGithubRepo(value: unknown): value is GithubRepo {
 
     const repo = value as Record<string, unknown>
     const owner = repo.owner as Record<string, unknown> | undefined
-
     return (
         typeof repo.id === 'number' &&
         typeof repo.name === 'string' &&
@@ -73,7 +72,9 @@ function isGithubGist(value: unknown): value is GithubGist {
 
 function parseGithubGists(payload: unknown): GithubGist[] {
     if (!Array.isArray(payload) || !payload.every(isGithubGist)) {
-        throw new Error('GitHub Gists API returned an unexpected response shape.')
+        throw new Error(
+            'GitHub Gists API returned an unexpected response shape.',
+        )
     }
 
     return payload
@@ -132,7 +133,7 @@ export async function fetchGithubProjects(): Promise<ProjectDto[]> {
 
     const payload: unknown = await response.json()
     const repos = parseGithubRepos(payload)
-
+    console.log(repos, payload)
     return repos.map(mapGithubRepoToProject)
 }
 

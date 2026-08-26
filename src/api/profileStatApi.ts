@@ -130,31 +130,17 @@ function pickChartValue(
 function mapProfileStatToProfileData(
     payload: ProfileStatGistPayload,
 ): ProfileDataShape {
-    return {
+    const profileData = {
         mainInfo: {
             name: payload.mainInfo.name,
             position: payload.mainInfo.position,
-            sex: payload.mainInfo.sex,
-            age: parseAge(payload.mainInfo.age),
-            avatar: payload.mainInfo.photo ?? null,
+            sex: (payload.mainInfo.sex as string | undefined) ?? '',
+            age: (parseAge(payload.mainInfo.age) as number | undefined) ?? 0,
+            photo: (payload.mainInfo.photo as string) ?? '',
         },
-        skills: splitSkills(payload.skills),
-        wakatime: {
-            text: `${payload.stats.wakatime ?? 0} hrs`,
-            url: 'https://wakatime.com',
-        },
-        social: {
-            linkedin:
-                typeof payload.links.linkedin === 'string'
-                    ? payload.links.linkedin
-                    : '#',
-            github:
-                typeof payload.links.github === 'string'
-                    ? payload.links.github
-                    : '#',
-        },
+        skills: splitSkills(payload.skills).join(', '),
         projects: {
-            openSource: payload.projects['open source'],
+            'open source': payload.projects['open source'],
             startups: payload.projects.startups,
             freelance: payload.projects.freelance,
             corporate: payload.projects.corporate,
@@ -175,12 +161,40 @@ function mapProfileStatToProfileData(
                 pickChartValue(payload.otherInfo.skillsChart, 'communication'),
             ],
         },
-        techStack: payload.techStack.map(name => ({
-            name,
-            icon: '',
-            url: '#',
-        })),
+        techStack: payload.techStack,
+        otherInfo: {
+            ...payload.otherInfo,
+            skillsChart: {
+                architecture: pickChartValue(
+                    payload.otherInfo.skillsChart,
+                    'architecture',
+                ),
+                coding: pickChartValue(payload.otherInfo.skillsChart, 'coding'),
+                performance: pickChartValue(
+                    payload.otherInfo.skillsChart,
+                    'performance',
+                ),
+                consistency: pickChartValue(
+                    payload.otherInfo.skillsChart,
+                    'consistency',
+                ),
+                communication: pickChartValue(
+                    payload.otherInfo.skillsChart,
+                    'communication',
+                ),
+            },
+        },
+        stats: {
+            ...payload.stats,
+            wakatime: payload.stats.wakatime?.toString() ?? '',
+        },
+        links: {
+            linkedin: payload.links.linkedin ?? '',
+            github: payload.links.github ?? '',
+        },
     }
+
+    return profileData
 }
 
 function buildGithubHeaders(): HeadersInit {

@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -105,30 +116,18 @@ function pickChartValue(chart, key) {
     return 6;
 }
 function mapProfileStatToProfileData(payload) {
-    var _a, _b;
-    return {
+    var _a, _b, _c, _d, _e, _f, _g;
+    var profileData = {
         mainInfo: {
             name: payload.mainInfo.name,
             position: payload.mainInfo.position,
-            sex: payload.mainInfo.sex,
-            age: parseAge(payload.mainInfo.age),
-            avatar: (_a = payload.mainInfo.photo) !== null && _a !== void 0 ? _a : null
+            sex: (_a = payload.mainInfo.sex) !== null && _a !== void 0 ? _a : '',
+            age: (_b = parseAge(payload.mainInfo.age)) !== null && _b !== void 0 ? _b : 0,
+            photo: (_c = payload.mainInfo.photo) !== null && _c !== void 0 ? _c : ''
         },
-        skills: splitSkills(payload.skills),
-        wakatime: {
-            text: ((_b = payload.stats.wakatime) !== null && _b !== void 0 ? _b : 0) + " hrs",
-            url: 'https://wakatime.com'
-        },
-        social: {
-            linkedin: typeof payload.links.linkedin === 'string'
-                ? payload.links.linkedin
-                : '#',
-            github: typeof payload.links.github === 'string'
-                ? payload.links.github
-                : '#'
-        },
+        skills: splitSkills(payload.skills).join(', '),
         projects: {
-            openSource: payload.projects['open source'],
+            'open source': payload.projects['open source'],
             startups: payload.projects.startups,
             freelance: payload.projects.freelance,
             corporate: payload.projects.corporate
@@ -149,12 +148,21 @@ function mapProfileStatToProfileData(payload) {
                 pickChartValue(payload.otherInfo.skillsChart, 'communication'),
             ]
         },
-        techStack: payload.techStack.map(function (name) { return ({
-            name: name,
-            icon: '',
-            url: '#'
-        }); })
+        techStack: payload.techStack,
+        otherInfo: __assign(__assign({}, payload.otherInfo), { skillsChart: {
+                architecture: pickChartValue(payload.otherInfo.skillsChart, 'architecture'),
+                coding: pickChartValue(payload.otherInfo.skillsChart, 'coding'),
+                performance: pickChartValue(payload.otherInfo.skillsChart, 'performance'),
+                consistency: pickChartValue(payload.otherInfo.skillsChart, 'consistency'),
+                communication: pickChartValue(payload.otherInfo.skillsChart, 'communication')
+            } }),
+        stats: __assign(__assign({}, payload.stats), { wakatime: (_e = (_d = payload.stats.wakatime) === null || _d === void 0 ? void 0 : _d.toString()) !== null && _e !== void 0 ? _e : '' }),
+        links: {
+            linkedin: (_f = payload.links.linkedin) !== null && _f !== void 0 ? _f : '',
+            github: (_g = payload.links.github) !== null && _g !== void 0 ? _g : ''
+        }
     };
+    return profileData;
 }
 function buildGithubHeaders() {
     var token = process.env.GITHUB_TOKEN;

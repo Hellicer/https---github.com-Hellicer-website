@@ -152,9 +152,9 @@ export function ProfileCard({
 
                 <div className="order-2 grid min-w-0 content-start gap-4 min-[581px]:col-start-2 min-[581px]:row-span-2 min-[581px]:row-start-1 min-[581px]:grid-cols-1">
                     <div className="relative flex h-32 w-32 max-[580px]:h-48 max-[580px]:w-full items-center justify-center rounded-xl bg-gray-500/40 min-[581px]:h-50 min-[581px]:w-50">
-                        {d.mainInfo.avatar ? (
+                        {d.mainInfo.photo ? (
                             <Image
-                                src={d.mainInfo.avatar}
+                                src={d.mainInfo.photo}
                                 alt={`${d.mainInfo.name} photo`}
                                 className="h-full w-full rounded-xl object-cover"
                                 fill
@@ -184,7 +184,7 @@ export function ProfileCard({
                             <div className="text-card-foreground mt-1 flex text-xs pointer-events-cursor">
                                 <a
                                     className="bg-gray-600 flex py-1 px-1 rounded-l-sm"
-                                    href={d.wakatime.url}
+                                    href="https://wakatime.com"
                                 >
                                     <Image
                                         className="me-1"
@@ -196,17 +196,17 @@ export function ProfileCard({
                                     wakatime
                                 </a>
                                 <div className="bg-[#0778b9] py-1  px-1 rounded-r-sm">
-                                    {d.wakatime.text}
+                                    {d.stats.wakatime}
                                 </div>
                             </div>
 
-                            <a href={d.social.linkedin}>
+                            <a href={d.links.linkedin}>
                                 <LinkedInLogoIcon
                                     className="h-[24px] w-[24px] mt-1  text-white"
                                     aria-label="LinkedIn icon"
                                 />
                             </a>
-                            <a href={d.social.github}>
+                            <a href={d.links.github}>
                                 <GitHubLogoIcon
                                     className="h-[24px] w-[24px] mt-1 text-white"
                                     aria-label="GitHub icon"
@@ -220,14 +220,18 @@ export function ProfileCard({
                     <TitleBar title={t('profileCard.skills')} />
 
                     <div className="pl-2 pt-1">
-                        {d.skills.map(s => (
+                        {d.skills
+                            .split(',')
+                            .map(skill => skill.trim())
+                            .filter(Boolean)
+                            .map(skill => (
                             <p
                                 className="font-inter text-base font-semibold  w-full  wrap-break-word "
-                                key={s}
+                                key={skill}
                             >
-                                {s}
+                                {skill}
                             </p>
-                        ))}
+                            ))}
                     </div>
                 </div>
             </div>
@@ -244,14 +248,29 @@ export function ProfileCard({
                 <div className="grid grid-flow-row">
                     <TitleBar title={t('profileCard.otherInfo')} />
 
-                    <RadarSimple {...d.radar} />
+                    <RadarSimple
+                        labels={[
+                            'Architecture',
+                            'Coding',
+                            'Speed',
+                            'Rhythm',
+                            'Soft skills',
+                        ]}
+                        values={[
+                            d.otherInfo.skillsChart.architecture,
+                            d.otherInfo.skillsChart.coding,
+                            d.otherInfo.skillsChart.performance,
+                            d.otherInfo.skillsChart.consistency,
+                            d.otherInfo.skillsChart.communication,
+                        ]}
+                    />
                 </div>
 
                 <div className="grid min-w-0 content-start">
                     <TitleBar title={t('profileCard.projects')} />
                     <div className="letter-spacing-wide grid grid-flow-row space-y-3 py-3 pt-4 pl-2 font-inter text-sm font-semibold sm:pt-6 sm:text-base">
                         {[
-                            ['Open-source', d.projects.openSource],
+                            ['Open-source', d.projects['open source']],
                             ['Startups', d.projects.startups],
                             ['Freelance', d.projects.freelance],
                             ['Corporate', d.projects.corporate],

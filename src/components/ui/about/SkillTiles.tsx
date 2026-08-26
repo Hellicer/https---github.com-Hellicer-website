@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ProfileDataShape } from '@/types/profile'
 import { SkillIcon } from './SkillIcon'
 import { toSimpleIconsSlug } from './toSimpleIconsSlug'
@@ -25,6 +25,13 @@ export function SkillTiles({
     const wrapperRef = useRef<HTMLDivElement | null>(null)
     const contentRef = useRef<HTMLDivElement | null>(null)
     const [hasOverflow, setHasOverflow] = useState(false)
+    const normalizedTechStack = useMemo(
+        () =>
+            techStack.map(tech =>
+                typeof tech === 'string' ? { name: tech, icon: null } : tech,
+            ),
+        [techStack],
+    )
 
     useEffect(() => {
         let frameId1 = 0
@@ -78,7 +85,7 @@ export function SkillTiles({
             mutationObserver.disconnect()
             window.removeEventListener('resize', scheduleCheck)
         }
-    }, [])
+    }, [normalizedTechStack])
 
     return (
         <div
@@ -86,8 +93,8 @@ export function SkillTiles({
             ref={wrapperRef}
         >
             <div className="flex flex-wrap gap-2 pl-2 pt-1" ref={contentRef}>
-                {techStack.map(tech => (
-                    <div key={tech.name}>
+                {normalizedTechStack.map((tech, index) => (
+                    <div key={`${tech.name}-${index}`}>
                         {onRemove ? (
                             <button
                                 type="button"

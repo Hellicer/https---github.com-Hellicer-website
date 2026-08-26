@@ -2,10 +2,10 @@
 "use strict";
 exports.__esModule = true;
 exports.SkillTiles = void 0;
+var image_1 = require("next/image");
 var react_1 = require("react");
 var SkillIcon_1 = require("./SkillIcon");
 var toSimpleIconsSlug_1 = require("./toSimpleIconsSlug");
-var image_1 = require("next/image");
 function SkillTiles(_a) {
     var techStack = _a.techStack, onRemove = _a.onRemove, _b = _a.fixedHeight, fixedHeight = _b === void 0 ? true : _b, _c = _a.showOverflowIndicator, showOverflowIndicator = _c === void 0 ? true : _c;
     var wrapperRef = react_1.useRef(null);

@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ProfileDataShape } from '@/types/profile'
+import Image from 'next/image'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { SkillIcon } from './SkillIcon'
 import { toSimpleIconsSlug } from './toSimpleIconsSlug'
-import Image from 'next/image'
 
 export type SkillTileItem = {
     name: string

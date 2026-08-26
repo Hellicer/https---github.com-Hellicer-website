@@ -2,19 +2,19 @@
 "use strict";
 exports.__esModule = true;
 exports.ProfileCard = void 0;
-var RadarSkills_1 = require("./RadarSkills");
-var button_1 = require("../button");
+var profileClientApi_1 = require("@/api/profileClientApi");
+var react_icons_1 = require("@radix-ui/react-icons");
 var next_intl_1 = require("next-intl");
+var image_1 = require("next/image");
 var react_1 = require("react");
 var react_dom_1 = require("react-dom");
-var react_icons_1 = require("@radix-ui/react-icons");
-var react_2 = require("swiper/react");
 var modules_1 = require("swiper/modules");
-var profileClientApi_1 = require("@/api/profileClientApi");
+var react_2 = require("swiper/react");
+var button_1 = require("../button");
+var EmptyProfileCard_1 = require("./EmptyProfileCard");
+var RadarSkills_1 = require("./RadarSkills");
 var SkillTiles_1 = require("./SkillTiles");
 var TitleBar_1 = require("./TitleBar");
-var EmptyProfileCard_1 = require("./EmptyProfileCard");
-var image_1 = require("next/image");
 function ProfileCard(_a) {
     var _b, _c, _d;
     var _e = _a === void 0 ? {} : _a, className = _e.className, initialProfileLoad = _e.initialProfileLoad;

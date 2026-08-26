@@ -1,19 +1,19 @@
 ﻿'use client'
-import { RadarSimple } from './RadarSkills'
+import { fetchProfileStat } from '@/api/profileClientApi'
 import { CommonProps } from '@/interfaces/props'
-import { Button } from '../button'
+import type { ProfileDataShape, ProfileLoadResult } from '@/types/profile'
+import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
-import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCards } from 'swiper/modules'
-import type { ProfileDataShape, ProfileLoadResult } from '@/types/profile'
-import { fetchProfileStat } from '@/api/profileClientApi'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Button } from '../button'
+import { EmptyProfileCard } from './EmptyProfileCard'
+import { RadarSimple } from './RadarSkills'
 import { SkillTiles } from './SkillTiles'
 import { TitleBar } from './TitleBar'
-import { EmptyProfileCard } from './EmptyProfileCard'
-import Image from 'next/image'
 
 export function ProfileCard({
     className,
@@ -225,12 +225,12 @@ export function ProfileCard({
                             .map(skill => skill.trim())
                             .filter(Boolean)
                             .map(skill => (
-                            <p
-                                className="font-inter text-base font-semibold  w-full  wrap-break-word "
-                                key={skill}
-                            >
-                                {skill}
-                            </p>
+                                <p
+                                    className="font-inter text-base font-semibold  w-full  wrap-break-word "
+                                    key={skill}
+                                >
+                                    {skill}
+                                </p>
                             ))}
                     </div>
                 </div>

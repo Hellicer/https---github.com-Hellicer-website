@@ -1,12 +1,12 @@
-import { FileTextIcon, GlobeIcon, InputIcon } from '@radix-ui/react-icons'
 import { IconCloud } from '@/components/ui/icon-cloud'
+import { FileTextIcon, GlobeIcon, InputIcon } from '@radix-ui/react-icons'
 
-import { BentoCard, BentoGrid } from '../bento-grid'
-import { Marquee } from '../magicui/marquee'
+import { FILES as files } from '@/data/files'
+import { SLUGS as slugs } from '@/data/slugs'
 import { cn } from '@/lib/utils'
 import { AnimatedList } from '../animated-list'
-import { SLUGS as slugs } from '@/data/slugs'
-import { FILES as files } from '@/data/files'
+import { BentoCard, BentoGrid } from '../bento-grid'
+import { Marquee } from '../magicui/marquee'
 
 interface Item {
     name: string
@@ -216,7 +216,10 @@ export function BentoMenu({
 }) {
     const features = createFeatures(disableAnimations)
     return (
-        <BentoGrid className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[320px] max-w-5xl">
+        <BentoGrid
+            className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[320px]"
+            style={{ maxWidth: '1496px' }}
+        >
             {features.map(feature => (
                 <BentoCard key={feature.name} {...feature} />
             ))}

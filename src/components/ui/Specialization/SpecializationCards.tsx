@@ -4,17 +4,17 @@ import { BentoGrid } from '../bento-grid'
 import { BentoCard } from '../BentoCard'
 
 import {
-    GlobeIcon,
-    DashboardIcon,
-    PersonIcon,
+    ChatBubbleIcon,
     CodeIcon,
     CubeIcon,
-    ChatBubbleIcon,
-    RocketIcon,
+    DashboardIcon,
+    GlobeIcon,
     IdCardIcon,
+    PersonIcon,
+    RocketIcon,
 } from '@radix-ui/react-icons'
-import SpecTypeToggle from '../SpecTypeToggle/SpecTypeToggle'
 import { useTranslations } from 'next-intl'
+import SpecTypeToggle from '../SpecTypeToggle/SpecTypeToggle'
 
 const features = [
     {

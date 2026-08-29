@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../../.."
+		},
+		{
+			"path": "../../../../../bewow"
+		}
+	],
+	"settings": {
+		"compile-hero.disable-compile-files-on-did-save-code": false
+	}
+}

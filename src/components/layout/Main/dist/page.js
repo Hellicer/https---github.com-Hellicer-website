@@ -79,7 +79,7 @@ function MainPage() {
                                                 React.createElement("a", { href: '#', className: "" },
                                                     React.createElement("span", { className: "text-2xl" }, t('common.hireUs')),
                                                     React.createElement(lucide_react_1.Inbox, { className: " ms-2 min-h-5.5 min-w-5.5" })))))),
-                                React.createElement("div", { className: "w-full max-w-360 mx-auto mt-22 text-left px-5" },
+                                React.createElement("div", { className: "w-full max-w-360 mx-auto mt-22 text-left px-5", style: { paddingLeft: '62px' } },
                                     React.createElement(LazyBentoMenu_1["default"], null))),
                             React.createElement("div", { className: "relative mx-auto grid max-w-360 z-10 justify-items-center max-lg:px-2 lg:p-4 gap-50 items-stretch mt-20" },
                                 React.createElement(SpecializationCards_1.SpecializationCards, null),

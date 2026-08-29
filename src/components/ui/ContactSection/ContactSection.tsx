@@ -1,30 +1,26 @@
-import Link from 'next/link'
 import {
+    GitHubLogoIcon,
     InstagramLogoIcon,
     LinkedInLogoIcon,
-    GitHubLogoIcon,
 } from '@radix-ui/react-icons'
-import { PiTelegramLogo } from 'react-icons/pi'
-import { FaWhatsapp } from 'react-icons/fa'
-import { MdOutlineContentCopy } from 'react-icons/md'
-import { FaFigma } from 'react-icons/fa'
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
+import { FaFigma, FaWhatsapp } from 'react-icons/fa'
+import { MdOutlineContentCopy } from 'react-icons/md'
+import { PiTelegramLogo } from 'react-icons/pi'
 
 export default function ContactSection() {
     const t = useTranslations('contact')
     return (
-        <section
-            className="w-full px-4 sm:px-6 lg:px-8 text-white"
-            id="contact"
-        >
-            <div className="max-w-[1400px] mx-auto">
+        <section className="w-full text-white" id="contact">
+            <div className="">
                 {/* Title */}
                 <h2 className="font-silkscreen text-2xl sm:text-3xl font-bold tracking-widest uppercase mb-8 sm:mb-12">
                     {t('title')}
                 </h2>
 
                 {/* Content */}
-                <div className="flex flex-col md:flex-row justify-between gap-8 sm:gap-12">
+                <div className="flex flex-col md:flex-row justify-between gap-8 px-5 sm:gap-12 mx-auto">
                     {/* Left Side */}
                     <div className="space-y-6 sm:space-y-8 text-sm sm:text-base lg:text-lg">
                         {/* Telegram / WhatsApp */}

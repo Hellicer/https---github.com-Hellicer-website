@@ -63,7 +63,10 @@ export default async function MainPage() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full max-w-360 mx-auto mt-22 text-left px-5">
+                <div
+                    className="w-full max-w-360 mx-auto mt-22 text-left px-5"
+                    style={{ paddingLeft: '62px' }}
+                >
                     <LazyBentoMenu />
                 </div>
             </GlobeWrapper>

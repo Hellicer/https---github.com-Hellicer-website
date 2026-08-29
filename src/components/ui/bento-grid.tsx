@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { ArrowRightIcon } from '@radix-ui/react-icons'
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 interface BentoGridProps extends ComponentPropsWithoutRef<'div'> {
     children: ReactNode
@@ -21,10 +21,7 @@ interface BentoCardProps extends ComponentPropsWithoutRef<'div'> {
 
 const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
     return (
-        <div
-            className={cn('grid w-full  grid-cols-3 gap-4', className)}
-            {...props}
-        >
+        <div className={cn('grid grid-cols-3 gap-4', className)} {...props}>
             {children}
         </div>
     )
@@ -44,7 +41,7 @@ const BentoCard = ({
         key={name}
         className={cn(
             'group relative col-span-3 flex flex-col justify-between overflow-hidden max-lg:h-[250px] rounded-xl',
-            'bg-card transition-all hover:border-black/20 hover:bg-accent ',
+            'rounded-2xl border border-black bg-card p-6 shadow-[0_14px_30px_rgba(0,0,0,0.28)] backdrop-blur-md transition-transform duration-500 [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] lg:group-hover:[transform:translateZ(18px)] ',
             className,
         )}
         {...props}

@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from 'react'
 
 const BentoMenu = dynamic(
     () =>
-        import('@/components/ui/BentoMenu/BentoMenu').then(mod => mod.BentoMenu),
+        import('@/components/ui/BentoMenu/BentoMenu').then(
+            mod => mod.BentoMenu,
+        ),
     { ssr: false },
 )
 
@@ -45,7 +47,7 @@ export default function LazyBentoMenu() {
     }, [isDesktop, isVisible])
 
     return (
-        <div ref={containerRef}>
+        <div ref={containerRef} className="">
             {isVisible ? <BentoMenu disableAnimations={!isDesktop} /> : null}
         </div>
     )

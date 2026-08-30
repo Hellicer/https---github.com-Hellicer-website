@@ -29,7 +29,7 @@ export function AboutSection({
                     <TestimonialsMarquee className="h-fit w-full cursor-default self-end" />
                 </div>
 
-                <div className=" max-lg:justify-items-center grid w-full min-w-0 cursor-pointer gap-8 lg:mt-12 lg:gap-10 lg:mr-19 place-items-end ">
+                <div className=" max-lg:justify-items-center grid w-full min-w-0 cursor-pointer gap-8 lg:mt-12 lg:gap-10 lg:mr-10 place-items-end ">
                     <ProfileCard
                         className="w-full max-w-158"
                         initialProfileLoad={initialProfileLoad}

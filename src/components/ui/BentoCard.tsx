@@ -44,14 +44,14 @@ export function BentoCard({
         >
             <div
                 className={cn(
-                    'relative h-full w-full rounded-2xl transition-transform duration-500 [transform-style:preserve-3d] lg:group-hover:[transform:rotateY(180deg)]',
+                    'relative h-full w-full rounded-2xl transition-transform duration-900 [transform-style:preserve-3d] lg:group-hover:[transform:rotateY(180deg)]',
                     isFlipped && '[transform:rotateY(180deg)]',
                 )}
             >
                 {/* front */}
                 <div
                     className={cn(
-                        'absolute inset-0 h-full w-full rounded-2xl border border-black bg-card p-6 shadow-[0_14px_30px_rgba(0,0,0,0.28)] backdrop-blur-md transition-transform duration-500 [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] lg:group-hover:[transform:translateZ(18px)]',
+                        'absolute inset-0 h-full w-full rounded-2xl border border-black bg-card p-6 shadow-[0_14px_30px_rgba(0,0,0,0.28)] backdrop-blur-md transition-transform duration-900 [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] lg:group-hover:[transform:translateZ(18px)]',
                         isFlipped && '[transform:translateZ(18px)]',
                     )}
                 >

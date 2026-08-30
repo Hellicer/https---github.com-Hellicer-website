@@ -130,6 +130,6 @@ function createFeatures(disableAnimations) {
 function BentoMenu(_a) {
     var _b = _a.disableAnimations, disableAnimations = _b === void 0 ? false : _b;
     var features = createFeatures(disableAnimations);
-    return (React.createElement(bento_grid_1.BentoGrid, { className: "flex flex-col lg:flex-row gap-4 h-auto lg:h-[320px]", style: { maxWidth: '1496px' } }, features.map(function (feature) { return (React.createElement(bento_grid_1.BentoCard, __assign({ key: feature.name }, feature))); })));
+    return (React.createElement(bento_grid_1.BentoGrid, { className: "flex flex-col lg:flex-row gap-4 h-auto lg:h-[320px]  max-w-5xl" }, features.map(function (feature) { return (React.createElement(bento_grid_1.BentoCard, __assign({ key: feature.name }, feature))); })));
 }
 exports.BentoMenu = BentoMenu;

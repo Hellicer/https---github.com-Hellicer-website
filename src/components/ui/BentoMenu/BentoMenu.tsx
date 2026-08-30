@@ -216,10 +216,7 @@ export function BentoMenu({
 }) {
     const features = createFeatures(disableAnimations)
     return (
-        <BentoGrid
-            className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[320px]"
-            style={{ maxWidth: '1496px' }}
-        >
+        <BentoGrid className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[320px]  max-w-5xl">
             {features.map(feature => (
                 <BentoCard key={feature.name} {...feature} />
             ))}

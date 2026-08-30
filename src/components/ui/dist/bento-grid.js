@@ -33,7 +33,7 @@ var BentoGrid = function (_a) {
 exports.BentoGrid = BentoGrid;
 var BentoCard = function (_a) {
     var name = _a.name, className = _a.className, background = _a.background, Icon = _a.Icon, description = _a.description, href = _a.href, cta = _a.cta, props = __rest(_a, ["name", "className", "background", "Icon", "description", "href", "cta"]);
-    return (React.createElement("div", __assign({ key: name, className: utils_1.cn('group relative col-span-3 flex flex-col justify-between overflow-hidden max-lg:h-[250px] rounded-xl', 'rounded-2xl border border-black bg-card p-6 shadow-[0_14px_30px_rgba(0,0,0,0.28)] backdrop-blur-md transition-transform duration-500 [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] lg:group-hover:[transform:translateZ(18px)] ', className) }, props),
+    return (React.createElement("div", __assign({ key: name, className: utils_1.cn('group relative col-span-3 flex flex-col justify-between overflow-hidden max-lg:h-[250px] rounded-xl', 'rounded-2xl border border-black bg-card p-2 shadow-[0_14px_30px_rgba(0,0,0,0.28)] backdrop-blur-md transition-transform duration-500 [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:translateZ(0)] lg:group-hover:[transform:translateZ(18px)] ', className) }, props),
         React.createElement("div", null, background),
         React.createElement("div", { className: "p-4" },
             React.createElement("div", { className: "pointer-events-none z-10 flex transform-gpu flex-col gap-1 transition-all duration-300 lg:group-hover:-translate-y-10" },

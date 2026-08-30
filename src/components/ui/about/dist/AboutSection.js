@@ -19,7 +19,7 @@ function AboutSection(_a) {
                     React.createElement("h3", { className: "h-fit text-2xl leading-tight font-inter font-extrabold max-lg:pb-4 sm:text-3xl lg:text-4xl" }, t('subtitle')),
                     React.createElement(StatsCard_1.StatsCard, { className: "grid h-full w-full max-w-158 items-stretch content-between" })),
                 React.createElement(TestimonialsMarquee_1.TestimonialsMarquee, { className: "h-fit w-full cursor-default self-end" })),
-            React.createElement("div", { className: " max-lg:justify-items-center grid w-full min-w-0 cursor-pointer gap-8 lg:mt-12 lg:gap-10 lg:mr-19 place-items-end " },
+            React.createElement("div", { className: " max-lg:justify-items-center grid w-full min-w-0 cursor-pointer gap-8 lg:mt-12 lg:gap-10 lg:mr-10 place-items-end " },
                 React.createElement(ProfileCard_1.ProfileCard, { className: "w-full max-w-158", initialProfileLoad: initialProfileLoad })))));
 }
 exports.AboutSection = AboutSection;

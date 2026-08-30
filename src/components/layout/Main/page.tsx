@@ -32,7 +32,7 @@ export default async function MainPage() {
                     id="about"
                 >
                     <div
-                        className="flex flex-col relative z-10 w-full max-w-5xl
+                        className="flex flex-col relative z-10 w-full max-w-6xl
                     "
                     >
                         <h1 className=" font-silkscreen text-5xl  max-w-4xl  font-bold uppercase leading-tight tracking-wide">
@@ -41,16 +41,16 @@ export default async function MainPage() {
                             {/* Your Business + Our Solution = Success! */}
                         </h1>
 
-                        <p className="mt-6 font-semibold text-xl text-gray-30 max-w-4xl  text-left">
+                        <p className="mt-10 font-semibold text-xl text-gray-30 max-w-4xl  text-left">
                             {t('headerTitle.description')}
                         </p>
 
-                        <div className="mt-8 text-right">
+                        <div className="mt-10 mx-22 text-right">
                             <Button
                                 variant="secondary"
                                 asChild
                                 size="default"
-                                className="pointer-events-auto p-0 h-11 "
+                                className="pointer-events-auto p-4 h-12 "
                             >
                                 <a href={'#'} className="">
                                     {/* {cta} */}

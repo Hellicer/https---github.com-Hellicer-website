@@ -1,4 +1,5 @@
-import '../swiper.css'
+// import '../swiper.css'
+
 import Main from '@/components/layout/Main/page'
 import HeaderShell from '@/components/layout/Header/HeaderShell'
 import ContactSection from '@/components/ui/ContactSection/ContactSection'

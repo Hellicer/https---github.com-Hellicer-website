@@ -133,7 +133,7 @@ export async function fetchGithubProjects(): Promise<ProjectDto[]> {
 
     const payload: unknown = await response.json()
     const repos = parseGithubRepos(payload)
-    console.log(repos, payload)
+    console.log(222, repos, payload)
     return repos.map(mapGithubRepoToProject)
 }
 

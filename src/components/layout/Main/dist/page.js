@@ -55,6 +55,9 @@ function MainPage() {
                 case 0: return [4 /*yield*/, server_1.getTranslations('')];
                 case 1:
                     t = _b.sent();
+                    return [4 /*yield*/, github_1.syncGithubProjectsIfNeeded()["catch"](function () { return undefined; })];
+                case 2:
+                    _b.sent();
                     return [4 /*yield*/, Promise.all([
                             github_1.getGithubProjectsFromDb()["catch"](function () { return []; }),
                             profileStatApi_1.fetchProfileCardsFromGists()["catch"](function () { return ({
@@ -62,11 +65,10 @@ function MainPage() {
                                 source: 'local',
                                 reason: 'Failed to load profile cards on server.'
                             }); }),
-                        ])
-                        // console.log(dbProjects)
-                    ];
-                case 2:
+                        ])];
+                case 3:
                     _a = _b.sent(), dbProjects = _a[0], initialProfileLoad = _a[1];
+                    console.log(dbProjects);
                     initialProjects = dbProjects.length > 0 ? dbProjects : projects_data_1.projects;
                     return [2 /*return*/, (React.createElement("main", { className: "pt-20 " },
                             React.createElement(index_1.GlobeWrapper, null,

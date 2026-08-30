@@ -6,6 +6,8 @@ import 'server-only'
 
 type GithubProjectRow = Prisma.GithubProjectGetPayload<Record<string, never>>
 
+const GITHUB_PROJECTS_SYNC_TTL_MS = 86400000 //     24 hours in milliseconds
+
 function mapDbProjectToProjectDto(project: GithubProjectRow): ProjectDto {
     return {
         id: String(project.githubId),
@@ -18,6 +20,33 @@ function mapDbProjectToProjectDto(project: GithubProjectRow): ProjectDto {
         codeUrl: project.codeUrl,
         previewUrl: project.previewUrl,
     }
+}
+
+export async function shouldSyncGithubProjects(): Promise<boolean> {
+    const prisma = getPrismaClient()
+
+    const totalProjects = await prisma.githubProject.count()
+    if (totalProjects === 0) {
+        return true
+    }
+
+    const latestProject = await prisma.githubProject.findFirst({
+        orderBy: { updatedAt: 'desc' },
+        select: { updatedAt: true },
+    })
+
+    console.log(
+        'Latest project updated at:',
+        latestProject?.updatedAt,
+        latestProject,
+    )
+    if (!latestProject) {
+        return true
+    }
+
+    const staleByMs = Date.now() - latestProject.updatedAt.getTime()
+
+    return staleByMs > GITHUB_PROJECTS_SYNC_TTL_MS
 }
 
 export async function syncGithubProjectsToDb(): Promise<void> {
@@ -47,16 +76,22 @@ export async function syncGithubProjectsToDb(): Promise<void> {
     })
 }
 
+export async function syncGithubProjectsIfNeeded(): Promise<void> {
+    const shouldSync = await shouldSyncGithubProjects()
+
+    if (shouldSync) {
+        await syncGithubProjectsToDb()
+    }
+}
+
 export async function getGithubProjectsFromDb(): Promise<ProjectDto[]> {
     // console.log('Fetching projects from DB...')
     const prisma = getPrismaClient()
 
-  
-
     const rows = await prisma.githubProject.findMany({
         orderBy: { updatedAt: 'desc' },
     })
-    // console.log(prisma)
-    // console.log('Fetched projects from DB:', rows)
+    console.log(prisma)
+    console.log('Fetched projects from DB:', rows.length)
     return rows.map(mapDbProjectToProjectDto)
 }

@@ -36,10 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getGithubProjectsFromDb = exports.syncGithubProjectsToDb = void 0;
+exports.getGithubProjectsFromDb = exports.syncGithubProjectsIfNeeded = exports.syncGithubProjectsToDb = exports.shouldSyncGithubProjects = void 0;
 var githubApi_1 = require("@/api/githubApi");
 var prisma_1 = require("@/lib/prisma");
 require("server-only");
+var GITHUB_PROJECTS_SYNC_TTL_MS = 86400000; //     24 hours in milliseconds
 function mapDbProjectToProjectDto(project) {
     return {
         id: String(project.githubId),
@@ -53,6 +54,36 @@ function mapDbProjectToProjectDto(project) {
         previewUrl: project.previewUrl
     };
 }
+function shouldSyncGithubProjects() {
+    return __awaiter(this, void 0, Promise, function () {
+        var prisma, totalProjects, latestProject, staleByMs;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    prisma = prisma_1.getPrismaClient();
+                    return [4 /*yield*/, prisma.githubProject.count()];
+                case 1:
+                    totalProjects = _a.sent();
+                    if (totalProjects === 0) {
+                        return [2 /*return*/, true];
+                    }
+                    return [4 /*yield*/, prisma.githubProject.findFirst({
+                            orderBy: { updatedAt: 'desc' },
+                            select: { updatedAt: true }
+                        })];
+                case 2:
+                    latestProject = _a.sent();
+                    console.log('Latest project updated at:', latestProject === null || latestProject === void 0 ? void 0 : latestProject.updatedAt, latestProject);
+                    if (!latestProject) {
+                        return [2 /*return*/, true];
+                    }
+                    staleByMs = Date.now() - latestProject.updatedAt.getTime();
+                    return [2 /*return*/, staleByMs > GITHUB_PROJECTS_SYNC_TTL_MS];
+            }
+        });
+    });
+}
+exports.shouldSyncGithubProjects = shouldSyncGithubProjects;
 function syncGithubProjectsToDb() {
     return __awaiter(this, void 0, Promise, function () {
         var prisma, projects;
@@ -100,6 +131,25 @@ function syncGithubProjectsToDb() {
     });
 }
 exports.syncGithubProjectsToDb = syncGithubProjectsToDb;
+function syncGithubProjectsIfNeeded() {
+    return __awaiter(this, void 0, Promise, function () {
+        var shouldSync;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, shouldSyncGithubProjects()];
+                case 1:
+                    shouldSync = _a.sent();
+                    if (!shouldSync) return [3 /*break*/, 3];
+                    return [4 /*yield*/, syncGithubProjectsToDb()];
+                case 2:
+                    _a.sent();
+                    _a.label = 3;
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.syncGithubProjectsIfNeeded = syncGithubProjectsIfNeeded;
 function getGithubProjectsFromDb() {
     return __awaiter(this, void 0, Promise, function () {
         var prisma, rows;
@@ -109,14 +159,11 @@ function getGithubProjectsFromDb() {
                     prisma = prisma_1.getPrismaClient();
                     return [4 /*yield*/, prisma.githubProject.findMany({
                             orderBy: { updatedAt: 'desc' }
-                        })
-                        // console.log(prisma)
-                        // console.log('Fetched projects from DB:', rows)
-                    ];
+                        })];
                 case 1:
                     rows = _a.sent();
-                    // console.log(prisma)
-                    // console.log('Fetched projects from DB:', rows)
+                    console.log(prisma);
+                    console.log('Fetched projects from DB:', rows.length);
                     return [2 /*return*/, rows.map(mapDbProjectToProjectDto)];
             }
         });

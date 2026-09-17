@@ -35,23 +35,15 @@
 │   └── dev-with-lan-ip.mjs  # Dev server script for LAN access
 ├── src/
 │   ├── app/
-│   │   ├── api/
-│   │   │   ├── github/repos/route.ts
-│   │   │   └── profile/submit/route.ts
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   └── page.tsx
-│   ├── api/
-│   │   ├── githubApi.ts
-│   │   ├── profileClientApi.ts
-│   │   └── profileStatApi.ts
 │   ├── components/
 │   │   ├── layout/
 │   │   ├── ui/
 │   │   └── charts/
 │   ├── data/
 │   │   ├── projects.data.ts
-│   │   ├── UserData.ts
 │   │   └── techNames.ts
 │   ├── features/
 │   │   ├── change-language/
@@ -62,9 +54,7 @@
 │   │   └── translations/
 │   ├── interfaces/
 │   ├── lib/
-│   │   ├── github.ts
 │   │   ├── prisma.ts
-│   │   ├── projectPreview.ts
 │   │   └── utils.ts
 │   ├── shared/
 │   ├── types/

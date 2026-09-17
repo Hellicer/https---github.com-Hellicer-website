@@ -1,24 +1,23 @@
 'use client'
 
 import { Project } from '@/data/projects.data'
-import {
-    PROJECT_PREVIEW_PLACEHOLDER,
-    resolveProjectPreviewUrl,
-} from '@/lib/projectPreview'
 import { CircleEllipsis, ExternalLink } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Tag from '@/components/ui/Tag'
 import Image from 'next/image'
+
+const PROJECT_PREVIEW_PLACEHOLDER = 'https://placehold.net/600x400.png'
+
 export default function ProjectCard({ project }: { project: Project }) {
     const t = useTranslations('')
     const [previewSrc, setPreviewSrc] = useState(
-        resolveProjectPreviewUrl(project.previewUrl),
+        project.previewUrl?.trim() || PROJECT_PREVIEW_PLACEHOLDER,
     )
     const detailsUrl = project.codeUrl ?? project.liveUrl
 
     useEffect(() => {
-        setPreviewSrc(resolveProjectPreviewUrl(project.previewUrl))
+        setPreviewSrc(project.previewUrl?.trim() || PROJECT_PREVIEW_PLACEHOLDER)
     }, [project.previewUrl])
 
     return (

@@ -1,16 +1,13 @@
 ﻿'use client'
-import { fetchProfileStat } from '@/api/profileClientApi'
 import { CommonProps } from '@/interfaces/props'
 import type { ProfileDataShape, ProfileLoadResult } from '@/types/profile'
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
 import { EffectCards } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Button } from '../button'
-import { EmptyProfileCard } from './EmptyProfileCard'
 import { RadarSimple } from './RadarSkills'
 import { SkillTiles } from './SkillTiles'
 import { TitleBar } from './TitleBar'
@@ -25,100 +22,11 @@ export function ProfileCard({
     const [profileCards, setProfileCards] = useState<ProfileDataShape[]>(
         initialProfileLoad?.data ?? [],
     )
-    const [isEmptyCardModalOpen, setIsEmptyCardModalOpen] = useState(false)
-    const [profileSource, setProfileSource] = useState<
-        'loading' | 'gist' | 'local'
-    >(initialProfileLoad?.source ?? 'loading')
-    const [profileLoadReason, setProfileLoadReason] = useState<string | null>(
-        initialProfileLoad?.reason ?? null,
-    )
     const shouldShowComingSoonFallback = profileCards.length === 0
     const shouldUseSwiper = profileCards.length > 0
 
-    useEffect(() => {
-        if (initialProfileLoad) {
-            return
-        }
-
-        let isMounted = true
-
-        fetchProfileStat().then(result => {
-            if (!isMounted) {
-                return
-            }
-
-            if (result.data.length > 0) {
-                setProfileCards(result.data)
-                setProfileSource(result.source)
-                setProfileLoadReason(null)
-            } else {
-                setProfileSource('local')
-                setProfileLoadReason(result.reason ?? null)
-            }
-        })
-
-        return () => {
-            isMounted = false
-        }
-    }, [initialProfileLoad])
-
-    useEffect(() => {
-        if (!isEmptyCardModalOpen) {
-            return
-        }
-
-        const html = document.documentElement
-        const body = document.body
-        const scrollY = window.scrollY
-
-        const originalHtmlOverflow = html.style.overflow
-        const originalHtmlOverscroll = html.style.overscrollBehavior
-        const originalBodyOverflow = body.style.overflow
-        const originalBodyPosition = body.style.position
-        const originalBodyTop = body.style.top
-        const originalBodyWidth = body.style.width
-        const originalBodyOverscroll = body.style.overscrollBehavior
-        const originalBodyTouchAction = body.style.touchAction
-
-        html.style.overflow = 'hidden'
-        html.style.overscrollBehavior = 'none'
-        body.style.overflow = 'hidden'
-        body.style.position = 'fixed'
-        body.style.top = `-${scrollY}px`
-        body.style.width = '100%'
-        body.style.overscrollBehavior = 'none'
-        body.style.touchAction = 'none'
-
-        return () => {
-            html.style.overflow = originalHtmlOverflow
-            html.style.overscrollBehavior = originalHtmlOverscroll
-            body.style.overflow = originalBodyOverflow
-            body.style.position = originalBodyPosition
-            body.style.top = originalBodyTop
-            body.style.width = originalBodyWidth
-            body.style.overscrollBehavior = originalBodyOverscroll
-            body.style.touchAction = originalBodyTouchAction
-            window.scrollTo(0, scrollY)
-        }
-    }, [isEmptyCardModalOpen])
-
     const renderProfileCardContent = (d: ProfileDataShape) => (
         <div className="grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 min-[581px]:min-h-[954px]">
-            {/* <div className="flex items-center justify-between rounded-md border border-ring/40 bg-card/70 px-3 py-2 text-xs font-semibold">
-                <span>
-                    Data source:{' '}
-                    {profileSource === 'loading'
-                        ? 'loading'
-                        : profileSource === 'gist'
-                          ? 'StatGist'
-                          : 'local fallback'}
-                </span>
-                {profileLoadReason && (
-                    <span className="ml-2 max-w-60 truncate text-muted-foreground">
-                        {profileLoadReason}
-                    </span>
-                )}
-            </div> */}
             <div className="grid min-w-0 gap-6 min-[581px]:grid-cols-[minmax(0,1fr)_auto]">
                 <div className="order-1 min-w-0 font-inter text-base font-semibold min-[581px]:col-start-1 min-[581px]:row-start-1">
                     <TitleBar title={t('profileCard.mainInfo')} />
@@ -294,43 +202,9 @@ export function ProfileCard({
                 <p className="text-sm text-muted-foreground font-semibold">
                     {t('profile.comingSoonDescription')}
                 </p>
-                <Button
-                    variant="secondary"
-                    size="default"
-                    className="mx-auto text-2xl pointer-events-auto"
-                    onClick={() => setIsEmptyCardModalOpen(true)}
-                >
-                    {'+ ' + t('profile.submitApplication')}
-                </Button>
             </div>
         </div>
     )
-
-    const emptyCardModalContent = (
-        <div className="fixed inset-0 z-[9999] overflow-y-auto overscroll-contain bg-black/70 p-4">
-            <div
-                className="relative mx-auto w-full max-w-xl pt-8"
-                onClick={e => e.stopPropagation()}
-            >
-                <button
-                    type="button"
-                    className="absolute top-10 -right-12 z-10 rounded-md border border-ring/40 bg-card px-2 py-1 text-sm font-semibold text-white hover:bg-card/90"
-                    onClick={() => setIsEmptyCardModalOpen(false)}
-                    aria-label="Close modal"
-                >
-                    {'\u00D7'}
-                </button>
-                <EmptyProfileCard
-                    onCancel={() => setIsEmptyCardModalOpen(false)}
-                />
-            </div>
-        </div>
-    )
-
-    const emptyCardModal =
-        isEmptyCardModalOpen && typeof document !== 'undefined'
-            ? createPortal(emptyCardModalContent, document.body)
-            : null
 
     if (shouldShowComingSoonFallback) {
         return (
@@ -340,7 +214,6 @@ export function ProfileCard({
                 >
                     {comingSoonContent}
                 </div>
-                {emptyCardModal}
             </>
         )
     }
@@ -374,7 +247,6 @@ export function ProfileCard({
                     renderProfileCardContent(profileCards[0])
                 )}
             </div>
-            {emptyCardModal}
         </>
     )
 }

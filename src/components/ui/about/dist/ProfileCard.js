@@ -2,88 +2,23 @@
 "use strict";
 exports.__esModule = true;
 exports.ProfileCard = void 0;
-var profileClientApi_1 = require("@/api/profileClientApi");
 var react_icons_1 = require("@radix-ui/react-icons");
 var next_intl_1 = require("next-intl");
 var image_1 = require("next/image");
 var react_1 = require("react");
-var react_dom_1 = require("react-dom");
 var modules_1 = require("swiper/modules");
 var react_2 = require("swiper/react");
 var button_1 = require("../button");
-var EmptyProfileCard_1 = require("./EmptyProfileCard");
 var RadarSkills_1 = require("./RadarSkills");
 var SkillTiles_1 = require("./SkillTiles");
 var TitleBar_1 = require("./TitleBar");
 function ProfileCard(_a) {
-    var _b, _c, _d;
-    var _e = _a === void 0 ? {} : _a, className = _e.className, initialProfileLoad = _e.initialProfileLoad;
+    var _b;
+    var _c = _a === void 0 ? {} : _a, className = _c.className, initialProfileLoad = _c.initialProfileLoad;
     var t = next_intl_1.useTranslations('');
-    var _f = react_1.useState((_b = initialProfileLoad === null || initialProfileLoad === void 0 ? void 0 : initialProfileLoad.data) !== null && _b !== void 0 ? _b : []), profileCards = _f[0], setProfileCards = _f[1];
-    var _g = react_1.useState(false), isEmptyCardModalOpen = _g[0], setIsEmptyCardModalOpen = _g[1];
-    var _h = react_1.useState((_c = initialProfileLoad === null || initialProfileLoad === void 0 ? void 0 : initialProfileLoad.source) !== null && _c !== void 0 ? _c : 'loading'), profileSource = _h[0], setProfileSource = _h[1];
-    var _j = react_1.useState((_d = initialProfileLoad === null || initialProfileLoad === void 0 ? void 0 : initialProfileLoad.reason) !== null && _d !== void 0 ? _d : null), profileLoadReason = _j[0], setProfileLoadReason = _j[1];
+    var _d = react_1.useState((_b = initialProfileLoad === null || initialProfileLoad === void 0 ? void 0 : initialProfileLoad.data) !== null && _b !== void 0 ? _b : []), profileCards = _d[0], setProfileCards = _d[1];
     var shouldShowComingSoonFallback = profileCards.length === 0;
     var shouldUseSwiper = profileCards.length > 0;
-    react_1.useEffect(function () {
-        if (initialProfileLoad) {
-            return;
-        }
-        var isMounted = true;
-        profileClientApi_1.fetchProfileStat().then(function (result) {
-            var _a;
-            if (!isMounted) {
-                return;
-            }
-            if (result.data.length > 0) {
-                setProfileCards(result.data);
-                setProfileSource(result.source);
-                setProfileLoadReason(null);
-            }
-            else {
-                setProfileSource('local');
-                setProfileLoadReason((_a = result.reason) !== null && _a !== void 0 ? _a : null);
-            }
-        });
-        return function () {
-            isMounted = false;
-        };
-    }, [initialProfileLoad]);
-    react_1.useEffect(function () {
-        if (!isEmptyCardModalOpen) {
-            return;
-        }
-        var html = document.documentElement;
-        var body = document.body;
-        var scrollY = window.scrollY;
-        var originalHtmlOverflow = html.style.overflow;
-        var originalHtmlOverscroll = html.style.overscrollBehavior;
-        var originalBodyOverflow = body.style.overflow;
-        var originalBodyPosition = body.style.position;
-        var originalBodyTop = body.style.top;
-        var originalBodyWidth = body.style.width;
-        var originalBodyOverscroll = body.style.overscrollBehavior;
-        var originalBodyTouchAction = body.style.touchAction;
-        html.style.overflow = 'hidden';
-        html.style.overscrollBehavior = 'none';
-        body.style.overflow = 'hidden';
-        body.style.position = 'fixed';
-        body.style.top = "-" + scrollY + "px";
-        body.style.width = '100%';
-        body.style.overscrollBehavior = 'none';
-        body.style.touchAction = 'none';
-        return function () {
-            html.style.overflow = originalHtmlOverflow;
-            html.style.overscrollBehavior = originalHtmlOverscroll;
-            body.style.overflow = originalBodyOverflow;
-            body.style.position = originalBodyPosition;
-            body.style.top = originalBodyTop;
-            body.style.width = originalBodyWidth;
-            body.style.overscrollBehavior = originalBodyOverscroll;
-            body.style.touchAction = originalBodyTouchAction;
-            window.scrollTo(0, scrollY);
-        };
-    }, [isEmptyCardModalOpen]);
     var renderProfileCardContent = function (d) { return (React.createElement("div", { className: "grid min-h-[860px] min-w-0 gap-6 rounded-2xl bg-card p-4 text-sm transition-transform duration-500 shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:p-6 min-[581px]:min-h-[954px]" },
         React.createElement("div", { className: "grid min-w-0 gap-6 min-[581px]:grid-cols-[minmax(0,1fr)_auto]" },
             React.createElement("div", { className: "order-1 min-w-0 font-inter text-base font-semibold min-[581px]:col-start-1 min-[581px]:row-start-1" },
@@ -180,24 +115,14 @@ function ProfileCard(_a) {
     var comingSoonContent = (React.createElement("div", { className: "grid min-h-[860px] min-w-0 place-items-center rounded-2xl bg-card p-6 text-center shadow-[0_24px_60px_rgba(0,0,0,0.45)] min-[581px]:min-h-[954px]" },
         React.createElement("div", { className: "grid gap-4" },
             React.createElement("p", { className: "rounded-full border border-ring/40 bg-card/70 px-4 py-3 font-silkscreen text-2xl tracking-widest text-ring uppercase shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:px-6 sm:text-3xl" }, t('profile.comingSoon')),
-            React.createElement("p", { className: "text-sm text-muted-foreground font-semibold" }, t('profile.comingSoonDescription')),
-            React.createElement(button_1.Button, { variant: "secondary", size: "default", className: "mx-auto text-2xl pointer-events-auto", onClick: function () { return setIsEmptyCardModalOpen(true); } }, '+ ' + t('profile.submitApplication')))));
-    var emptyCardModalContent = (React.createElement("div", { className: "fixed inset-0 z-[9999] overflow-y-auto overscroll-contain bg-black/70 p-4" },
-        React.createElement("div", { className: "relative mx-auto w-full max-w-xl pt-8", onClick: function (e) { return e.stopPropagation(); } },
-            React.createElement("button", { type: "button", className: "absolute top-10 -right-12 z-10 rounded-md border border-ring/40 bg-card px-2 py-1 text-sm font-semibold text-white hover:bg-card/90", onClick: function () { return setIsEmptyCardModalOpen(false); }, "aria-label": "Close modal" }, '\u00D7'),
-            React.createElement(EmptyProfileCard_1.EmptyProfileCard, { onCancel: function () { return setIsEmptyCardModalOpen(false); } }))));
-    var emptyCardModal = isEmptyCardModalOpen && typeof document !== 'undefined'
-        ? react_dom_1.createPortal(emptyCardModalContent, document.body)
-        : null;
+            React.createElement("p", { className: "text-sm text-muted-foreground font-semibold" }, t('profile.comingSoonDescription')))));
     if (shouldShowComingSoonFallback) {
         return (React.createElement(React.Fragment, null,
-            React.createElement("div", { className: "group w-full min-w-0 max-w-xl [perspective:1000px] " + className }, comingSoonContent),
-            emptyCardModal));
+            React.createElement("div", { className: "group w-full min-w-0 max-w-xl [perspective:1000px] " + className }, comingSoonContent)));
     }
     return (React.createElement(React.Fragment, null,
         React.createElement("div", { className: "group w-full min-w-0 max-w-xl [perspective:1000px] " + className }, shouldUseSwiper ? (React.createElement(react_2.Swiper, { effect: "cards", grabCursor: true, autoHeight: true, modules: [modules_1.EffectCards], className: "w-full min-w-0" },
             profileCards.map(function (card, index) { return (React.createElement(react_2.SwiperSlide, { key: card.mainInfo.name + "-" + index, className: "min-w-0" }, renderProfileCardContent(card))); }),
-            React.createElement(react_2.SwiperSlide, { className: "min-w-0" }, comingSoonContent))) : (renderProfileCardContent(profileCards[0]))),
-        emptyCardModal));
+            React.createElement(react_2.SwiperSlide, { className: "min-w-0" }, comingSoonContent))) : (renderProfileCardContent(profileCards[0])))));
 }
 exports.ProfileCard = ProfileCard;

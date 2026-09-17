@@ -1,5 +1,5 @@
 import { FiltersState } from '@/interfaces/props'
-import { ProjectStack, ProjectStatus } from '@/types/github'
+import { ProjectStack, ProjectStatus } from '@/types/project'
 import { Button } from '../button'
 
 function ProjectsFilters({

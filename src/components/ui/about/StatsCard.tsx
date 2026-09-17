@@ -3,33 +3,6 @@
 import { useTranslations } from 'next-intl'
 import { Code2, Briefcase, Target, Zap, Tags } from 'lucide-react'
 import { CommonProps } from '@/interfaces/props'
-import { useEffect, useState } from 'react'
-
-type GistSummary = { id: string }
-
-let gistsCountPromise: Promise<number> | null = null
-
-function getGistsCount(): Promise<number> {
-    if (!gistsCountPromise) {
-        gistsCountPromise = fetch('/api/github/gists', {
-            cache: 'no-store',
-        })
-            .then(async response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch gists.')
-                }
-
-                const gists = (await response.json()) as GistSummary[]
-                return gists.length
-            })
-            .catch(error => {
-                gistsCountPromise = null
-                throw error
-            })
-    }
-
-    return gistsCountPromise
-}
 
 const items = [
     { icon: Code2, key: 'experience' },
@@ -41,30 +14,6 @@ const items = [
 
 export function StatsCard({ className }: CommonProps = {}) {
     const t = useTranslations('about.solvingBlock')
-    const [gistsCount, setGistsCount] = useState<number | null>(null)
-
-    useEffect(() => {
-        let isMounted = true
-
-        const loadGists = async () => {
-            try {
-                const gists = await getGistsCount()
-                if (isMounted) {
-                    setGistsCount(gists)
-                }
-            } catch {
-                if (isMounted) {
-                    setGistsCount(0)
-                }
-            }
-        }
-
-        loadGists()
-
-        return () => {
-            isMounted = false
-        }
-    }, [])
 
     return (
         <div className={`group rounded-2xl ${className}`}>

@@ -76,23 +76,3 @@ export type ProfileLoadResult = {
     reason?: string
 }
 
-export type ProfileSubmissionPayload = {
-    mainInfo: {
-        name: string
-        position: string
-        sex: string
-        age?: number
-    }
-    skills: string[]
-    techStack: string[]
-}
-
-export type ProfileSubmissionResult = {
-    ok: true
-    submissionId: string
-    photoUrl: string | null
-    cvUrl: string | null
-    gistId: string
-    gistUrl: string
-    createdAt: string
-}

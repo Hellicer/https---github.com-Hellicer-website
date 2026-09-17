@@ -36,40 +36,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var profileStatApi_1 = require("@/api/profileStatApi");
 var index_1 = require("@/components/layout/index");
 var button_1 = require("@/components/ui/button");
 var ProjectContentBlock_1 = require("@/components/ui/Project/ProjectContentBlock");
 var SpecializationCards_1 = require("@/components/ui/Specialization/SpecializationCards");
 var projects_data_1 = require("@/data/projects.data");
-var github_1 = require("@/lib/github");
 var lucide_react_1 = require("lucide-react");
 var server_1 = require("next-intl/server");
 var LazyAboutSection_1 = require("./LazyAboutSection");
 var LazyBentoMenu_1 = require("./LazyBentoMenu");
 function MainPage() {
     return __awaiter(this, void 0, void 0, function () {
-        var t, _a, dbProjects, initialProfileLoad, initialProjects;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var t, initialProjects, initialProfileLoad;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0: return [4 /*yield*/, server_1.getTranslations('')];
                 case 1:
-                    t = _b.sent();
-                    return [4 /*yield*/, github_1.syncGithubProjectsIfNeeded()["catch"](function () { return undefined; })];
-                case 2:
-                    _b.sent();
-                    return [4 /*yield*/, Promise.all([
-                            github_1.getGithubProjectsFromDb()["catch"](function () { return []; }),
-                            profileStatApi_1.fetchProfileCardsFromGists()["catch"](function () { return ({
-                                data: [],
-                                source: 'local',
-                                reason: 'Failed to load profile cards on server.'
-                            }); }),
-                        ])];
-                case 3:
-                    _a = _b.sent(), dbProjects = _a[0], initialProfileLoad = _a[1];
-                    console.log(dbProjects);
-                    initialProjects = dbProjects.length > 0 ? dbProjects : projects_data_1.projects;
+                    t = _a.sent();
+                    initialProjects = projects_data_1.projects;
+                    initialProfileLoad = {
+                        data: [],
+                        source: 'local',
+                        reason: 'External profile data is disabled.'
+                    };
                     return [2 /*return*/, (React.createElement("main", { className: "pt-20 " },
                             React.createElement(index_1.GlobeWrapper, null,
                                 React.createElement("div", { className: "cursor-default w-full max-w-360 mx-auto mt-25 text-left px-5", id: "about" },

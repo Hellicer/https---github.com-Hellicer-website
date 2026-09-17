@@ -1,11 +1,11 @@
 'use client';
 "use strict";
 exports.__esModule = true;
-var lucide_react_1 = require("lucide-react");
-var react_1 = require("react");
-var next_intl_1 = require("next-intl");
 var Tag_1 = require("@/components/ui/Tag");
+var lucide_react_1 = require("lucide-react");
+var next_intl_1 = require("next-intl");
 var image_1 = require("next/image");
+var react_1 = require("react");
 var PROJECT_PREVIEW_PLACEHOLDER = 'https://placehold.net/600x400.png';
 function ProjectCard(_a) {
     var _b, _c;

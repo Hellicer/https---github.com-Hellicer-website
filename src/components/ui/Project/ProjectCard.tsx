@@ -1,11 +1,11 @@
 'use client'
 
+import Tag from '@/components/ui/Tag'
 import { Project } from '@/data/projects.data'
 import { CircleEllipsis, ExternalLink } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import Tag from '@/components/ui/Tag'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 const PROJECT_PREVIEW_PLACEHOLDER = 'https://placehold.net/600x400.png'
 

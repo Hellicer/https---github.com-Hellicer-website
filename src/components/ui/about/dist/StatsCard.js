@@ -2,8 +2,8 @@
 "use strict";
 exports.__esModule = true;
 exports.StatsCard = void 0;
-var next_intl_1 = require("next-intl");
 var lucide_react_1 = require("lucide-react");
+var next_intl_1 = require("next-intl");
 var items = [
     { icon: lucide_react_1.Code2, key: 'experience' },
     { icon: lucide_react_1.Briefcase, key: 'projectsCompleted' },

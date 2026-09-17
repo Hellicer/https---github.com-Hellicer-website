@@ -1,8 +1,8 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
-import { Code2, Briefcase, Target, Zap, Tags } from 'lucide-react'
 import { CommonProps } from '@/interfaces/props'
+import { Briefcase, Code2, Tags, Target, Zap } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 const items = [
     { icon: Code2, key: 'experience' },

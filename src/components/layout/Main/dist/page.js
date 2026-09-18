@@ -41,18 +41,28 @@ var button_1 = require("@/components/ui/button");
 var ProjectContentBlock_1 = require("@/components/ui/Project/ProjectContentBlock");
 var SpecializationCards_1 = require("@/components/ui/Specialization/SpecializationCards");
 var projects_data_1 = require("@/data/projects.data");
+var repo_1 = require("@/lib/github/repo");
 var lucide_react_1 = require("lucide-react");
 var server_1 = require("next-intl/server");
 var LazyAboutSection_1 = require("./LazyAboutSection");
 var LazyBentoMenu_1 = require("./LazyBentoMenu");
 function MainPage() {
     return __awaiter(this, void 0, void 0, function () {
-        var t, initialProjects, initialProfileLoad;
+        var t, visibleRepo, vesebleRepoWithPreview, initialProjects, initialProfileLoad;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, server_1.getTranslations('')];
                 case 1:
                     t = _a.sent();
+                    return [4 /*yield*/, repo_1.getRepositoriesData('Hellicer')];
+                case 2:
+                    visibleRepo = _a.sent();
+                    return [4 /*yield*/, repo_1.getRepositoryPreview('Hellicer', 'https---github.com-Hellicer-website')
+                        // console.log('visibleRepo', visibleRepo)
+                        // console.log('visibleRepoWithPreview', vesebleRepoWithPreview)
+                    ];
+                case 3:
+                    vesebleRepoWithPreview = _a.sent();
                     initialProjects = projects_data_1.projects;
                     initialProfileLoad = {
                         data: [],

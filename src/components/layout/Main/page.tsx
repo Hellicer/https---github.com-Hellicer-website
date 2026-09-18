@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import ProjectContentBlock from '@/components/ui/Project/ProjectContentBlock'
 import { SpecializationCards } from '@/components/ui/Specialization/SpecializationCards'
 import { projects, type Project } from '@/data/projects.data'
+import { getRepositoriesData, getRepositoryPreview } from '@/lib/github/repo'
 import { Inbox } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import LazyAboutSection from './LazyAboutSection'
@@ -10,6 +11,16 @@ import LazyBentoMenu from './LazyBentoMenu'
 
 export default async function MainPage() {
     const t = await getTranslations('')
+
+    const visibleRepo = await getRepositoriesData('Hellicer')
+    const vesebleRepoWithPreview = await getRepositoryPreview(
+        'Hellicer',
+        'https---github.com-Hellicer-website',
+    )
+
+    // console.log('visibleRepo', visibleRepo)
+    // console.log('visibleRepoWithPreview', vesebleRepoWithPreview)
+
     const initialProjects: Project[] = projects
     const initialProfileLoad = {
         data: [],
@@ -46,7 +57,6 @@ export default async function MainPage() {
                                 className="pointer-events-auto p-4 h-12 "
                             >
                                 <a href={'#'} className="">
-                                    {/* {cta} */}
                                     <span className="text-2xl">
                                         {t('common.hireUs')}
                                     </span>

@@ -36,11 +36,7 @@ function ProjectContentBlock(_a) {
             React.createElement("h1", null, t('project.title'))),
         React.createElement("div", { className: "px-5 mt-16 mb-16 flex items-center justify-between" },
             React.createElement(ProjectsFilters_1.ProjectsFilters, { filters: filters, setFilters: setFilters, options: filterOptions }),
-            React.createElement("button", { title: t('common.resetFilter'), 
-                // onClick={() =>
-                //     setFilters({ stack: null, status: null, tech: [] })
-                // }
-                className: "text-xs mx-6 text-gray-400 underline hover:text-white" },
+            React.createElement("button", { title: t('common.resetFilter'), onClick: function () { return setFilters({ topics: [] }); }, className: "text-xs mx-6 text-gray-400 underline hover:text-white" },
                 React.createElement(lucide_react_1.RotateCcw, { className: "h-4 w-4 cursor-pointer" }))),
         React.createElement("div", { className: "px-5" },
             React.createElement(react_1.Suspense, { fallback: React.createElement(ProjectSkeleton_1["default"], null) },

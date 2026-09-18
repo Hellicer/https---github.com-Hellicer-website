@@ -13,38 +13,23 @@ function ProjectsFilters({
         topics: string[]
     }
 }) {
-    const toggleTech = (tech: string) => {
+    const toggleTopic = (topic: string) => {
         setFilters(prev => ({
-            ...prev,
-            topics: prev.topics.includes(tech)
-                ? prev.topics.filter(t => t !== tech)
-                : [...prev.topics, tech],
+            topics: prev.topics.includes(topic)
+                ? prev.topics.filter(item => item !== topic)
+                : [...prev.topics, topic],
         }))
     }
 
     return (
         <div className="flex flex-wrap gap-6">
-            {/* <FilterRow title="Stack" /> */}
-
-            {/* <FilterRow
-                title="Status"
-                items={options.statuses}
-                active={filters.status}
-                onClick={value =>
-                    setFilters(f => ({
-                        ...f,
-                        status: f.status === value ? null : value,
-                    }))
-                }
-            /> */}
-
-            {/* <FilterRow
-                title="Tech"
-                items={options.tech}
+            <FilterRow
+                title="Topics"
+                items={options.topics}
                 multiple
-                activeList={filters.tech}
-                onClick={toggleTech}
-            /> */}
+                activeList={filters.topics}
+                onClick={toggleTopic}
+            />
         </div>
     )
 }

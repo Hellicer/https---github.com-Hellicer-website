@@ -74,11 +74,13 @@ export default function ProjectCard({ project }: { project: Project }) {
             </div>
 
             <div className="mt-auto flex h-16 flex-wrap content-end gap-1.5 overflow-hidden min-[581px]:gap-2">
-                {topics.map(t => (
-                    <Tag className="capitalize" key={t}>
-                        {t}
-                    </Tag>
-                ))}
+                {topics
+                    .filter(t => t !== 'portfolio')
+                    .map(t => (
+                        <Tag className="capitalize" key={t}>
+                            {t}
+                        </Tag>
+                    ))}
             </div>
         </div>
     )

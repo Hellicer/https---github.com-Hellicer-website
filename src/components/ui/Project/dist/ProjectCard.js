@@ -29,6 +29,8 @@ function ProjectCard(_a) {
             detailsUrl ? (React.createElement("a", { className: "inline-flex h-8 items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition hover:bg-accent", href: detailsUrl, rel: "noreferrer", target: "_blank" },
                 React.createElement(lucide_react_1.CircleEllipsis, { className: "h-3.5 w-3.5" }),
                 t('common.details'))) : null),
-        React.createElement("div", { className: "mt-auto flex h-16 flex-wrap content-end gap-1.5 overflow-hidden min-[581px]:gap-2" }, topics.map(function (t) { return (React.createElement(Tag_1["default"], { className: "capitalize", key: t }, t)); }))));
+        React.createElement("div", { className: "mt-auto flex h-16 flex-wrap content-end gap-1.5 overflow-hidden min-[581px]:gap-2" }, topics
+            .filter(function (t) { return t !== 'portfolio'; })
+            .map(function (t) { return (React.createElement(Tag_1["default"], { className: "capitalize", key: t }, t)); }))));
 }
 exports["default"] = ProjectCard;

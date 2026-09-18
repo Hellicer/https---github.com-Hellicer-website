@@ -59,12 +59,9 @@ export default function ProjectContentBlock({
                 />
                 <button
                     title={t('common.resetFilter')}
-                    // onClick={() =>
-                    //     setFilters({ stack: null, status: null, tech: [] })
-                    // }
+                    onClick={() => setFilters({ topics: [] })}
                     className="text-xs mx-6 text-gray-400 underline hover:text-white"
                 >
-                    {/* {t('common.resetFilter')} */}
                     <RotateCcw className="h-4 w-4 cursor-pointer" />
                 </button>
             </div>

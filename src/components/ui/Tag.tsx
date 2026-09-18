@@ -4,7 +4,7 @@ export default function Tag({
     className = '',
 }: {
     children: React.ReactNode
-    variant?: 'online' | 'beta' | 'archived'
+    variant?: string
     className?: string
 }) {
     return (

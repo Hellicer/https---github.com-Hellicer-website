@@ -1,9 +1,7 @@
 'use client'
 
-import { ComponentPropsWithoutRef } from 'react'
-import { useEffect, useState } from 'react'
-
 import { cn } from '@/lib/utils'
+import { useState, useEffect, ComponentPropsWithoutRef } from 'react'
 
 interface MarqueeProps extends ComponentPropsWithoutRef<'div'> {
     /**
@@ -69,7 +67,9 @@ export function Marquee({
 
         const mediaQuery = window.matchMedia('(min-width: 1024px)')
         const updateRepeat = () => {
-            setResponsiveRepeat(mediaQuery.matches ? desktopRepeat : mobileRepeat)
+            setResponsiveRepeat(
+                mediaQuery.matches ? desktopRepeat : mobileRepeat,
+            )
         }
 
         updateRepeat()

@@ -47,6 +47,8 @@
         "@types/react-dom": "^19",
         "eslint": "^9",
         "eslint-config-next": "15.3.2",
+        "eslint-plugin-simple-import-sort": "^14.0.0",
+        "eslint-plugin-unused-imports": "^4.4.1",
         "prisma": "^7.9.1",
         "svg-sprite": "^2.0.4",
         "tailwindcss": "^4",

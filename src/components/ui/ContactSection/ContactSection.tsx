@@ -1,13 +1,13 @@
-import {
-    GitHubLogoIcon,
-    InstagramLogoIcon,
-    LinkedInLogoIcon,
-} from '@radix-ui/react-icons'
-import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { PiTelegramLogo } from 'react-icons/pi'
 import { FaFigma, FaWhatsapp } from 'react-icons/fa'
 import { MdOutlineContentCopy } from 'react-icons/md'
-import { PiTelegramLogo } from 'react-icons/pi'
+import {
+    GitHubLogoIcon,
+    LinkedInLogoIcon,
+    InstagramLogoIcon,
+} from '@radix-ui/react-icons'
 
 export default function ContactSection() {
     const t = useTranslations('contact')

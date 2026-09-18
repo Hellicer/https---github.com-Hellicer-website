@@ -1,8 +1,9 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { gsap } from 'gsap'
-import { useEffect, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { useRef,useState,useEffect } from 'react'
+
 import Header from './page'
 
 const DotPatternDemo = dynamic(

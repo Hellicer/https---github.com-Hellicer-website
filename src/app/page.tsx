@@ -1,10 +1,10 @@
 // import '../swiper.css'
 
 import Main from '@/components/layout/Main/page'
-import HeaderShell from '@/components/layout/Header/HeaderShell'
-import ContactSection from '@/components/ui/ContactSection/ContactSection'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
+import HeaderShell from '@/components/layout/Header/HeaderShell'
+import ContactSection from '@/components/ui/ContactSection/ContactSection'
 
 const HOME_MESSAGE_KEYS = [
     'language',

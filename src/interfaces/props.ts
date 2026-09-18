@@ -1,4 +1,3 @@
-import { ProjectStack, ProjectStatus } from '@prisma/client'
 
 export interface CommonProps {
     t?: (key: string) => string
@@ -11,7 +10,5 @@ export interface CommonProps {
 }
 
 export type FiltersState = {
-    stack: ProjectStack | null
-    status: ProjectStatus | null
-    tech: string[]
+    topics: string[]
 }

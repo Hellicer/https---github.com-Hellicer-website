@@ -1,12 +1,12 @@
-import { IconCloud } from '@/components/ui/icon-cloud'
-import { FileTextIcon, GlobeIcon, InputIcon } from '@radix-ui/react-icons'
-
+import { cn } from '@/lib/utils'
 import { FILES as files } from '@/data/files'
 import { SLUGS as slugs } from '@/data/slugs'
-import { cn } from '@/lib/utils'
+import { IconCloud } from '@/components/ui/icon-cloud'
+import { GlobeIcon, InputIcon, FileTextIcon } from '@radix-ui/react-icons'
+
+import { Marquee } from '../magicui/marquee'
 import { AnimatedList } from '../animated-list'
 import { BentoCard, BentoGrid } from '../bento-grid'
-import { Marquee } from '../magicui/marquee'
 
 interface Item {
     name: string
@@ -46,8 +46,7 @@ let notifications = [
     },
 ]
 notifications = Array.from({ length: 10 }, () => notifications).flat()
-const Notification = ({ name, description, icon, color, time }: Item) => {
-    return (
+const Notification = ({ name, description, icon, color, time }: Item) => (
         <figure
             className={cn(
                 'relative mx-auto min-h-fit w-full max-w-[400px] cursor-pointer overflow-hidden rounded-2xl p-4 ',
@@ -81,7 +80,6 @@ const Notification = ({ name, description, icon, color, time }: Item) => {
             </div>
         </figure>
     )
-}
 export function AnimatedListDemo({ className }: { className?: string }) {
     return (
         <div
@@ -95,7 +93,7 @@ export function AnimatedListDemo({ className }: { className?: string }) {
                     <Notification {...item} key={idx} />
                 ))}
             </AnimatedList>
-            <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-1/4 "></div>
+            <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-1/4 " />
         </div>
     )
 }

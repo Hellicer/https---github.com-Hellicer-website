@@ -1,11 +1,12 @@
 export type TRepositories = {
     id: number
     name: string
+    description?: string | null
+    topics?: string[] | null
     owner: string
-    topic: Array<string>
-    created_at: string
-    description?: string
-    website?: string
-    github: string
-    preview?: string
+    created_at?: string | null
+    website?: string | null
+    github?: string | null
+    preview?: string | null
+    archived?: boolean
 }

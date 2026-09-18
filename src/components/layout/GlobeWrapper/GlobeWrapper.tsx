@@ -1,8 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import React, { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import React, { useRef , useState,ReactNode, useEffect } from 'react'
 
 const Globe = dynamic(
     () => import('@/components/ui/magicui/globe').then(mod => mod.Globe),

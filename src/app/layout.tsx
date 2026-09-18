@@ -1,7 +1,8 @@
-import { Inter, Silkscreen, Handjet } from 'next/font/google'
 import './globals.css'
+
 import localFont from 'next/font/local'
 import { getLocale } from 'next-intl/server'
+import { Inter, Handjet } from 'next/font/google'
 
 const interSans = Inter({
     variable: '--font-inter-sans',

@@ -1,37 +1,42 @@
 // projects.data.ts
-export type Project = {
-    id: string
-    title: string
-    description: string
-    status: 'online' | 'beta' | 'archived'
-    stack: 'frontend' | 'backend' | 'fullstack'
-    tech: string[]
-    liveUrl: string | null
-    codeUrl: string | null
-    previewUrl: string | null
-}
+// export type Project = {
+//     id: string
+//     name: string
+//     description: string
+//     archived: boolean
+//     topics: string[]
+//     website: string | null
+//     github: string | null
+//     preview: string | null
+// }
 
-export const projects: Project[] = [
+import { TRepositories } from '@/types/repositories'
+
+export type Project = TRepositories
+
+export const projects: TRepositories[] = [
     {
-        id: 'nanoticia',
-        title: 'Nanoticia',
+        id: 23434,
+        name: 'Nanoticia',
         description: 'Reune os principais portais de noticias em um só lugar.',
-        status: 'online',
-        stack: 'frontend',
-        tech: ['Next.js', 'React', 'Typescript'],
-        liveUrl: null,
-        codeUrl: null,
-        previewUrl: null,
+        archived: false,
+        topics: ['Next.js', 'React', 'Typescript'],
+        website: undefined,
+        github: undefined,
+        preview: undefined,
+        owner: 'Hellicer',
+        created_at: '2023-01-01T00:00:00Z',
     },
     {
-        id: 'chatbot',
-        title: 'Chatbots',
+        id: 123132,
+        name: 'Chatbots',
         description: 'Bots for Telegram, WhatsApp and Facebook Messenger.',
-        status: 'beta',
-        stack: 'backend',
-        tech: ['Node.js', 'Firebase'],
-        liveUrl: null,
-        codeUrl: null,
-        previewUrl: null,
+        archived: false,
+        topics: ['Node.js', 'Firebase'],
+        website: undefined,
+        github: undefined,
+        preview: undefined,
+        owner: 'Hellicer',
+        created_at: '2023-01-01T00:00:00Z',
     },
 ]

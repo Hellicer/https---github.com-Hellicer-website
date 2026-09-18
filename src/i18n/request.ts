@@ -1,5 +1,5 @@
-import { getRequestConfig } from 'next-intl/server'
 import { cookies } from 'next/headers'
+import { getRequestConfig } from 'next-intl/server'
 
 const supportedLocales = ['en', 'uk'] as const
 type SupportedLocale = (typeof supportedLocales)[number]

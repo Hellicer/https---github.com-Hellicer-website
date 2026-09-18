@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { CommonProps } from '@/interfaces/props'
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect } from 'react'
 
 function Button({
     onclick,

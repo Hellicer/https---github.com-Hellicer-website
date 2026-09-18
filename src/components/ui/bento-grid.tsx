@@ -1,8 +1,7 @@
-import { ArrowRightIcon } from '@radix-ui/react-icons'
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
-
-import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { ArrowRightIcon } from '@radix-ui/react-icons'
+import { ReactNode, ComponentPropsWithoutRef } from 'react'
 
 interface BentoGridProps extends ComponentPropsWithoutRef<'div'> {
     children: ReactNode
@@ -19,13 +18,11 @@ interface BentoCardProps extends ComponentPropsWithoutRef<'div'> {
     cta: string
 }
 
-const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
-    return (
+const BentoGrid = ({ children, className, ...props }: BentoGridProps) => (
         <div className={cn('grid grid-cols-3 gap-4', className)} {...props}>
             {children}
         </div>
     )
-}
 
 const BentoCard = ({
     name,

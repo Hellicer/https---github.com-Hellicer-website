@@ -2,61 +2,44 @@
 
 import { ProjectsFilters } from '@/components/ui/Project/ProjectsFilters'
 import { ProjectsGrid } from '@/components/ui/Project/ProjectsGrid'
+import ProjectsSkeleton from '@/components/ui/Project/ProjectSkeleton'
+import { projects } from '@/data/projects.data'
 import { FiltersState } from '@/interfaces/props'
-import { Project, projects } from '@/data/projects.data'
-import { useEffect, useMemo, useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { TRepositories } from '@/types/repositories'
 import { RotateCcw } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 
 export default function ProjectContentBlock({
     initialProjects = projects,
 }: {
-    initialProjects?: Project[]
+    initialProjects?: TRepositories[]
 }) {
     const t = useTranslations('')
-    const [activeProjects] = useState<Project[]>(initialProjects)
+    const [activeProjects] = useState<TRepositories[]>(initialProjects)
     const [filters, setFilters] = useState<FiltersState>({
-        stack: null,
-        status: null,
-        tech: [],
+        topics: [],
     })
 
     const filterOptions = useMemo(() => {
-        const stacks = Array.from(new Set(activeProjects.map(p => p.stack)))
-        const statuses = Array.from(new Set(activeProjects.map(p => p.status)))
-        const tech = Array.from(
-            new Set(activeProjects.flatMap(p => p.tech)),
+        const topics = Array.from(
+            new Set(activeProjects.flatMap(p => p.topics ?? [])),
         ).sort((a, b) => a.localeCompare(b))
 
-        return { stacks, statuses, tech }
+        return { topics }
     }, [activeProjects])
 
     useEffect(() => {
         setFilters(prev => {
-            const validStacks = new Set(filterOptions.stacks)
-            const validStatuses = new Set(filterOptions.statuses)
-            const validTech = new Set(filterOptions.tech)
+            const validTopics = new Set(filterOptions.topics)
+            const nextTopics = prev.topics.filter(item => validTopics.has(item))
 
-            const nextStack =
-                prev.stack && validStacks.has(prev.stack) ? prev.stack : null
-            const nextStatus =
-                prev.status && validStatuses.has(prev.status)
-                    ? prev.status
-                    : null
-            const nextTech = prev.tech.filter(item => validTech.has(item))
-
-            if (
-                nextStack === prev.stack &&
-                nextStatus === prev.status &&
-                nextTech.length === prev.tech.length
-            ) {
+            if (nextTopics.length === prev.topics.length) {
                 return prev
             }
 
             return {
-                stack: nextStack,
-                status: nextStatus,
-                tech: nextTech,
+                topics: nextTopics,
             }
         })
     }, [filterOptions])
@@ -76,9 +59,9 @@ export default function ProjectContentBlock({
                 />
                 <button
                     title={t('common.resetFilter')}
-                    onClick={() =>
-                        setFilters({ stack: null, status: null, tech: [] })
-                    }
+                    // onClick={() =>
+                    //     setFilters({ stack: null, status: null, tech: [] })
+                    // }
                     className="text-xs mx-6 text-gray-400 underline hover:text-white"
                 >
                     {/* {t('common.resetFilter')} */}
@@ -86,7 +69,9 @@ export default function ProjectContentBlock({
                 </button>
             </div>
             <div className="px-5">
-                <ProjectsGrid filters={filters} projects={activeProjects} />
+                <Suspense fallback={<ProjectsSkeleton />}>
+                    <ProjectsGrid filters={filters} projects={activeProjects} />
+                </Suspense>
             </div>
         </section>
     )

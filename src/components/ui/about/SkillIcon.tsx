@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { useState,useEffect } from 'react'
 
 export function SkillIcon({ skill }: { skill: string }) {
     const [hasError, setHasError] = useState(false)

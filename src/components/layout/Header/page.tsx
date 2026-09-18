@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import LanguageSwitcher from '@/features/change-language/changeLang'
+import { cn } from '@/lib/utils'
 import Logotype from '@/shared/logotype/logotype'
-import NavbarMenu from '@/components/ui/navbarMenu/navbarMenu'
 // import ContactUs from '@/components/ui/contactUs/ContactUs'
 // import SwitcherTheme from '@/features/switcher-theme/SwitchTheme'
-import { cn } from '@/lib/utils'
+import { useRef, useState, useEffect } from 'react'
+import NavbarMenu from '@/components/ui/navbarMenu/navbarMenu'
+import LanguageSwitcher from '@/features/change-language/changeLang'
 
 export default function Header({ className }: { className?: string }) {
     const keepHeaderVisible = false

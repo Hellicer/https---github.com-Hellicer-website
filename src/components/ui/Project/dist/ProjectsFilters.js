@@ -23,18 +23,11 @@ var button_1 = require("../button");
 function ProjectsFilters(_a) {
     var filters = _a.filters, setFilters = _a.setFilters, options = _a.options;
     var toggleTech = function (tech) {
-        setFilters(function (prev) { return (__assign(__assign({}, prev), { tech: prev.tech.includes(tech)
-                ? prev.tech.filter(function (t) { return t !== tech; })
-                : __spreadArrays(prev.tech, [tech]) })); });
+        setFilters(function (prev) { return (__assign(__assign({}, prev), { topics: prev.topics.includes(tech)
+                ? prev.topics.filter(function (t) { return t !== tech; })
+                : __spreadArrays(prev.topics, [tech]) })); });
     };
-    return (React.createElement("div", { className: "flex flex-wrap gap-6" },
-        React.createElement(FilterRow, { title: "Stack", items: options.stacks, active: filters.stack, onClick: function (value) {
-                return setFilters(function (f) { return (__assign(__assign({}, f), { stack: f.stack === value ? null : value })); });
-            } }),
-        React.createElement(FilterRow, { title: "Status", items: options.statuses, active: filters.status, onClick: function (value) {
-                return setFilters(function (f) { return (__assign(__assign({}, f), { status: f.status === value ? null : value })); });
-            } }),
-        React.createElement(FilterRow, { title: "Tech", items: options.tech, multiple: true, activeList: filters.tech, onClick: toggleTech })));
+    return (React.createElement("div", { className: "flex flex-wrap gap-6" }));
 }
 exports.ProjectsFilters = ProjectsFilters;
 function FilterRow(_a) {

@@ -1,5 +1,4 @@
 "use strict";
-// import '../swiper.css'
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -37,53 +36,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var page_1 = require("@/components/layout/Main/page");
-var HeaderShell_1 = require("@/components/layout/Header/HeaderShell");
-var ContactSection_1 = require("@/components/ui/ContactSection/ContactSection");
-var next_intl_1 = require("next-intl");
-var server_1 = require("next-intl/server");
-var HOME_MESSAGE_KEYS = [
-    'language',
-    'header',
-    'headerTitle',
-    'subHeaderTitle',
-    'sideSwitcherLeft',
-    'sideSwitcherRight',
-    'specialization',
-    'about',
-    'project',
-    'profileCard',
-    'profile',
-    'contact',
-    'contactSection',
-    'common',
-];
-function pickHomeMessages(messages) {
-    return Object.fromEntries(HOME_MESSAGE_KEYS.filter(function (key) { return key in messages; }).map(function (key) { return [
-        key,
-        messages[key],
-    ]; }));
-}
-function Home() {
+var ProjectContentBlock_1 = require("@/components/ui/Project/ProjectContentBlock");
+var ProjectSkeleton_1 = require("@/components/ui/Project/ProjectSkeleton");
+var repo_1 = require("@/lib/github/repo");
+var react_1 = require("react");
+function ProjectsSection() {
     return __awaiter(this, void 0, void 0, function () {
-        var locale, allMessages, homeMessages;
+        var projects;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, server_1.getLocale()];
+                case 0: return [4 /*yield*/, repo_1.getRepositoriesData('Hellicer')];
                 case 1:
-                    locale = _a.sent();
-                    return [4 /*yield*/, server_1.getMessages()];
-                case 2:
-                    allMessages = (_a.sent());
-                    homeMessages = pickHomeMessages(allMessages);
-                    return [2 /*return*/, (React.createElement(next_intl_1.NextIntlClientProvider, { locale: locale, messages: homeMessages },
-                            React.createElement("div", { className: "flex flex-col overflow-x-hidden" },
-                                React.createElement(HeaderShell_1["default"], null),
-                                React.createElement(page_1["default"], null),
-                                React.createElement("footer", { className: "mt-40 relative grid max-w-360 w-full place-self-center z-10 justify-items-center items-stretch p-4 gap-16" },
-                                    React.createElement(ContactSection_1["default"], null)))))];
+                    projects = _a.sent();
+                    return [2 /*return*/, (React.createElement(react_1.Suspense, { fallback: React.createElement(ProjectSkeleton_1["default"], null) },
+                            React.createElement(ProjectContentBlock_1["default"], { initialProjects: projects }),
+                            React.createElement(ProjectSkeleton_1["default"], null)))];
             }
         });
     });
 }
-exports["default"] = Home;
+exports["default"] = ProjectsSection;

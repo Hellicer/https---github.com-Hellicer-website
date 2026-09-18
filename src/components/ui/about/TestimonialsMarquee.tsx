@@ -1,9 +1,9 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { Marquee } from '@/components/ui/magicui/marquee'
+import { useState, useEffect } from 'react'
 import { CommonProps } from '@/interfaces/props'
-import { useEffect, useState } from 'react'
+import { Marquee } from '@/components/ui/magicui/marquee'
 
 const reviews = [
     {
@@ -57,8 +57,7 @@ const ReviewCard = ({
     name: string
     username: string
     body: string
-}) => {
-    return (
+}) => (
         <figure
             className={cn(
                 'relative h-full w-64 cursor-default overflow-hidden rounded-xl p-4 sm:w-80',
@@ -88,7 +87,6 @@ const ReviewCard = ({
             <blockquote className="mt-2 text-sm">{body}</blockquote>
         </figure>
     )
-}
 export function TestimonialsMarquee({ className }: CommonProps = {}) {
     const [isFirefox, setIsFirefox] = useState(false)
 

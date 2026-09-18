@@ -36,34 +36,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var index_1 = require("@/components/layout/index");
-var button_1 = require("@/components/ui/button");
-var ProjectContentBlock_1 = require("@/components/ui/Project/ProjectContentBlock");
-var SpecializationCards_1 = require("@/components/ui/Specialization/SpecializationCards");
-var projects_data_1 = require("@/data/projects.data");
-var repo_1 = require("@/lib/github/repo");
 var lucide_react_1 = require("lucide-react");
+var button_1 = require("@/components/ui/button");
 var server_1 = require("next-intl/server");
-var LazyAboutSection_1 = require("./LazyAboutSection");
+var index_1 = require("@/components/layout/index");
+var SpecializationCards_1 = require("@/components/ui/Specialization/SpecializationCards");
+var ProjectContentBlock_1 = require("@/components/ui/Project/ProjectContentBlock");
 var LazyBentoMenu_1 = require("./LazyBentoMenu");
+var LazyAboutSection_1 = require("./LazyAboutSection");
+var repo_1 = require("@/lib/github/repo");
 function MainPage() {
     return __awaiter(this, void 0, void 0, function () {
-        var t, visibleRepo, vesebleRepoWithPreview, initialProjects, initialProfileLoad;
+        var t, projects, initialProfileLoad;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, server_1.getTranslations('')];
                 case 1:
                     t = _a.sent();
-                    return [4 /*yield*/, repo_1.getRepositoriesData('Hellicer')];
+                    return [4 /*yield*/, repo_1.getRepositoriesData('Hellicer')]; // Fetch the projects data from the API or any other source
                 case 2:
-                    visibleRepo = _a.sent();
-                    return [4 /*yield*/, repo_1.getRepositoryPreview('Hellicer', 'https---github.com-Hellicer-website')
-                        // console.log('visibleRepo', visibleRepo)
-                        // console.log('visibleRepoWithPreview', vesebleRepoWithPreview)
-                    ];
-                case 3:
-                    vesebleRepoWithPreview = _a.sent();
-                    initialProjects = projects_data_1.projects;
+                    projects = _a.sent() // Fetch the projects data from the API or any other source
+                    ;
                     initialProfileLoad = {
                         data: [],
                         source: 'local',
@@ -77,7 +70,7 @@ function MainPage() {
                                         React.createElement("p", { className: "mt-10 font-semibold text-xl text-gray-30 max-w-4xl  text-left" }, t('headerTitle.description')),
                                         React.createElement("div", { className: "mt-10 mx-22 text-right" },
                                             React.createElement(button_1.Button, { variant: "secondary", asChild: true, size: "default", className: "pointer-events-auto p-4 h-12 " },
-                                                React.createElement("a", { href: '#', className: "" },
+                                                React.createElement("a", { href: "#", className: "" },
                                                     React.createElement("span", { className: "text-2xl" }, t('common.hireUs')),
                                                     React.createElement(lucide_react_1.Inbox, { className: " ms-2 min-h-5.5 min-w-5.5" })))))),
                                 React.createElement("div", { className: "w-full max-w-360 mx-auto mt-22 text-left px-5", style: { paddingLeft: '62px' } },
@@ -86,7 +79,7 @@ function MainPage() {
                                 React.createElement(SpecializationCards_1.SpecializationCards, null),
                                 React.createElement(LazyAboutSection_1["default"], { initialProfileLoad: initialProfileLoad })),
                             React.createElement("div", { className: "relative mx-auto grid max-w-360 mt-40 z-10 justify-items-center p-4 gap-16 items-stretch  ", id: "projects" },
-                                React.createElement(ProjectContentBlock_1["default"], { initialProjects: initialProjects }))))];
+                                React.createElement(ProjectContentBlock_1["default"], { initialProjects: projects }))))];
             }
         });
     });

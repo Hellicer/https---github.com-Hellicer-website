@@ -1,14 +1,13 @@
 "use client"
 
+import { cn } from "@/lib/utils"
+import { motion, MotionProps, AnimatePresence } from "motion/react"
 import React, {
-  ComponentPropsWithoutRef,
-  useEffect,
   useMemo,
   useState,
+  useEffect,
+  ComponentPropsWithoutRef,
 } from "react"
-import { AnimatePresence, motion, MotionProps } from "motion/react"
-
-import { cn } from "@/lib/utils"
 
 export function AnimatedListItem({ children }: { children: React.ReactNode }) {
   const animations: MotionProps = {

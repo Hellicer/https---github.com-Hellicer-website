@@ -1,16 +1,19 @@
 ﻿'use client'
-import { CommonProps } from '@/interfaces/props'
+
 import type { ProfileDataShape, ProfileLoadResult } from '@/types/profile'
-import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
-import { useTranslations } from 'next-intl'
+
 import Image from 'next/image'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { EffectCards } from 'swiper/modules'
+import { CommonProps } from '@/interfaces/props'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
+
 import { Button } from '../button'
-import { RadarSimple } from './RadarSkills'
-import { SkillTiles } from './SkillTiles'
 import { TitleBar } from './TitleBar'
+import { SkillTiles } from './SkillTiles'
+import { RadarSimple } from './RadarSkills'
 
 export function ProfileCard({
     className,
@@ -81,7 +84,7 @@ export function ProfileCard({
                             size="default"
                             className="pointer-events-auto h-9 p-0 text-sm sm:text-base"
                         >
-                            <a href={'#'} className="">
+                            <a href="#" className="">
                                 <span className="capitalize">
                                     {t('common.download')} CV
                                 </span>
@@ -96,7 +99,7 @@ export function ProfileCard({
                                 >
                                     <Image
                                         className="me-1"
-                                        src={`https://cdn.simpleicons.org/wakatime/wakatime`}
+                                        src="https://cdn.simpleicons.org/wakatime/wakatime"
                                         width={14}
                                         height={14}
                                         alt="Wakatime logo"
@@ -208,19 +211,16 @@ export function ProfileCard({
 
     if (shouldShowComingSoonFallback) {
         return (
-            <>
-                <div
+            <div
                     className={`group w-full min-w-0 max-w-xl [perspective:1000px] ${className}`}
                 >
                     {comingSoonContent}
                 </div>
-            </>
         )
     }
 
     return (
-        <>
-            <div
+        <div
                 className={`group w-full min-w-0 max-w-xl [perspective:1000px] ${className}`}
             >
                 {shouldUseSwiper ? (
@@ -247,6 +247,5 @@ export function ProfileCard({
                     renderProfileCardContent(profileCards[0])
                 )}
             </div>
-        </>
     )
 }

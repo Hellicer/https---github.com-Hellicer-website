@@ -6,8 +6,6 @@ export default function ContactUs(props: any) {
     const t = useTranslations('header')
 
     return (
-        <>
-            <button> {t?.('contact') ?? 'loren ipsum'}</button>
-        </>
+        <button> {t?.('contact') ?? 'loren ipsum'}</button>
     )
 }

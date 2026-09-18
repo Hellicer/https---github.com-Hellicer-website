@@ -1,8 +1,9 @@
 'use client'
 
 import type { ProfileLoadResult } from '@/types/profile'
+
 import dynamic from 'next/dynamic'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 const AboutSection = dynamic(
     () =>

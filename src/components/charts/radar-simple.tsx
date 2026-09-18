@@ -1,12 +1,12 @@
 'use client'
 
 import { TrendingUp } from 'lucide-react'
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts'
+import { Radar,PolarGrid, RadarChart,PolarAngleAxis } from 'recharts'
 
 import {
-    type ChartConfig,
-    ChartContainer,
     ChartTooltip,
+    ChartContainer,
+    type ChartConfig,
     ChartTooltipContent,
 } from '../ui/chart'
 

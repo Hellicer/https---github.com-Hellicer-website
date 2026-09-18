@@ -1,7 +1,8 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { useRef, useState, useEffect, useCallback } from 'react'
+
 export interface InteractiveGridPatternProps {
     className?: string
     children?: React.ReactNode
@@ -111,7 +112,7 @@ export function InteractiveGridPattern({
                                         style={{
                                             width: scaledCellSize,
                                             height: scaledCellSize,
-                                            borderColor: borderColor,
+                                            borderColor,
                                             backgroundColor: isHovered
                                                 ? glowColor
                                                 : proximityFactor > 0

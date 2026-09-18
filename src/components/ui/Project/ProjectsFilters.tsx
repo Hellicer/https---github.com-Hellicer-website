@@ -1,5 +1,5 @@
 import { FiltersState } from '@/interfaces/props'
-import { ProjectStack, ProjectStatus } from '@/types/project'
+
 import { Button } from '../button'
 
 function ProjectsFilters({
@@ -10,35 +10,23 @@ function ProjectsFilters({
     filters: FiltersState
     setFilters: React.Dispatch<React.SetStateAction<FiltersState>>
     options: {
-        stacks: ProjectStack[]
-        statuses: ProjectStatus[]
-        tech: string[]
+        topics: string[]
     }
 }) {
     const toggleTech = (tech: string) => {
         setFilters(prev => ({
             ...prev,
-            tech: prev.tech.includes(tech)
-                ? prev.tech.filter(t => t !== tech)
-                : [...prev.tech, tech],
+            topics: prev.topics.includes(tech)
+                ? prev.topics.filter(t => t !== tech)
+                : [...prev.topics, tech],
         }))
     }
 
     return (
         <div className="flex flex-wrap gap-6">
-            <FilterRow
-                title="Stack"
-                items={options.stacks}
-                active={filters.stack}
-                onClick={value =>
-                    setFilters(f => ({
-                        ...f,
-                        stack: f.stack === value ? null : value,
-                    }))
-                }
-            />
+            {/* <FilterRow title="Stack" /> */}
 
-            <FilterRow
+            {/* <FilterRow
                 title="Status"
                 items={options.statuses}
                 active={filters.status}
@@ -48,15 +36,15 @@ function ProjectsFilters({
                         status: f.status === value ? null : value,
                     }))
                 }
-            />
+            /> */}
 
-            <FilterRow
+            {/* <FilterRow
                 title="Tech"
                 items={options.tech}
                 multiple
                 activeList={filters.tech}
                 onClick={toggleTech}
-            />
+            /> */}
         </div>
     )
 }

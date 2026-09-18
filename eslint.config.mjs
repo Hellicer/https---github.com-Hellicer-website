@@ -1,11 +1,10 @@
-import globals from 'globals'
 import eslintJs from '@eslint/js'
-import reactPlugin from 'eslint-plugin-react'
 import importPlugin from 'eslint-plugin-import'
-import reactHooksPlugin from 'eslint-plugin-react-hooks'
 import perfectionistPlugin from 'eslint-plugin-perfectionist'
+import reactPlugin from 'eslint-plugin-react'
+import reactHooksPlugin from 'eslint-plugin-react-hooks'
 import unusedImportsPlugin from 'eslint-plugin-unused-imports'
-import parserTypeScript from '@typescript-eslint/parser'
+import globals from 'globals'
 
 // ----------------------------------------------------------------------
 
@@ -214,7 +213,15 @@ export const customConfig = {
 
 export default [
     { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
-    { ignores: ['*', '!src/', 'eslint.config.*'] },
+    {
+        ignores: [
+            '**/node_modules/**',
+            '**/.next/**',
+            '**/dist/**',
+            '**/build/**',
+            '**/coverage/**',
+        ],
+    },
     {
         languageOptions: {
             parser: (await import('@typescript-eslint/parser')).default, // <-- you imported this from '@typescript-eslint/parser'

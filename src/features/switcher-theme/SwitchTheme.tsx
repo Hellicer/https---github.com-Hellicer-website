@@ -2,7 +2,7 @@
 
 import { Sun } from 'lucide-react'
 
-export default function SwitchertTheme(props: any) {
+export default function SwitchertTheme() {
     return (
         <div className="grid grid-flow-row">
             <span>light</span>

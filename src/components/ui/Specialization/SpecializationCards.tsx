@@ -1,19 +1,19 @@
 'use client'
 
-import { BentoGrid } from '../bento-grid'
-import { BentoCard } from '../BentoCard'
-
+import { useTranslations } from 'next-intl'
 import {
-    ChatBubbleIcon,
     CodeIcon,
     CubeIcon,
-    DashboardIcon,
     GlobeIcon,
     IdCardIcon,
     PersonIcon,
     RocketIcon,
+    DashboardIcon,
+    ChatBubbleIcon,
 } from '@radix-ui/react-icons'
-import { useTranslations } from 'next-intl'
+
+import { BentoCard } from '../BentoCard'
+import { BentoGrid } from '../bento-grid'
 import SpecTypeToggle from '../SpecTypeToggle/SpecTypeToggle'
 
 const features = [

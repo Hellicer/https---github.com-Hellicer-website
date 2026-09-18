@@ -1,14 +1,13 @@
 'use client'
 
+import { ChartContainer,type ChartConfig } from '@/components/ui/chart'
 import {
-    RadarChart,
     Radar,
     PolarGrid,
+    RadarChart,
     PolarAngleAxis,
     PolarRadiusAxis,
 } from 'recharts'
-
-import { ChartContainer, type ChartConfig } from '@/components/ui/chart'
 
 export function RadarSimple({
     labels = [],

@@ -37,9 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getRepositoryPreview = exports.getRepositoriesData = exports.getPublicRepositories = void 0;
+exports.getRepositoriesData = exports.getRepositoryPreview = exports.getPublicRepositories = void 0;
 var client_1 = require("./client");
-var cachedRepositories = {};
+// let cachedRepositories: TRepositories[] = {} as TRepositories[]
 function getPublicRepositories(username) {
     return __awaiter(this, void 0, void 0, function () {
         var data;
@@ -58,29 +58,6 @@ function getPublicRepositories(username) {
     });
 }
 exports.getPublicRepositories = getPublicRepositories;
-function getRepositoriesData(username) {
-    return __awaiter(this, void 0, void 0, function () {
-        var repos;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, getPublicRepositories(username)];
-                case 1:
-                    repos = _a.sent();
-                    return [2 /*return*/, repos.map(function (repo) { return ({
-                            id: repo.id,
-                            name: repo.name,
-                            topic: repo.topics,
-                            created_at: repo.created_at,
-                            description: repo.description,
-                            website: repo.homepage,
-                            github: repo.html_url,
-                            owner: repo.owner.login
-                        }); })];
-            }
-        });
-    });
-}
-exports.getRepositoriesData = getRepositoriesData;
 function getRepositoryPreview(owner, repo) {
     return __awaiter(this, void 0, void 0, function () {
         var data, _a;
@@ -98,6 +75,7 @@ function getRepositoryPreview(owner, repo) {
                     if (Array.isArray(data) || data.type !== 'file') {
                         return [2 /*return*/, null];
                     }
+                    console.log('data.download_url', data.download_url);
                     return [2 /*return*/, data.download_url];
                 case 2:
                     _a = _b.sent();
@@ -108,3 +86,41 @@ function getRepositoryPreview(owner, repo) {
     });
 }
 exports.getRepositoryPreview = getRepositoryPreview;
+function getRepositoriesData(username) {
+    return __awaiter(this, void 0, void 0, function () {
+        var repos;
+        var _this = this;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, getPublicRepositories(username)];
+                case 1:
+                    repos = _a.sent();
+                    return [2 /*return*/, Promise.all(repos
+                            .filter(function (repo) { var _a; return (_a = repo.topics) === null || _a === void 0 ? void 0 : _a.includes('portfolio'); })
+                            .map(function (repo) { return __awaiter(_this, void 0, void 0, function () {
+                            var _a;
+                            return __generator(this, function (_b) {
+                                switch (_b.label) {
+                                    case 0:
+                                        _a = {
+                                            id: repo.id,
+                                            name: repo.name,
+                                            topics: repo.topics,
+                                            created_at: repo.created_at,
+                                            description: repo.description,
+                                            website: repo.homepage,
+                                            github: repo.html_url,
+                                            owner: repo.owner.login,
+                                            archived: repo.archived
+                                        };
+                                        return [4 /*yield*/, getRepositoryPreview(repo.owner.login, repo.name)];
+                                    case 1: return [2 /*return*/, (_a.preview = _b.sent(),
+                                            _a)];
+                                }
+                            });
+                        }); }))];
+            }
+        });
+    });
+}
+exports.getRepositoriesData = getRepositoriesData;

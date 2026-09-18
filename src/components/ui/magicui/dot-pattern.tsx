@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils'
 import { motion } from 'motion/react'
-import React, { useEffect, useId, useRef, useState } from 'react'
+import React, { useId, useRef, useState, useEffect } from 'react'
 
 /**
  *  DotPattern Component Props

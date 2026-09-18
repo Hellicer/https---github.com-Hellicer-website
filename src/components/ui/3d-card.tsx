@@ -1,7 +1,7 @@
 "use client"
 
-import React, { createContext, useContext, useEffect, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
+import React, { useRef, useState, useEffect, useContext, createContext } from "react"
 
 const MouseEnterContext = createContext<
   [boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined
@@ -77,8 +77,7 @@ export interface CardBodyProps {
   className?: string
 }
 
-export const CardBody = ({ children, className }: CardBodyProps) => {
-  return (
+export const CardBody = ({ children, className }: CardBodyProps) => (
     <div
       className={cn(
         "h-96 w-96 [transform-style:preserve-3d] [&>*]:[transform-style:preserve-3d]",
@@ -88,7 +87,6 @@ export const CardBody = ({ children, className }: CardBodyProps) => {
       {children}
     </div>
   )
-}
 
 export type CardItemProps = {
   as?: React.ElementType

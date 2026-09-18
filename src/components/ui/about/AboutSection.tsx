@@ -1,7 +1,9 @@
 import type { ProfileLoadResult } from '@/types/profile'
+
 import { useTranslations } from 'next-intl'
-import { ProfileCard } from './ProfileCard'
+
 import { StatsCard } from './StatsCard'
+import { ProfileCard } from './ProfileCard'
 import { TestimonialsMarquee } from './TestimonialsMarquee'
 
 export function AboutSection({

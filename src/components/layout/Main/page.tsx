@@ -1,27 +1,17 @@
-import { GlobeWrapper } from '@/components/layout/index'
-import { Button } from '@/components/ui/button'
-import ProjectContentBlock from '@/components/ui/Project/ProjectContentBlock'
-import { SpecializationCards } from '@/components/ui/Specialization/SpecializationCards'
-import { projects, type Project } from '@/data/projects.data'
-import { getRepositoriesData, getRepositoryPreview } from '@/lib/github/repo'
 import { Inbox } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { getTranslations } from 'next-intl/server'
-import LazyAboutSection from './LazyAboutSection'
+import { getRepositoriesData } from '@/lib/github/repo'
+import { GlobeWrapper } from '@/components/layout/index'
+import ProjectsContentBlock from '@/components/ui/Project/ProjectContentBlock'
+import { SpecializationCards } from '@/components/ui/Specialization/SpecializationCards'
+
 import LazyBentoMenu from './LazyBentoMenu'
+import LazyAboutSection from './LazyAboutSection'
 
 export default async function MainPage() {
     const t = await getTranslations('')
-
-    const visibleRepo = await getRepositoriesData('Hellicer')
-    const vesebleRepoWithPreview = await getRepositoryPreview(
-        'Hellicer',
-        'https---github.com-Hellicer-website',
-    )
-
-    // console.log('visibleRepo', visibleRepo)
-    // console.log('visibleRepoWithPreview', vesebleRepoWithPreview)
-
-    const initialProjects: Project[] = projects
+    const projects = await getRepositoriesData('Hellicer') // Fetch the projects data from the API or any other source
     const initialProfileLoad = {
         data: [],
         source: 'local' as const,
@@ -56,7 +46,7 @@ export default async function MainPage() {
                                 size="default"
                                 className="pointer-events-auto p-4 h-12 "
                             >
-                                <a href={'#'} className="">
+                                <a href="#" className="">
                                     <span className="text-2xl">
                                         {t('common.hireUs')}
                                     </span>
@@ -81,7 +71,7 @@ export default async function MainPage() {
                 className="relative mx-auto grid max-w-360 mt-40 z-10 justify-items-center p-4 gap-16 items-stretch  "
                 id="projects"
             >
-                <ProjectContentBlock initialProjects={initialProjects} />
+                <ProjectsContentBlock initialProjects={projects} />
             </div>
         </main>
     )

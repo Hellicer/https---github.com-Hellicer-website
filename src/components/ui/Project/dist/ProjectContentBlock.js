@@ -1,13 +1,13 @@
 'use client';
 "use strict";
 exports.__esModule = true;
-var ProjectsFilters_1 = require("@/components/ui/Project/ProjectsFilters");
+var react_1 = require("react");
+var next_intl_1 = require("next-intl");
 var ProjectsGrid_1 = require("@/components/ui/Project/ProjectsGrid");
-var ProjectSkeleton_1 = require("@/components/ui/Project/ProjectSkeleton");
 var projects_data_1 = require("@/data/projects.data");
 var lucide_react_1 = require("lucide-react");
-var next_intl_1 = require("next-intl");
-var react_1 = require("react");
+var ProjectSkeleton_1 = require("@/components/ui/Project/ProjectSkeleton");
+var ProjectsFilters_1 = require("@/components/ui/Project/ProjectsFilters");
 function ProjectContentBlock(_a) {
     var _b = _a.initialProjects, initialProjects = _b === void 0 ? projects_data_1.projects : _b;
     var t = next_intl_1.useTranslations('');

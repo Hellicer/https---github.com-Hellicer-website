@@ -8,6 +8,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
 };
 exports.__esModule = true;
 exports.ProjectsFilters = void 0;
+var react_1 = require("react");
 var button_1 = require("../button");
 function ProjectsFilters(_a) {
     var filters = _a.filters, setFilters = _a.setFilters, options = _a.options;
@@ -18,19 +19,19 @@ function ProjectsFilters(_a) {
                 : __spreadArrays(prev.topics, [topic])
         }); });
     };
-    return (React.createElement("div", { className: "flex flex-wrap gap-6" },
-        React.createElement(FilterRow, { title: "Topics", items: options.topics, multiple: true, activeList: filters.topics, onClick: toggleTopic })));
+    return (react_1["default"].createElement("div", { className: "flex flex-wrap gap-6" },
+        react_1["default"].createElement(FilterRow, { title: "Topics", items: options.topics, multiple: true, activeList: filters.topics, onClick: toggleTopic })));
 }
 exports.ProjectsFilters = ProjectsFilters;
 function FilterRow(_a) {
     var title = _a.title, items = _a.items, onClick = _a.onClick, active = _a.active, _b = _a.activeList, activeList = _b === void 0 ? [] : _b, _c = _a.multiple, multiple = _c === void 0 ? false : _c;
-    return (React.createElement("div", { className: "flex flex-wrap items-center gap-3" },
-        React.createElement("span", { className: "text-sm uppercase tracking-wider text-gray-400" }, title),
+    return (react_1["default"].createElement("div", { className: "flex flex-wrap items-center gap-3" },
+        react_1["default"].createElement("span", { className: "text-sm uppercase tracking-wider text-gray-400" }, title),
         items.map(function (item) {
             var isActive = multiple
                 ? activeList.includes(item)
                 : active === item;
-            return (React.createElement(button_1.Button, { variant: "secondary", asChild: true, size: "default", key: item, onClick: function () { return onClick(item); }, className: "font-inter cursor-pointer p-0 h-9 px-4 py-1.5 rounded-md text-xs\n                            " + (isActive ? 'bg-secondary ' : '') },
-                React.createElement("span", { className: "capitalize" }, item)));
+            return (react_1["default"].createElement(button_1.Button, { variant: "secondary", asChild: true, size: "default", key: item, onClick: function () { return onClick(item); }, className: "font-inter cursor-pointer p-0 h-9 px-4 py-1.5 rounded-md text-xs\n                            " + (isActive ? 'bg-secondary ' : '') },
+                react_1["default"].createElement("span", { className: "capitalize" }, item)));
         })));
 }

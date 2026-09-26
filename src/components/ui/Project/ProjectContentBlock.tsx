@@ -1,14 +1,14 @@
 'use client'
 
-import { ProjectsFilters } from '@/components/ui/Project/ProjectsFilters'
-import { ProjectsGrid } from '@/components/ui/Project/ProjectsGrid'
-import ProjectsSkeleton from '@/components/ui/Project/ProjectSkeleton'
+import { RotateCcw } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { projects } from '@/data/projects.data'
 import { FiltersState } from '@/interfaces/props'
 import { TRepositories } from '@/types/repositories'
-import { RotateCcw } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { Suspense, useEffect, useMemo, useState } from 'react'
+import { useMemo, Suspense, useState, useEffect } from 'react'
+import { ProjectsGrid } from '@/components/ui/Project/ProjectsGrid'
+import ProjectsSkeleton from '@/components/ui/Project/ProjectSkeleton'
+import { ProjectsFilters } from '@/components/ui/Project/ProjectsFilters'
 
 export default function ProjectContentBlock({
     initialProjects = projects,

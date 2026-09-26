@@ -1,3 +1,4 @@
+import React from 'react'
 import { FiltersState } from '@/interfaces/props'
 
 import { Button } from '../button'

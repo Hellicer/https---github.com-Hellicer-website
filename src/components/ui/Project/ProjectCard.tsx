@@ -1,11 +1,11 @@
 'use client'
 
-import Tag from '@/components/ui/Tag'
-import { Project } from '@/data/projects.data'
-import { CircleEllipsis, ExternalLink } from 'lucide-react'
-import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import Tag from '@/components/ui/Tag'
+import { useTranslations } from 'next-intl'
+import { useState, useEffect } from 'react'
+import { Project } from '@/data/projects.data'
+import { ExternalLink, CircleEllipsis } from 'lucide-react'
 
 const PROJECT_PREVIEW_PLACEHOLDER = 'https://placehold.net/600x400.png'
 
@@ -75,10 +75,10 @@ export default function ProjectCard({ project }: { project: Project }) {
 
             <div className="mt-auto flex h-16 flex-wrap content-end gap-1.5 overflow-hidden min-[581px]:gap-2">
                 {topics
-                    .filter(t => t !== 'portfolio')
-                    .map(t => (
-                        <Tag className="capitalize" key={t}>
-                            {t}
+                    .filter(topic => topic !== 'portfolio')
+                    .map(topic => (
+                        <Tag className="capitalize" key={topic}>
+                            {topic}
                         </Tag>
                     ))}
             </div>

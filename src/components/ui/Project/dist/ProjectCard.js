@@ -1,11 +1,11 @@
 'use client';
 "use strict";
 exports.__esModule = true;
-var Tag_1 = require("@/components/ui/Tag");
-var lucide_react_1 = require("lucide-react");
-var next_intl_1 = require("next-intl");
 var image_1 = require("next/image");
+var Tag_1 = require("@/components/ui/Tag");
+var next_intl_1 = require("next-intl");
 var react_1 = require("react");
+var lucide_react_1 = require("lucide-react");
 var PROJECT_PREVIEW_PLACEHOLDER = 'https://placehold.net/600x400.png';
 function ProjectCard(_a) {
     var _b, _c, _d;
@@ -30,7 +30,7 @@ function ProjectCard(_a) {
                 React.createElement(lucide_react_1.CircleEllipsis, { className: "h-3.5 w-3.5" }),
                 t('common.details'))) : null),
         React.createElement("div", { className: "mt-auto flex h-16 flex-wrap content-end gap-1.5 overflow-hidden min-[581px]:gap-2" }, topics
-            .filter(function (t) { return t !== 'portfolio'; })
-            .map(function (t) { return (React.createElement(Tag_1["default"], { className: "capitalize", key: t }, t)); }))));
+            .filter(function (topic) { return topic !== 'portfolio'; })
+            .map(function (topic) { return (React.createElement(Tag_1["default"], { className: "capitalize", key: topic }, topic)); }))));
 }
 exports["default"] = ProjectCard;

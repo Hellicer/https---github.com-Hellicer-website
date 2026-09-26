@@ -1,8 +1,8 @@
 import { Project } from '@/data/projects.data'
 import { FiltersState } from '@/interfaces/props'
 
-import { NoFoundProjectsBlock } from './NoFoundProjectsBlock'
 import ProjectCard from './ProjectCard'
+import { NoFoundProjectsBlock } from './NoFoundProjectsBlock'
 
 function ProjectsGrid({
     filters,
